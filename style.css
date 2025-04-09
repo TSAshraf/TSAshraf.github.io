@@ -9,7 +9,6 @@ body, html {
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* Background Image */
 .background {
   background: url('11.jpg') no-repeat center center/cover;
   height: 100vh;
@@ -17,9 +16,8 @@ body, html {
   position: relative;
 }
 
-/* Overlay to darken image slightly */
 .overlay {
-  background-color: rgba(0, 0, 0, 0.6); /* Soft dark filter */
+  background-color: rgba(0, 0, 0, 0.6);
   height: 100%;
   width: 100%;
   display: flex;
@@ -27,7 +25,6 @@ body, html {
   align-items: center;
 }
 
-/* Centered content */
 .content {
   color: #fff;
   text-align: center;
@@ -45,17 +42,23 @@ body, html {
   margin-bottom: 20px;
 }
 
-/* Music play button */
-#playBtn {
-  background-color: #007bff;
-  border: none;
-  padding: 10px 20px;
+/* Mute/Unmute button in bottom-right */
+#mute-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0,0,0,0.5);
   color: white;
-  font-size: 1rem;
-  border-radius: 5px;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  width: 44px;
+  height: 44px;
   cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s;
 }
 
-#playBtn:hover {
-  background-color: #0056b3;
+#mute-toggle:hover {
+  background-color: rgba(0,0,0,0.8);
 }
