@@ -1,96 +1,68 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body, html {
-  height: 100%;
-  font-family: 'Segoe UI', sans-serif;
-  background: url('11.jpg') no-repeat center center/cover;
-  background-attachment: fixed;
-  color: white;
-}
-
-#mute-toggle {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(255,255,255,0.1);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 18px;
-  width: 44px;
-  height: 44px;
-  cursor: pointer;
-  z-index: 100;
-}
-
-#mute-toggle:hover {
-  background: rgba(255,255,255,0.3);
-}
-
-.container {
-  backdrop-filter: blur(4px);
-  padding: 80px 20px 40px;
-  max-width: 900px;
+.projects-wrapper {
+  max-width: 90%;
   margin: auto;
+  padding: 60px 20px;
   text-align: center;
+  color: white;
+  backdrop-filter: blur(4px);
 }
 
-.title {
+.projects-title {
   font-size: 2.2rem;
   margin-bottom: 40px;
   color: #ffffffdd;
 }
 
-.project-list {
+/* Scrollable Cards Row */
+.project-cards {
   display: flex;
-  flex-direction: column;
-  gap: 40px;
+  overflow-x: auto;
+  gap: 20px;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
 }
 
-.project {
-  background-color: rgba(0, 0, 0, 0.5);
+.card {
+  flex: 0 0 300px;
+  background: rgba(0, 0, 0, 0.6);
   padding: 25px;
-  border-radius: 10px;
-  transition: background 0.3s;
+  border-radius: 12px;
+  scroll-snap-align: center;
+  transition: transform 0.3s;
 }
 
-.project:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+.card:hover {
+  transform: scale(1.05);
 }
 
-.project h2 {
+.card h2 {
   margin-bottom: 10px;
+  font-size: 1.3rem;
   color: #fff;
 }
 
-.project p {
-  font-size: 0.95rem;
+.card p {
+  font-size: 0.9rem;
   color: #ccc;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
-.project a {
+.card a {
+  font-size: 0.85rem;
   color: #00ffff;
   text-decoration: none;
-  font-size: 0.9rem;
 }
 
-.project a:hover {
+.card a:hover {
   text-decoration: underline;
 }
 
-.back-link {
+.back-home {
   display: inline-block;
-  margin-top: 50px;
+  margin-top: 40px;
   font-size: 0.9rem;
-  color: #ffffff88;
-  text-decoration: none;
+  color: #aaa;
 }
-
-.back-link:hover {
+.back-home:hover {
   color: white;
 }
