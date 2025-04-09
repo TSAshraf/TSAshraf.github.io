@@ -8,30 +8,57 @@
 </head>
 <body>
 
-  <!-- Background Music -->
+  <!-- Background music -->
   <audio id="bg-music" src="music.mp3" autoplay loop muted></audio>
-
-  <!-- Fullscreen Background -->
-  <div class="background">
-    <div class="overlay">
-      <div class="content">
-        <h1>Hi! I'm Taashfeen</h1>
-        <p>A passionate CS student, interested in everything computer and robotics related.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mute/Unmute Button -->
   <button id="mute-toggle" aria-label="Toggle Music">🔇</button>
 
-  <script>
-    const music = document.getElementById("bg-music");
-    const muteBtn = document.getElementById("mute-toggle");
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="overlay">
+      <div class="hero-text">
+        <h1>Hi! I'm Taashfeen</h1>
+        <p>A passionate CS student, interested in everything computer and robotics related.</p>
+        <a href="#projects" class="scroll-btn">↓ View Projects</a>
+      </div>
+    </div>
+  </section>
 
-    muteBtn.addEventListener("click", () => {
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project-list">
+      <div class="project">
+        <h3>Loan Calculator</h3>
+        <p>A clean loan repayment tool using HTML, CSS, and JavaScript. Calculates totals based on user input.</p>
+        <a href="projects/loan-calculator/index.html" target="_blank">View Project</a>
+      </div>
+      <!-- Add more projects as needed -->
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      I’m a computer science student who loves building useful tools and exploring robotics, AI, and web development. I believe in learning by doing and coding by night.
+    </p>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:taashfeen@example.com">taashfeen@example.com</a></p>
+    <p>GitHub: <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></p>
+  </section>
+
+  <script>
+    const music = document.getElementById('bg-music');
+    const muteBtn = document.getElementById('mute-toggle');
+    muteBtn.addEventListener('click', () => {
       music.muted = !music.muted;
-      muteBtn.textContent = music.muted ? "🔇" : "🔊";
+      muteBtn.textContent = music.muted ? '🔇' : '🔊';
     });
   </script>
+
 </body>
 </html>
