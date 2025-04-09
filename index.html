@@ -1,11 +1,35 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Welcome</title>
-  </head>
-  <body>
-    <h1>Hi! I'm Taashfeen</h1>
-    <p><p>
-    <p>A Passionate CS Student, interested in everything computer and robotics related.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Taashfeen's Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background Music (optional: autoplay with muted, or trigger via click) -->
+  <audio id="bg-music" src="music.mp3" loop></audio>
+
+  <!-- Fullscreen Background -->
+  <div class="background">
+    <div class="overlay">
+      <div class="content">
+        <h1>Hi! I'm Taashfeen</h1>
+        <p>A passionate CS student, interested in everything computer and robotics related.</p>
+        <button id="playBtn">▶ Play Music</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const playBtn = document.getElementById("playBtn");
+    const music = document.getElementById("bg-music");
+
+    playBtn.addEventListener("click", () => {
+      music.play();
+      playBtn.style.display = "none"; // Hide button after play
+    });
+  </script>
+</body>
 </html>
