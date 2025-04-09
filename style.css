@@ -1,18 +1,20 @@
+/* Reset + base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
-body, html {
-  height: 100%;
+body {
   font-family: 'Segoe UI', sans-serif;
+  background-color: #111;
+  color: #fff;
+  scroll-behavior: smooth;
 }
 
-.background {
-  background: url('11.jpg') no-repeat center center/cover;
+/* Hero Section */
+#hero {
   height: 100vh;
-  width: 100%;
+  background: url('11.jpg') no-repeat center center/cover;
   position: relative;
 }
 
@@ -25,29 +27,80 @@ body, html {
   align-items: center;
 }
 
-.content {
-  color: #fff;
+.hero-text {
   text-align: center;
-  max-width: 600px;
   padding: 20px;
 }
 
-.content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
+.hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
 }
 
-.content p {
+.hero-text p {
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
-/* Mute/Unmute button in bottom-right */
+.scroll-btn {
+  text-decoration: none;
+  font-size: 1.2rem;
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.scroll-btn:hover {
+  background: #0056b3;
+}
+
+/* Sections */
+section {
+  padding: 80px 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Projects */
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.project {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.project a {
+  color: #00ffcc;
+  text-decoration: none;
+}
+
+.project a:hover {
+  text-decoration: underline;
+}
+
+/* Contact */
+#contact a {
+  color: #00ffff;
+}
+
+/* Mute button */
 #mute-toggle {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.6);
   color: white;
   border: none;
   border-radius: 50%;
@@ -55,10 +108,8 @@ body, html {
   width: 44px;
   height: 44px;
   cursor: pointer;
-  z-index: 10;
-  transition: background 0.3s;
+  z-index: 100;
 }
-
 #mute-toggle:hover {
-  background-color: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.8);
 }
