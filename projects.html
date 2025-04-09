@@ -1,46 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects - Taashfeen</title>
-  <link rel="stylesheet" href="projects.css" />
-</head>
-<body>
+<div class="projects-wrapper">
+  <h1 class="projects-title">Projects</h1>
 
-  <!-- Background music -->
-  <audio id="bg-music" src="music.mp3" autoplay loop muted></audio>
-  <button id="mute-toggle" aria-label="Toggle Music">🔇</button>
-
-  <!-- Page Content -->
-  <div class="container">
-    <h1 class="title">Projects</h1>
-
-    <div class="project-list">
-      <div class="project">
-        <h2>Loan Calculator</h2>
-        <p>A simple tool that calculates loan repayments using JavaScript. Built with HTML, CSS & JS.</p>
-        <a href="projects/loan-calculator/index.html" target="_blank">View Project</a>
-      </div>
-
-      <!-- You can add more projects like this -->
-      <div class="project">
-        <h2>Coming Soon</h2>
-        <p>More personal experiments and side projects are on the way.</p>
-      </div>
+  <div class="project-cards">
+    <div class="card">
+      <h2>Loan Calculator</h2>
+      <p>Simple calculator that lets you compute loan repayments based on interest and years.</p>
+      <a href="projects/loan-calculator/index.html" target="_blank">View</a>
     </div>
 
-    <a href="index.html" class="back-link">← Back to Home</a>
+    <div class="card">
+      <h2>To-Do App</h2>
+      <p>A clean to-do list made in vanilla JS. Save, update, and check off tasks with ease.</p>
+      <a href="#">Coming Soon</a>
+    </div>
+
+    <!-- Add more cards -->
   </div>
 
-  <script>
-    const music = document.getElementById('bg-music');
-    const muteBtn = document.getElementById('mute-toggle');
-    muteBtn.addEventListener('click', () => {
-      music.muted = !music.muted;
-      muteBtn.textContent = music.muted ? '🔇' : '🔊';
-    });
-  </script>
-
-</body>
-</html>
+  <a href="index.html" class="back-home">← Back to Home</a>
+</div>
