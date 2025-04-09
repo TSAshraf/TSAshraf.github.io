@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('11.jpg') no-repeat center center/cover;
+  background-attachment: fixed;
+  color: white;
+}
+
+#mute-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  z-index: 100;
+}
+
+#mute-toggle:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.container {
+  backdrop-filter: blur(4px);
+  padding: 80px 20px 40px;
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
+
+.title {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  color: #ffffffdd;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.project {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 25px;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.project:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.project h2 {
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.project p {
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.project a {
+  color: #00ffff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.project a:hover {
+  text-decoration: underline;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 50px;
+  font-size: 0.9rem;
+  color: #ffffff88;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: white;
+}
