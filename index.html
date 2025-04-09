@@ -12,10 +12,13 @@
   <audio id="bg-music" src="music.mp3" autoplay loop muted></audio>
   <button id="mute-toggle" aria-label="Toggle Music">🔇</button>
 
-  <!-- Minimal info -->
+  <!-- Main content -->
   <div class="info">
-    <p class="click">Click to continue</p>
-    <div class="links">
+    <p class="name">Taashfeen</p>
+    <p class="desc">A passionate CS student, interested in everything computer and robotics related.</p>
+    <p class="click hidden" id="clickToContinue">Click to continue</p>
+
+    <div class="links hidden" id="linkSection">
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </div>
@@ -24,7 +27,23 @@
   <script>
     const music = document.getElementById('bg-music');
     const muteBtn = document.getElementById('mute-toggle');
+    const clickMsg = document.getElementById('clickToContinue');
+    const linkSection = document.getElementById('linkSection');
 
+    // Show "Click to continue" after 3 seconds
+    setTimeout(() => {
+      clickMsg.classList.remove("hidden");
+      clickMsg.classList.add("fade-in");
+    }, 3000);
+
+    // On click, reveal buttons
+    clickMsg.addEventListener('click', () => {
+      linkSection.classList.remove("hidden");
+      linkSection.classList.add("fade-in");
+      clickMsg.style.display = "none"; // hide the click message
+    });
+
+    // Mute/unmute
     muteBtn.addEventListener('click', () => {
       music.muted = !music.muted;
       muteBtn.textContent = music.muted ? '🔇' : '🔊';
