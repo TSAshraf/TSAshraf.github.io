@@ -1,98 +1,21 @@
-/* Reset + base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #111;
-  color: #fff;
-  scroll-behavior: smooth;
-}
 
-/* Hero Section */
-#hero {
-  height: 100vh;
-  background: url('11.jpg') no-repeat center center/cover;
-  position: relative;
-}
-
-.overlay {
-  background-color: rgba(0, 0, 0, 0.6);
+html, body {
   height: 100%;
   width: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('11.jpg') no-repeat center center/cover;
+  background-attachment: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.hero-text {
-  text-align: center;
-  padding: 20px;
-}
-
-.hero-text h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.hero-text p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-.scroll-btn {
-  text-decoration: none;
-  font-size: 1.2rem;
-  background: #007bff;
   color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  transition: background 0.3s;
-}
-
-.scroll-btn:hover {
-  background: #0056b3;
-}
-
-/* Sections */
-section {
-  padding: 80px 20px;
-  max-width: 800px;
-  margin: auto;
-}
-
-h2 {
   text-align: center;
-  margin-bottom: 30px;
-}
-
-/* Projects */
-.project-list {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.project {
-  background-color: #1e1e1e;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.project a {
-  color: #00ffcc;
-  text-decoration: none;
-}
-
-.project a:hover {
-  text-decoration: underline;
-}
-
-/* Contact */
-#contact a {
-  color: #00ffff;
+  overflow: hidden;
 }
 
 /* Mute button */
@@ -100,16 +23,75 @@ h2 {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: rgba(0,0,0,0.6);
+  background: rgba(255,255,255,0.1);
   color: white;
   border: none;
   border-radius: 50%;
-  font-size: 20px;
+  font-size: 18px;
   width: 44px;
   height: 44px;
   cursor: pointer;
   z-index: 100;
+  transition: background 0.3s;
 }
 #mute-toggle:hover {
-  background: rgba(0,0,0,0.8);
+  background: rgba(255,255,255,0.3);
+}
+
+/* Intro */
+.info {
+  backdrop-filter: blur(2px);
+  padding: 20px;
+}
+
+.name {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #ffffffdd;
+  margin-bottom: 10px;
+}
+
+.desc {
+  font-size: 0.95rem;
+  color: #ffffffbb;
+  margin-bottom: 20px;
+}
+
+/* Click prompt + links */
+.click, .links a {
+  font-size: 0.9rem;
+  color: #ffffffcc;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.links {
+  margin-top: 15px;
+}
+
+.links a {
+  display: block;
+  margin: 8px 0;
+}
+.links a:hover {
+  color: #ffffff;
+}
+
+/* Animation classes */
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
