@@ -8,8 +8,8 @@
 </head>
 <body>
 
-  <!-- Background Music (optional: autoplay with muted, or trigger via click) -->
-  <audio id="bg-music" src="music.mp3" loop></audio>
+  <!-- Background Music -->
+  <audio id="bg-music" src="music.mp3" autoplay loop muted></audio>
 
   <!-- Fullscreen Background -->
   <div class="background">
@@ -17,18 +17,20 @@
       <div class="content">
         <h1>Hi! I'm Taashfeen</h1>
         <p>A passionate CS student, interested in everything computer and robotics related.</p>
-        <button id="playBtn">▶ Play Music</button>
       </div>
     </div>
   </div>
 
-  <script>
-    const playBtn = document.getElementById("playBtn");
-    const music = document.getElementById("bg-music");
+  <!-- Mute/Unmute Button -->
+  <button id="mute-toggle" aria-label="Toggle Music">🔇</button>
 
-    playBtn.addEventListener("click", () => {
-      music.play();
-      playBtn.style.display = "none"; // Hide button after play
+  <script>
+    const music = document.getElementById("bg-music");
+    const muteBtn = document.getElementById("mute-toggle");
+
+    muteBtn.addEventListener("click", () => {
+      music.muted = !music.muted;
+      muteBtn.textContent = music.muted ? "🔇" : "🔊";
     });
   </script>
 </body>
