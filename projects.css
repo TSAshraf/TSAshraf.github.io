@@ -31,7 +31,7 @@ body {
   max-width: 100%;
   min-width: 100vh; /* does this work??*/
   background: rgba(0, 0, 0, 0.6);
-  padding: 80px, 40pc;
+  padding: 80px, 40px;
   border-radius: 0;
   transition: transform 0.3s;
 }
