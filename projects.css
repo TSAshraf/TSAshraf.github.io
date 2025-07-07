@@ -22,13 +22,12 @@ body {
 .project-cards {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding-bottom: 10px;
   align-items: center;
+  gap: 20px;
 }
 
 .card {
-  flex: 0 0 300px;
+  width: 100%;
   background: rgba(0, 0, 0, 0.6);
   padding: 25px;
   border-radius: 12px;
