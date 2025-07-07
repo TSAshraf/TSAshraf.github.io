@@ -23,18 +23,19 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 0;
 }
 
 .card {
   width: 100%;
+  max-width: 100%;
   background: rgba(0, 0, 0, 0.6);
-  padding: 25px;
-  border-radius: 12px;
+  padding: 80px, 40pc;
+  border-radius: 0;
   transition: transform 0.3s;
 }
 
-.card:hover {
+.card:hover { /* Previously used code idk if i want to use it?? It's style choice (CSS)*/
   transform: scale(1.05);
 }
 
