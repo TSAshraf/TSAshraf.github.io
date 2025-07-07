@@ -77,3 +77,28 @@ body {
 .project-cards::-webkit-scrollbar {
   display: none;
 }
+
+/* need to add images for all of the cards (for each project), atm you can only add images, maybe add videos??*/
+.Loan-Calculator {
+  background: url('theimage.jpg') center/cover no-repeat;
+}
+
+.To-Do App {
+  background: url('theimage.jpg') center/cover no-repeat;
+}
+
+.Fix-the-Artifact {
+  background: url('theimage.jpg') center/cover no-repeat;
+}
+
+.Brain-Games {
+  background: url('theimage.jpg') center/cover no-repeat;
+}
+
+.Pomodoro-style {
+  background: url('theimage.jpg') center/cover no-repeat;
+}
+
+.Simple-Meditation-App {
+  background: url('theimage.jpg') center/cover no-repeat;
+}
