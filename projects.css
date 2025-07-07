@@ -29,6 +29,7 @@ body {
 .card {
   width: 100%;
   max-width: 100%;
+  min-width: 100vh; /* does this work??*/
   background: rgba(0, 0, 0, 0.6);
   padding: 80px, 40pc;
   border-radius: 0;
