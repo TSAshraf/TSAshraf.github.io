@@ -1,3 +1,8 @@
+body {
+  background: #111;
+  color: #eee;
+}
+
 .projects-wrapper {
   max-width: 90%;
   margin: auto;
@@ -63,6 +68,12 @@
   font-size: 0.9rem;
   color: #aaa;
 }
+
 .back-home:hover {
   color: white;
+}
+
+/* Optional: Hide scrollbar on Webkit browsers */
+.project-cards::-webkit-scrollbar {
+  display: none;
 }
