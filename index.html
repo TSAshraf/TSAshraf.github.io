@@ -15,21 +15,24 @@
   <svg id="parallax" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <!-- Slightly darker top so it blends with page tone -->
-        <stop offset="0%" stop-color="#1b1f22"/>
-        <stop offset="100%" stop-color="#2a2f32"/>
+        <stop offset="0%" stop-color="#11171b"/>
+        <stop offset="100%" stop-color="#1e2428"/>
       </linearGradient>
     </defs>
-    <!-- Sky + horizon line -->
+
+    <!-- Sky -->
     <rect width="1440" height="900" fill="url(#sky)"/>
-    <rect y="520" width="1440" height="6" fill="#2b2f31"/>
+
+    <!-- Horizon near the bottom -->
+    <rect y="820" width="1440" height="4" fill="#cfcfcf" opacity=".35"/>
+
     <!-- Parallax layers populated by scripts/parallax.js -->
-    <g id="layer-back"  fill="#3a3f42" opacity=".5"></g>
-    <g id="layer-mid"   fill="#2f3437" opacity=".7"></g>
+    <g id="layer-back"  fill="#3a3f42" opacity=".45"></g>
+    <g id="layer-mid"   fill="#2f3437" opacity=".70"></g>
     <g id="layer-front" fill="#202426" opacity=".95"></g>
   </svg>
 
-  <!-- All page content wrapped so it stacks ABOVE the background -->
+  <!-- All page content ABOVE the background -->
   <div id="page">
 
     <!-- Intro -->
@@ -37,7 +40,7 @@
       <h1>Taashfeen is a CS student focused on cognition, productivity, and practical tools.</h1>
     </header>
 
-    <!-- Projects (magazine-style spreads) -->
+    <!-- Projects -->
     <main>
       <section id="fix-the-artifact" class="project container">
         <div class="project-image">
@@ -100,7 +103,6 @@
 
   </div><!-- /#page -->
 
-  <!-- Scripts -->
   <script src="scripts/parallax.js"></script>
   <script src="scripts/rain.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
