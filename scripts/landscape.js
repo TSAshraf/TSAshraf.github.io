@@ -1,6 +1,4 @@
-// scripts/landscape.js
-// Fixed bottom band: stamp silhouettes, add gentle drift,
-// and reveal band near the footer with IntersectionObserver.
+// Fixed bottom band: stamp silhouettes, gentle drift, reveal near footer.
 (() => {
   const band  = document.getElementById('landscape');
   const back  = document.getElementById('layer-back');
@@ -20,7 +18,7 @@
     }
   }
 
-  // Simple “stalks” — swap with nicer shapes anytime
+  // Simple silhouettes
   const BACK   = 'M0 0 L6 -22 L12 0 L8 -6 L4 0 Z';
   const MID    = 'M0 0 L8 -34 L16 0 L10 -10 L4 0 Z';
   const FRONT  = 'M0 0 L10 -46 L20 0 L12 -14 L6 0 Z';
@@ -29,7 +27,7 @@
   stamp(mid,   MID,   56);
   stamp(front, FRONT, 64);
 
-  // Tiny ambient drift (keeps scene alive; not scroll-bound)
+  // Ambient drift
   let t0 = performance.now();
   function drift(){
     const t = (performance.now() - t0) / 1000;
@@ -43,7 +41,7 @@
   }
   drift();
 
-  // Reveal the band when near the bottom (trigger above footer)
+  // Reveal band near footer
   const trigger = document.getElementById('landscape-trigger');
 
   function setVisible(v){
@@ -56,13 +54,11 @@
       {
         root: null,
         threshold: 0,
-        // Slightly before very bottom; adjust to taste
-        rootMargin: '0px 0px -20% 0px'
+        rootMargin: '0px 0px -20% 0px' // tweak for earlier/later reveal
       }
     );
     io.observe(trigger);
   } else {
-    // Fallback: always show if no IO support or trigger missing
-    setVisible(true);
+    setVisible(true); // fallback
   }
 })();
