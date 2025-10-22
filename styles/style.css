@@ -1,193 +1,64 @@
-/* =========================
-   Reset & Base
-   ========================= */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
+/* Base */
+*{box-sizing:border-box}
 :root{
-  --bg: #0b0b0b;
-  --text: #f3f3f3;
-  --muted: #cfcfcf;
-  --card: rgba(0,0,0,.65);
-  --border: rgba(255,255,255,.12);
-  --accent: #9ae6b4; /* soft green */
+  --text:#eaeaea; --muted:#b8bec2; --accent:#f87171;
+  --card:rgba(255,255,255,0.035); --border:rgba(255,255,255,0.10);
 }
-
-html { scroll-behavior: smooth; }
-html, body { height: 100%; width: 100%; }
-
+html{scroll-behavior:smooth}
 body{
-  font-family: 'Segoe UI', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: url('13.jpg') no-repeat center center/cover fixed, var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  /* allow scrolling (was overflow: hidden;) */
-  overflow: auto;
+  margin:0; color:var(--text);
+  font:16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background:#2a2f32; /* fallback under SVG */
 }
 
-/* Utility */
-.container { max-width: 980px; margin: 0 auto; padding: 56px 20px; }
-.section-title { font-size: 24px; margin-bottom: 18px; }
-.hidden { opacity: 0; pointer-events: none; }
-.fade-in { animation: fadeIn .8s ease forwards; }
-@keyframes fadeIn { to { opacity: 1; pointer-events: auto; } }
+/* Background layers behind content */
+#parallax, #rain{
+  position:fixed; inset:0; pointer-events:none;
+}
+#parallax{ z-index:-2 }
+#rain{ z-index:-1; background:transparent }
+
+/* Intro */
+.container{ max-width:1200px; margin:0 auto; padding:0 5vw }
+.intro h1{
+  max-width:18ch; margin:16vh auto 18vh;
+  font-weight:700; font-size:clamp(2rem,4vw,3.5rem);
+}
+
+/* Project “feature spreads” */
+.project{
+  display:grid; grid-template-columns:1fr 1fr; gap:60px;
+  align-items:center; margin:0 auto 160px;
+}
+.project.flipped .project-image{ order:2 }
+.project-image img{
+  width:100%; border-radius:10px; box-shadow:0 6px 24px rgba(0,0,0,.4)
+}
+.project-text{
+  background:var(--card); border:1px solid var(--border);
+  border-radius:12px; padding:20px;
+}
+.project-text h2{ font-size:1.6rem; margin:0 0 8px }
+.project-text p{ color:var(--muted); margin:0 0 12px }
+.case-link{
+  color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent);
+  font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:.96rem
+}
+.case-link:hover{ color:#fff }
+
+/* Footer */
+.footer{ margin:120px auto 60px; text-align:center; color:var(--muted) }
+.footer a{ color:var(--accent); text-decoration:none }
+.footer a:hover{ text-decoration:underline }
 
 /* Accessibility */
-a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px }
+@media (prefers-reduced-motion: reduce){
+  #parallax, #rain{ display:none }
 }
 
-/* =========================
-   Sticky Nav
-   ========================= */
-.site-nav{
-  position: sticky; top: 0; z-index: 1000;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 16px;
-  background: rgba(0,0,0,.35);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
+/* Responsive */
+@media (max-width:900px){
+  .project{ grid-template-columns:1fr; gap:28px; margin-bottom:120px }
+  .project-image,.project-text{ order:unset }
 }
-.site-nav .logo{
-  color: var(--text); text-decoration: none; font-weight: 700; letter-spacing: .3px;
-}
-.site-nav .nav-links{ display: flex; align-items: center; gap: 14px; }
-.site-nav a{ color: var(--text); text-decoration: none; opacity: .9; }
-.site-nav a:hover{ opacity: 1; }
-
-/* Music toggle (kept from your original, moved into nav area style) */
-.icon-btn,
-#mute-toggle{
-  background: transparent; border: 1px solid var(--border);
-  color: var(--text); border-radius: 10px; padding: 6px 10px;
-  cursor: pointer; font-size: 16px;
-}
-#mute-toggle{ /* if you keep it floating instead of in header */
-  position: fixed; bottom: 20px; right: 20px; border-radius: 50%;
-  width: 44px; height: 44px; display: grid; place-items: center;
-  background: rgba(255,255,255,.08); transition: background .25s ease;
-  z-index: 1000;
-}
-#mute-toggle:hover{ background: rgba(255,255,255,.2); }
-
-/* =========================
-   Hero
-   ========================= */
-.hero{
-  min-height: 80vh; display: grid; place-items: center; position: relative;
-}
-.hero::before{
-  content:""; position: absolute; inset: 0;
-  /* Subtle dark gradient for text legibility over the photo */
-  background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.35));
-}
-.hero-card{
-  position: relative; max-width: 760px; margin: 0 24px;
-  background: rgba(0,0,0,.35);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border); border-radius: 16px;
-  padding: 28px; text-align: center;
-}
-.name{ font-size: clamp(28px, 3.6vw, 44px); margin-bottom: 8px; font-weight: 700; }
-.desc{ color: var(--muted); margin-bottom: 16px; font-size: 1.02rem; }
-.cta{ display: inline-block; color: var(--accent); text-decoration: none; font-weight: 600; }
-
-/* (Legacy intro styles kept for safety if you still use .info on hero) */
-.info{ backdrop-filter: blur(2px); padding: 20px; text-align: center; }
-.click, .links a{
-  font-size: 0.95rem; color: #ffffffcc; letter-spacing: .5px; text-decoration: none; cursor: pointer;
-  transition: color .2s ease;
-}
-.links{ margin-top: 15px; }
-.links a{ display: inline-block; margin: 6px 10px; }
-.links a:hover{ color: #fff; }
-
-/* =========================
-   Projects Grid & Cards
-   ========================= */
-.grid{ display: grid; gap: 20px; }
-@media (min-width: 900px){ .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
-
-/* Card base */
-.card{
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.card:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.35); }
-
-.card h3, .card h2{ font-size: 1.3rem; color: #fff; margin-bottom: 6px; }
-.card p{ font-size: 0.98rem; color: #d9d9d9; }
-
-.card-head{ display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-.badge{
-  background: rgba(154,230,180,.14);
-  border: 1px solid rgba(154,230,180,.45);
-  color: var(--accent);
-  padding: 2px 8px; border-radius: 999px; font-size: 12px;
-}
-
-.card-actions{
-  display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap;
-}
-.btn{
-  display: inline-block; padding: 8px 12px; border-radius: 10px;
-  background: var(--accent); color: #053; text-decoration: none; font-weight: 600;
-}
-.btn.ghost{
-  background: transparent; color: var(--text);
-  border: 1px solid var(--border);
-}
-.pill{
-  display: inline-block; padding: 6px 10px; border-radius: 999px;
-  border: 1px solid var(--border); color: var(--muted); font-size: .9rem;
-}
-
-/* =========================
-   Contact & Footer
-   ========================= */
-.contact p a{ color: var(--accent); text-decoration: none; }
-.contact p a:hover{ text-decoration: underline; }
-.footer{
-  text-align: center; padding: 24px; color: var(--muted);
-  border-top: 1px solid var(--border);
-}
-
-/* =========================
-   Legacy Projects Page Styles (merged & fixed)
-   If any classes remain in your HTML, these keep them tidy.
-   ========================= */
-.projects-wrapper{
-  max-width: 90%; margin: 0 auto; padding: 60px 20px; text-align: center;
-  color: white; backdrop-filter: blur(4px);
-}
-.projects-title{ font-size: 2.2rem; margin-bottom: 40px; color: #ffffffdd; }
-
-/* Removed odd min-width and bad padding comma; now rely on .card above */
-.project-cards{
-  display: grid; gap: 20px; /* was a vertical flex column; grid is cleaner */
-}
-
-/* Links inside legacy cards */
-.card a{ font-size: 0.95rem; color: #00ffff; text-decoration: none; }
-.card a:hover{ text-decoration: underline; }
-.back-home{
-  display: inline-block; margin-top: 40px; font-size: 0.95rem; color: #aaa; text-decoration: none;
-}
-.back-home:hover{ color: #fff; }
-
-/* Optional: hide custom scrollbars you had before */
-.project-cards::-webkit-scrollbar{ display: none; }
-
-/* =========================
-   Optional per-project background classes (keep if you use them)
-   Replace 'theimage.jpg' per card.
-   ========================= */
-.Loan-Calculator{ background: url('theimage.jpg') center/cover no-repeat; }
-.To-Do{ background: url('theimage.jpg') center/cover no-repeat; }
-.Fix-the-Artifact{ background: url('theimage.jpg') center/cover no-repeat; }
-.Brain-Games{ background: url('theimage.jpg') center/cover no-repeat; }
-.Pomodoro-Style{ background: url('theimage.jpg') center/cover no-repeat; }
-.Simple-Meditation{ background: url('theimage.jpg') center/cover no-repeat; }
