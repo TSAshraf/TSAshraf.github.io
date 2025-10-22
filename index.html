@@ -15,7 +15,7 @@
   <!-- Fixed landscape band at the bottom (revealed near footer) -->
   <div id="landscape" aria-hidden="true">
     <svg id="landscape-svg" viewBox="0 0 1440 360" preserveAspectRatio="xMidYMid slice">
-      <!-- No sky rect here (keeps background consistent with page) -->
+      <!-- No sky rect (keeps background consistent with page) -->
       <!-- Horizon near the bottom of the band -->
       <rect y="312" width="1440" height="3.5" fill="#d9d9d9" opacity=".33"/>
       <!-- Silhouette layers (stamped by JS) -->
@@ -32,53 +32,66 @@
       <h1>Taashfeen is a CS student focused on cognition, productivity, and practical tools.</h1>
     </header>
 
-    <main>
-      <section id="fix-the-artifact" class="project container">
-        <div class="project-image">
-          <img src="assets/Fantasy-Background.jpg" alt="Fix the Artifact" />
-        </div>
-        <div class="project-text">
-          <h2>Fix the Artifact</h2>
-          <p>A Java-based puzzle where players reconstruct archaeological artifacts. Zoom, saves, curated music.</p>
-          <p><a class="case-link" href="/projects/fix-the-artifact.html">Read case study</a></p>
-        </div>
-      </section>
+    <!-- Projects (image + 'Read case study' -> same target; 'View repo' secondary) -->
+    <main class="container">
+      <section class="projects">
 
-      <section id="neurotrain" class="project container flipped">
-        <div class="project-image">
-          <img src="assets/screenshots/neurotrain.jpg" alt="NeuroTrain" />
+        <!-- Fix the Artifact -->
+        <div class="project">
+          <a href="/projects/fix-the-artifact.html" class="project-image-link">
+            <img src="assets/screenshots/fix.jpg" alt="Fix the Artifact screenshot" class="project-image" />
+          </a>
+          <div class="project-info card">
+            <h3>Fix the Artifact</h3>
+            <p>A Java-based puzzle where players reconstruct archaeological artifacts. Zoom, saves, curated music.</p>
+            <a href="/projects/fix-the-artifact.html" class="link-main">Read case study</a>
+            <span class="divider">·</span>
+            <a href="https://github.com/TSAshraf/Fix-The-Artefact" class="link-secondary" target="_blank" rel="noreferrer">View repo</a>
+          </div>
         </div>
-        <div class="project-text">
-          <h2>NeuroTrain</h2>
-          <p>A SwiftUI cognitive training suite: Stroop, Dual N-Back, Reaction Time, Memory Span, Go/No-Go.</p>
-          <p><a class="case-link" href="/projects/neurotrain.html">Read case study</a></p>
-        </div>
-      </section>
 
-      <section id="focusflow" class="project container">
-        <div class="project-image">
-          <img src="assets/screenshots/focusflow.jpg" alt="FocusFlow" />
+        <!-- NeuroTrain -->
+        <div class="project">
+          <a href="/projects/neurotrain.html" class="project-image-link">
+            <img src="assets/screenshots/neurotrain.jpg" alt="NeuroTrain screenshot" class="project-image" />
+          </a>
+          <div class="project-info card">
+            <h3>NeuroTrain</h3>
+            <p>A SwiftUI cognitive training suite: Stroop, Dual N-Back, Reaction Time, Memory Span, Go/No-Go.</p>
+            <a href="/projects/neurotrain.html" class="link-main">Read case study</a>
+            <span class="divider">·</span>
+            <a href="https://github.com/TSAshraf" class="link-secondary" target="_blank" rel="noreferrer">View repo</a>
+          </div>
         </div>
-        <div class="project-text">
-          <h2>FocusFlow</h2>
-          <p>To-Do, Pomodoro, and Meditation in one SwiftUI app. Local notifications, session tracking, themes.</p>
-          <p><a class="case-link" href="/projects/focusflow.html">Read case study</a></p>
-        </div>
-      </section>
 
-      <section id="financial-tools" class="project container flipped">
-        <div class="project-image">
-          <img src="assets/screenshots/financial-tools.jpg" alt="Financial Tools" />
+        <!-- FocusFlow -->
+        <div class="project">
+          <a href="/projects/focusflow.html" class="project-image-link">
+            <img src="assets/screenshots/focusflow.jpg" alt="FocusFlow screenshot" class="project-image" />
+          </a>
+          <div class="project-info card">
+            <h3>FocusFlow</h3>
+            <p>To-Do, Pomodoro, and Meditation in one SwiftUI app. Local notifications, session tracking, themes.</p>
+            <a href="/projects/focusflow.html" class="link-main">Read case study</a>
+            <span class="divider">·</span>
+            <a href="https://github.com/TSAshraf" class="link-secondary" target="_blank" rel="noreferrer">View repo</a>
+          </div>
         </div>
-        <div class="project-text">
-          <h2>Financial Tools</h2>
-          <p>Python calculators and analytics: mortgages, amortization schedules, savings growth, portfolio metrics.</p>
-          <p>
-            <a class="case-link" href="/projects/financial-tools.html">Read case study</a>
-            &nbsp;·&nbsp;
-            <a class="case-link" href="https://github.com/TSAshraf/Financial_Tools" target="_blank" rel="noreferrer">View repo</a>
-          </p>
+
+        <!-- Financial Tools -->
+        <div class="project">
+          <a href="/projects/financial-tools.html" class="project-image-link">
+            <img src="assets/screenshots/financial-tools.jpg" alt="Financial Tools screenshot" class="project-image" />
+          </a>
+          <div class="project-info card">
+            <h3>Financial Tools</h3>
+            <p>Python calculators and analytics: mortgages, amortization schedules, savings growth, portfolio metrics.</p>
+            <a href="/projects/financial-tools.html" class="link-main">Read case study</a>
+            <span class="divider">·</span>
+            <a href="https://github.com/TSAshraf/Financial_Tools" class="link-secondary" target="_blank" rel="noreferrer">View repo</a>
+          </div>
         </div>
+
       </section>
     </main>
 
