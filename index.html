@@ -9,13 +9,13 @@
 </head>
 <body>
 
-  <!-- Global rain (far back) -->
+  <!-- Global rain (fixed, behind content, above background) -->
   <canvas id="rain" aria-hidden="true"></canvas>
 
-  <!-- Birds (above rain, below content) -->
+  <!-- Birds (fixed SVG across the sky, above rain, below landscape/page) -->
   <svg id="birds" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
 
-  <!-- Lightning (subtle flash overlay) -->
+  <!-- Occasional lightning flash (subtle) -->
   <div id="lightning" aria-hidden="true"></div>
 
   <!-- Fixed landscape band at the bottom (revealed near footer) -->
@@ -115,9 +115,9 @@
     </footer>
   </div><!-- /#page -->
 
-  <!-- New sky effects (birds + lightning) -->
+  <!-- Sky effects (birds + lightning) -->
   <script src="scripts/sky.js"></script>
-  <!-- Horizon band logic (stalks + reveal) -->
+  <!-- Horizon band (stalks + reveal) -->
   <script src="scripts/landscape.js"></script>
   <!-- Rain background -->
   <script src="scripts/rain.js"></script>
