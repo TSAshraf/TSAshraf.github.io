@@ -12,39 +12,26 @@
   <!-- Global rain (behind everything) -->
   <canvas id="rain" aria-hidden="true"></canvas>
 
-  <!-- Fixed landscape band at the bottom -->
+  <!-- Fixed landscape band at the bottom (revealed near footer) -->
   <div id="landscape" aria-hidden="true">
     <svg id="landscape-svg" viewBox="0 0 1440 360" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <!-- subtle vertical sky gradient inside the band -->
-        <linearGradient id="land-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  stop-color="#11171b"/>
-          <stop offset="100%" stop-color="#1e2428"/>
-        </linearGradient>
-      </defs>
-
-      <!-- sky fill just for the band -->
-      <rect width="1440" height="360" fill="url(#land-sky)"/>
-
-      <!-- horizon near bottom of band -->
+      <!-- No sky rect here (keeps background consistent with page) -->
+      <!-- Horizon near the bottom of the band -->
       <rect y="312" width="1440" height="3.5" fill="#d9d9d9" opacity=".33"/>
-
-      <!-- silhouettes (grow UP from the horizon) -->
+      <!-- Silhouette layers (stamped by JS) -->
       <g id="layer-back"  fill="#3a3f42" opacity=".45"></g>
       <g id="layer-mid"   fill="#2f3437" opacity=".70"></g>
       <g id="layer-front" fill="#202426" opacity=".95"></g>
     </svg>
   </div>
 
-  <!-- All page content above background layers -->
+  <!-- Page content -->
   <div id="page">
 
-    <!-- Intro -->
     <header class="intro container">
       <h1>Taashfeen is a CS student focused on cognition, productivity, and practical tools.</h1>
     </header>
 
-    <!-- Projects -->
     <main>
       <section id="fix-the-artifact" class="project container">
         <div class="project-image">
@@ -95,10 +82,9 @@
       </section>
     </main>
 
-    <!-- Reveal trigger for the fixed landscape band -->
+    <!-- Reveal trigger for the landscape band -->
     <div id="landscape-trigger" aria-hidden="true"></div>
 
-    <!-- Footer -->
     <footer class="container footer">
       <p>
         Contact: <a href="mailto:YOUR_EMAIL">YOUR_EMAIL</a> ·
