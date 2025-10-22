@@ -1,9 +1,11 @@
-// Stamp simple upward silhouettes inside the fixed bottom band.
+// scripts/landscape.js
+// Stamp simple upward silhouettes inside the fixed bottom band
 (() => {
+  const band  = document.getElementById('landscape');
   const back  = document.getElementById('layer-back');
   const mid   = document.getElementById('layer-mid');
   const front = document.getElementById('layer-front');
-  if (!back || !mid || !front) return;
+  if (!band || !back || !mid || !front) return;
 
   const HORIZON_Y = 312; // matches the horizon <rect> y value in index.html
 
@@ -26,11 +28,11 @@
   stamp(mid,   MID,   56);
   stamp(front, FRONT, 64);
 
-  // Optional: very subtle, slow drift to keep it alive (doesn't scroll)
+  // Very subtle, slow drift to keep it alive (not scroll-bound)
   let t0 = performance.now();
   function drift(){
     const t = (performance.now() - t0) / 1000;
-    const dxBack  = Math.sin(t * 0.05) * 6;   // tiny oscillation
+    const dxBack  = Math.sin(t * 0.05) * 6;    // tiny oscillation
     const dxMid   = Math.sin(t * 0.06 + 1) * 10;
     const dxFront = Math.sin(t * 0.08 + 2) * 14;
     back .setAttribute('transform', `translate(${dxBack},0)`);
@@ -39,4 +41,33 @@
     requestAnimationFrame(drift);
   }
   drift();
+
+  // ---- Reveal the fixed landscape only near the footer ----
+  // Requires:
+  //   <div id="landscape-trigger"></div> placed above your <footer>
+  //   CSS:
+  //     #landscape{ opacity:0; transition:opacity .8s ease; }
+  //     #landscape.landscape--visible{ opacity:1; }
+  //     #page{ padding-bottom: 34vh; }  // same as #landscape height
+  const trigger = document.getElementById('landscape-trigger');
+
+  function showBand(visible){
+    band.classList.toggle('landscape--visible', !!visible);
+  }
+
+  if (trigger && 'IntersectionObserver' in window){
+    const io = new IntersectionObserver(
+      (entries) => showBand(entries[0]?.isIntersecting),
+      {
+        root: null,
+        threshold: 0,
+        // Start fading in a bit before the very bottom is reached
+        rootMargin: '0px 0px -20% 0px'
+      }
+    );
+    io.observe(trigger);
+  } else {
+    // Fallback: always show the band if IO isn't supported or trigger missing
+    showBand(true);
+  }
 })();
