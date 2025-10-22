@@ -96,32 +96,3 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-
   #landscape{ height: 30vh; }
   #page{ padding-bottom: calc(30vh + 20px); }
 }
-
-/* Fade the fixed landscape band in only near the footer */
-#landscape{
-  opacity: 0;
-  transition: opacity .8s ease;
-}
-
-#landscape.landscape--visible{
-  opacity: 1;
-}
-
-/* Make sure content can scroll “past” the band without being covered */
-#landscape-trigger{
-  height: 1px;         /* tiny sentinel */
-}
-
-/* Give the page enough bottom padding so the footer isn't obscured
-   by the fixed band when it becomes visible. Match your band height. */
-#page{
-  padding-bottom: 34vh;   /* same as #landscape height */
-}
-
-/* (Already present) — the band is fixed to the bottom */
-#landscape{
-  position: fixed; left: 0; right: 0; bottom: 0;
-  height: 34vh;
-  z-index: 1; pointer-events: none;
-  overflow: hidden;
-}
