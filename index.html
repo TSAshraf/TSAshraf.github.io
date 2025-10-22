@@ -9,37 +9,44 @@
 </head>
 <body>
 
-  <!-- Global rain (behind everything) -->
+  <!-- Global rain (far back) -->
   <canvas id="rain" aria-hidden="true"></canvas>
+
+  <!-- Birds (above rain, below content) -->
+  <svg id="birds" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+
+  <!-- Lightning (subtle flash overlay) -->
+  <div id="lightning" aria-hidden="true"></div>
 
   <!-- Fixed landscape band at the bottom (revealed near footer) -->
   <div id="landscape" aria-hidden="true">
     <svg id="landscape-svg" viewBox="0 0 1440 360" preserveAspectRatio="xMidYMid slice">
-      <!-- No sky rect (keeps background consistent with page) -->
-      <!-- Horizon near the bottom of the band -->
+      <!-- Horizon line -->
       <rect y="312" width="1440" height="3.5" fill="#d9d9d9" opacity=".33"/>
-      <!-- Silhouette layers (stamped by JS) -->
+      <!-- Silhouette layers stamped by JS -->
       <g id="layer-back"  fill="#3a3f42" opacity=".45"></g>
       <g id="layer-mid"   fill="#2f3437" opacity=".70"></g>
       <g id="layer-front" fill="#202426" opacity=".95"></g>
     </svg>
   </div>
 
-  <!-- Page content -->
+  <!-- Fog sits just above the horizon (fixed) -->
+  <div id="fog" aria-hidden="true"></div>
+
+  <!-- Page content (top layer) -->
   <div id="page">
 
     <header class="intro container">
       <h1>Taashfeen is a CS student focused on cognition, productivity, and practical tools.</h1>
     </header>
 
-    <!-- Projects (image + 'Read case study' -> same target; 'View repo' secondary) -->
     <main class="container">
       <section class="projects">
 
         <!-- Fix the Artifact -->
         <div class="project">
           <a href="/projects/fix-the-artifact.html" class="project-image-link">
-            <img src="assets/Fantasy-Background.jpg" alt="Fix the Artifact screenshot" class="project-image" />
+            <img src="assets/screenshots/fix.jpg" alt="Fix the Artifact screenshot" class="project-image" />
           </a>
           <div class="project-info card">
             <h3>Fix the Artifact</h3>
@@ -108,7 +115,11 @@
     </footer>
   </div><!-- /#page -->
 
+  <!-- New sky effects (birds + lightning) -->
+  <script src="scripts/sky.js"></script>
+  <!-- Horizon band logic (stalks + reveal) -->
   <script src="scripts/landscape.js"></script>
+  <!-- Rain background -->
   <script src="scripts/rain.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
