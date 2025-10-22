@@ -1,132 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Taashfeen — Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
-  <meta name="description" content="Portfolio of Taashfeen — projects in Swift, Java, and Python." />
+  <meta name="description" content="Projects in Swift, Java, and Python — cognition, productivity, practical tools." />
+  <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
 
-  <!-- Sticky Nav -->
-  <header class="site-nav">
-    <a href="#home" class="logo">Taashfeen</a>
-    <nav class="nav-links">
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-      <button id="mute-toggle" class="icon-btn" aria-label="Toggle background music" aria-pressed="true" title="Toggle music">🔇</button>
-    </nav>
+  <!-- Background layers -->
+  <canvas id="rain" aria-hidden="true"></canvas>
+  <svg id="parallax" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#747a7e"/>
+        <stop offset="100%" stop-color="#2a2f32"/>
+      </linearGradient>
+    </defs>
+    <rect width="1440" height="900" fill="url(#sky)"/>
+    <rect y="520" width="1440" height="6" fill="#2b2f31"/>
+    <g id="layer-back"  fill="#3a3f42" opacity=".5"></g>
+    <g id="layer-mid"   fill="#2f3437" opacity=".7"></g>
+    <g id="layer-front" fill="#202426" opacity=".95"></g>
+  </svg>
+
+  <!-- Intro -->
+  <header class="intro container">
+    <h1>Taashfeen is a CS student focused on cognition, productivity, and practical tools.</h1>
   </header>
 
-  <!-- Hero -->
-  <section id="home" class="hero">
-    <!-- Background music -->
-    <audio id="bg-music" src="music.mp3" autoplay loop muted></audio>
-
-    <div class="hero-card">
-      <h1 class="name">Taashfeen</h1>
-      <p class="desc">CS student building things across Swift, Java, and Python — with a focus on cognition, productivity, and practical tools.</p>
-      <a class="cta" href="#projects" aria-label="Skip to projects">View Projects ↓</a>
-    </div>
-  </section>
-
   <!-- Projects -->
-  <main id="projects" class="container">
-    <h2 class="section-title">Projects</h2>
+  <main>
+    <section id="fix-the-artifact" class="project container">
+      <div class="project-image">
+        <img src="assets/screenshots/fix.jpg" alt="Fix the Artifact" />
+      </div>
+      <div class="project-text">
+        <h2>Fix the Artifact</h2>
+        <p>A Java-based puzzle where players reconstruct archaeological artifacts. Zoom, saves, curated music.</p>
+        <p><a class="case-link" href="/projects/fix-the-artifact.html">Read case study</a></p>
+      </div>
+    </section>
 
-    <div class="grid">
-      <!-- Fix the Artifact -->
-      <article class="card">
-        <header class="card-head">
-          <h3>Fix the Artifact</h3>
-          <span class="badge">Java</span>
-        </header>
-        <p>
-          A Java-based puzzle where players reconstruct archaeological artifacts. 
-          Focused on concentration, accessibility, and gentle learning through interaction.
-        </p>
-        <div class="card-actions">
-          <a class="btn" href="https://github.com/TSAshraf/Fix-The-Artefact" target="_blank" rel="noreferrer">View Repo</a>
-          <a class="btn ghost" href="/projects/fix-the-artifact.html">Read case study →</a>
-        </div>
-      </article>
+    <section id="neurotrain" class="project container flipped">
+      <div class="project-image">
+        <img src="assets/screenshots/neurotrain.jpg" alt="NeuroTrain" />
+      </div>
+      <div class="project-text">
+        <h2>NeuroTrain</h2>
+        <p>A SwiftUI cognitive training suite: Stroop, Dual N-Back, Reaction Time, Memory Span, Go/No-Go.</p>
+        <p><a class="case-link" href="/projects/neurotrain.html">Read case study</a></p>
+      </div>
+    </section>
 
-      <!-- NeuroTrain -->
-      <article class="card">
-        <header class="card-head">
-          <h3>NeuroTrain</h3>
-          <span class="badge">SwiftUI</span>
-        </header>
-        <p>
-          Cognitive training suite featuring Stroop, Dual N-Back, Reaction Time, Memory Span, and Go/No-Go. 
-          Tracks accuracy/RT and adapts difficulty over time.
-        </p>
-        <div class="card-actions">
-          <span class="pill">Demo coming soon</span>
-          <a class="btn ghost" href="/projects/neurotrain.html">Read case study →</a>
-        </div>
-      </article>
+    <section id="focusflow" class="project container">
+      <div class="project-image">
+        <img src="assets/screenshots/focusflow.jpg" alt="FocusFlow" />
+      </div>
+      <div class="project-text">
+        <h2>FocusFlow</h2>
+        <p>To-Do, Pomodoro, and Meditation in one SwiftUI app. Local notifications, session tracking, themes.</p>
+        <p><a class="case-link" href="/projects/focusflow.html">Read case study</a></p>
+      </div>
+    </section>
 
-      <!-- FocusFlow -->
-      <article class="card">
-        <header class="card-head">
-          <h3>FocusFlow</h3>
-          <span class="badge">SwiftUI</span>
-        </header>
+    <section id="financial-tools" class="project container flipped">
+      <div class="project-image">
+        <img src="assets/screenshots/financial-tools.jpg" alt="Financial Tools" />
+      </div>
+      <div class="project-text">
+        <h2>Financial Tools</h2>
+        <p>Python calculators and analytics: mortgages, amortization schedules, savings growth, portfolio metrics.</p>
         <p>
-          Productivity & mindfulness in one: plan tasks, run Pomodoro sessions, and unwind with meditation timers. 
-          Local notifications, session history, and customizable themes.
+          <a class="case-link" href="/projects/financial-tools.html">Read case study</a>
+          &nbsp;·&nbsp;
+          <a class="case-link" href="https://github.com/TSAshraf/Financial_Tools" target="_blank" rel="noreferrer">View repo</a>
         </p>
-        <div class="card-actions">
-          <span class="pill">Demo coming soon</span>
-          <a class="btn ghost" href="/projects/focusflow.html">Read case study →</a>
-        </div>
-      </article>
-
-      <!-- Financial Tools -->
-      <article class="card">
-        <header class="card-head">
-          <h3>Financial Tools</h3>
-          <span class="badge">Python / Web</span>
-        </header>
-        <p>
-          Practical calculators and analytics: loans & mortgages with amortization schedules, savings growth, and portfolio metrics. 
-        </p>
-        <div class="card-actions">
-          <a class="btn" href="https://github.com/TSAshraf/Financial_Tools" target="_blank" rel="noreferrer">View Repo</a>
-          <a class="btn ghost" href="/projects/financial-tools.html">Read case study →</a>
-        </div>
-      </article>
-    </div>
+      </div>
+    </section>
   </main>
 
-  <!-- Contact -->
-  <section id="contact" class="container contact">
-    <h2 class="section-title">Contact</h2>
+  <footer class="container footer">
     <p>
-      Email: <a href="mailto:YOUR_EMAIL_HERE">YOUR_EMAIL_HERE</a> ·
+      Contact: <a href="mailto:YOUR_EMAIL">YOUR_EMAIL</a> ·
       <a href="https://github.com/TSAshraf" target="_blank" rel="noreferrer">GitHub</a> ·
       <a href="https://www.linkedin.com/in/YOUR_HANDLE" target="_blank" rel="noreferrer">LinkedIn</a>
     </p>
-  </section>
-
-  <footer class="footer">
     <p>© <span id="year"></span> Taashfeen</p>
   </footer>
 
+  <script src="scripts/parallax.js"></script>
+  <script src="scripts/rain.js"></script>
   <script>
-    // Smooth scroll (native via CSS scroll-behavior, here just year + music)
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    const music = document.getElementById('bg-music');
-    const muteBtn = document.getElementById('mute-toggle');
-    // Toggle mute on click
-    muteBtn.addEventListener('click', () => {
-      music.muted = !music.muted;
-      muteBtn.textContent = music.muted ? '🔇' : '🔊';
-      muteBtn.setAttribute('aria-pressed', String(!music.muted));
-    });
   </script>
 </body>
 </html>
