@@ -4,28 +4,29 @@
   --text:#eaeaea; --muted:#b8bec2; --accent:#f87171;
   --card:rgba(255,255,255,0.035); --border:rgba(255,255,255,0.10);
 }
-html { scroll-behavior: smooth; background:#2a2f32; } /* fallback under SVG */
+html { scroll-behavior: smooth; background:#1e2428; } /* fallback under SVG */
 body{
   margin:0;
   color:var(--text);
   font:16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: transparent;               /* IMPORTANT: let bg layers show through */
+  background: transparent !important; /* let BG show through */
 }
 
-/* Stacking fix: backgrounds at z=0, content above at z=1 */
+/* Background layers behind content */
 #parallax, #rain{
-  position: fixed; inset: 0;
-  z-index: 0;                            /* was negative; that hid it under body paint */
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;                /* BG */
   pointer-events: none;
 }
-#page{
-  position: relative;
-  z-index: 1;                            /* all content above backgrounds */
-}
 
-/* ------- Intro / Layout ------- */
+/* Content above BG */
+#page{ position: relative; z-index: 1; }
+
+/* Intro / Layout */
 .container{ max-width:1200px; margin:0 auto; padding:0 5vw; }
-
 .intro h1{
   max-width:18ch;
   margin:16vh auto 18vh;
@@ -33,10 +34,11 @@ body{
   font-size:clamp(2rem,4vw,3.5rem);
 }
 
-/* ------- Projects (magazine spreads) ------- */
+/* Projects (magazine spreads) */
 .project{
   display:grid; grid-template-columns:1fr 1fr; gap:60px;
   align-items:center; margin:0 auto 160px;
+  background: transparent !important;  /* avoid covering BG */
 }
 .project.flipped .project-image{ order:2; }
 
@@ -61,18 +63,18 @@ body{
 }
 .case-link:hover{ color:#fff; }
 
-/* ------- Footer ------- */
+/* Footer */
 .footer{ margin:120px auto 60px; text-align:center; color:var(--muted); }
 .footer a{ color:var(--accent); text-decoration:none; }
 .footer a:hover{ text-decoration:underline; }
 
-/* ------- Accessibility & Motion ------- */
+/* Accessibility & Motion */
 a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 @media (prefers-reduced-motion: reduce){
   #parallax, #rain{ display:none; }
 }
 
-/* ------- Responsive ------- */
+/* Responsive */
 @media (max-width: 900px){
   .project{ grid-template-columns:1fr; gap:28px; margin-bottom:120px; }
   .project-image, .project-text{ order: unset; }
