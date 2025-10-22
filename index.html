@@ -9,30 +9,34 @@
 </head>
 <body>
 
-  <!-- Background layers (always behind content) -->
+  <!-- Global rain (behind everything) -->
   <canvas id="rain" aria-hidden="true"></canvas>
 
-  <svg id="parallax" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#11171b"/>
-        <stop offset="100%" stop-color="#1e2428"/>
-      </linearGradient>
-    </defs>
+  <!-- Fixed landscape band at the bottom -->
+  <div id="landscape" aria-hidden="true">
+    <svg id="landscape-svg" viewBox="0 0 1440 360" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <!-- subtle vertical sky gradient inside the band -->
+        <linearGradient id="land-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="#11171b"/>
+          <stop offset="100%" stop-color="#1e2428"/>
+        </linearGradient>
+      </defs>
 
-    <!-- Sky -->
-    <rect width="1440" height="900" fill="url(#sky)"/>
+      <!-- sky fill just for the band -->
+      <rect width="1440" height="360" fill="url(#land-sky)"/>
 
-    <!-- Horizon near the bottom -->
-    <rect y="820" width="1440" height="4" fill="#cfcfcf" opacity=".35"/>
+      <!-- horizon near bottom of band -->
+      <rect y="312" width="1440" height="3.5" fill="#d9d9d9" opacity=".33"/>
 
-    <!-- Parallax layers populated by scripts/parallax.js -->
-    <g id="layer-back"  fill="#3a3f42" opacity=".45"></g>
-    <g id="layer-mid"   fill="#2f3437" opacity=".70"></g>
-    <g id="layer-front" fill="#202426" opacity=".95"></g>
-  </svg>
+      <!-- silhouettes (grow UP from the horizon) -->
+      <g id="layer-back"  fill="#3a3f42" opacity=".45"></g>
+      <g id="layer-mid"   fill="#2f3437" opacity=".70"></g>
+      <g id="layer-front" fill="#202426" opacity=".95"></g>
+    </svg>
+  </div>
 
-  <!-- All page content ABOVE the background -->
+  <!-- All page content above background layers -->
   <div id="page">
 
     <!-- Intro -->
@@ -100,10 +104,9 @@
       </p>
       <p>© <span id="year"></span> Taashfeen</p>
     </footer>
-
   </div><!-- /#page -->
 
-  <script src="scripts/parallax.js"></script>
+  <script src="scripts/landscape.js"></script>
   <script src="scripts/rain.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
