@@ -9,91 +9,100 @@
 </head>
 <body>
 
-  <!-- Background layers -->
+  <!-- Background layers (always behind content) -->
   <canvas id="rain" aria-hidden="true"></canvas>
+
   <svg id="parallax" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#747a7e"/>
+        <!-- Slightly darker top so it blends with page tone -->
+        <stop offset="0%" stop-color="#1b1f22"/>
         <stop offset="100%" stop-color="#2a2f32"/>
       </linearGradient>
     </defs>
+    <!-- Sky + horizon line -->
     <rect width="1440" height="900" fill="url(#sky)"/>
     <rect y="520" width="1440" height="6" fill="#2b2f31"/>
+    <!-- Parallax layers populated by scripts/parallax.js -->
     <g id="layer-back"  fill="#3a3f42" opacity=".5"></g>
     <g id="layer-mid"   fill="#2f3437" opacity=".7"></g>
     <g id="layer-front" fill="#202426" opacity=".95"></g>
   </svg>
 
-  <!-- Intro -->
-  <header class="intro container">
-    <h1>Taashfeen is a CS student focused on cognition, productivity, and practical tools.</h1>
-  </header>
+  <!-- All page content wrapped so it stacks ABOVE the background -->
+  <div id="page">
 
-  <!-- Projects -->
-  <main>
-    <section id="fix-the-artifact" class="project container">
-      <div class="project-image">
-        <img src="assets/screenshots/fix.jpg" alt="Fix the Artifact" />
-      </div>
-      <div class="project-text">
-        <h2>Fix the Artifact</h2>
-        <p>A Java-based puzzle where players reconstruct archaeological artifacts. Zoom, saves, curated music.</p>
-        <p><a class="case-link" href="/projects/fix-the-artifact.html">Read case study</a></p>
-      </div>
-    </section>
+    <!-- Intro -->
+    <header class="intro container">
+      <h1>Taashfeen is a CS student focused on cognition, productivity, and practical tools.</h1>
+    </header>
 
-    <section id="neurotrain" class="project container flipped">
-      <div class="project-image">
-        <img src="assets/screenshots/neurotrain.jpg" alt="NeuroTrain" />
-      </div>
-      <div class="project-text">
-        <h2>NeuroTrain</h2>
-        <p>A SwiftUI cognitive training suite: Stroop, Dual N-Back, Reaction Time, Memory Span, Go/No-Go.</p>
-        <p><a class="case-link" href="/projects/neurotrain.html">Read case study</a></p>
-      </div>
-    </section>
+    <!-- Projects (magazine-style spreads) -->
+    <main>
+      <section id="fix-the-artifact" class="project container">
+        <div class="project-image">
+          <img src="assets/screenshots/fix.jpg" alt="Fix the Artifact" />
+        </div>
+        <div class="project-text">
+          <h2>Fix the Artifact</h2>
+          <p>A Java-based puzzle where players reconstruct archaeological artifacts. Zoom, saves, curated music.</p>
+          <p><a class="case-link" href="/projects/fix-the-artifact.html">Read case study</a></p>
+        </div>
+      </section>
 
-    <section id="focusflow" class="project container">
-      <div class="project-image">
-        <img src="assets/screenshots/focusflow.jpg" alt="FocusFlow" />
-      </div>
-      <div class="project-text">
-        <h2>FocusFlow</h2>
-        <p>To-Do, Pomodoro, and Meditation in one SwiftUI app. Local notifications, session tracking, themes.</p>
-        <p><a class="case-link" href="/projects/focusflow.html">Read case study</a></p>
-      </div>
-    </section>
+      <section id="neurotrain" class="project container flipped">
+        <div class="project-image">
+          <img src="assets/screenshots/neurotrain.jpg" alt="NeuroTrain" />
+        </div>
+        <div class="project-text">
+          <h2>NeuroTrain</h2>
+          <p>A SwiftUI cognitive training suite: Stroop, Dual N-Back, Reaction Time, Memory Span, Go/No-Go.</p>
+          <p><a class="case-link" href="/projects/neurotrain.html">Read case study</a></p>
+        </div>
+      </section>
 
-    <section id="financial-tools" class="project container flipped">
-      <div class="project-image">
-        <img src="assets/screenshots/financial-tools.jpg" alt="Financial Tools" />
-      </div>
-      <div class="project-text">
-        <h2>Financial Tools</h2>
-        <p>Python calculators and analytics: mortgages, amortization schedules, savings growth, portfolio metrics.</p>
-        <p>
-          <a class="case-link" href="/projects/financial-tools.html">Read case study</a>
-          &nbsp;·&nbsp;
-          <a class="case-link" href="https://github.com/TSAshraf/Financial_Tools" target="_blank" rel="noreferrer">View repo</a>
-        </p>
-      </div>
-    </section>
-  </main>
+      <section id="focusflow" class="project container">
+        <div class="project-image">
+          <img src="assets/screenshots/focusflow.jpg" alt="FocusFlow" />
+        </div>
+        <div class="project-text">
+          <h2>FocusFlow</h2>
+          <p>To-Do, Pomodoro, and Meditation in one SwiftUI app. Local notifications, session tracking, themes.</p>
+          <p><a class="case-link" href="/projects/focusflow.html">Read case study</a></p>
+        </div>
+      </section>
 
-  <footer class="container footer">
-    <p>
-      Contact: <a href="mailto:YOUR_EMAIL">YOUR_EMAIL</a> ·
-      <a href="https://github.com/TSAshraf" target="_blank" rel="noreferrer">GitHub</a> ·
-      <a href="https://www.linkedin.com/in/YOUR_HANDLE" target="_blank" rel="noreferrer">LinkedIn</a>
-    </p>
-    <p>© <span id="year"></span> Taashfeen</p>
-  </footer>
+      <section id="financial-tools" class="project container flipped">
+        <div class="project-image">
+          <img src="assets/screenshots/financial-tools.jpg" alt="Financial Tools" />
+        </div>
+        <div class="project-text">
+          <h2>Financial Tools</h2>
+          <p>Python calculators and analytics: mortgages, amortization schedules, savings growth, portfolio metrics.</p>
+          <p>
+            <a class="case-link" href="/projects/financial-tools.html">Read case study</a>
+            &nbsp;·&nbsp;
+            <a class="case-link" href="https://github.com/TSAshraf/Financial_Tools" target="_blank" rel="noreferrer">View repo</a>
+          </p>
+        </div>
+      </section>
+    </main>
 
+    <!-- Footer -->
+    <footer class="container footer">
+      <p>
+        Contact: <a href="mailto:YOUR_EMAIL">YOUR_EMAIL</a> ·
+        <a href="https://github.com/TSAshraf" target="_blank" rel="noreferrer">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/YOUR_HANDLE" target="_blank" rel="noreferrer">LinkedIn</a>
+      </p>
+      <p>© <span id="year"></span> Taashfeen</p>
+    </footer>
+
+  </div><!-- /#page -->
+
+  <!-- Scripts -->
   <script src="scripts/parallax.js"></script>
   <script src="scripts/rain.js"></script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
