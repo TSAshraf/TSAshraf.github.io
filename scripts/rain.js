@@ -1,87 +1,90 @@
-// Birds (SVG) + Lightning (CSS) — gentle, rare, atmospheric.
+// Subtle diagonal rain across the viewport.
 (() => {
-  const birdsSvg = document.getElementById('birds');
-  const lightning = document.getElementById('lightning');
-  if (!birdsSvg || !lightning) return;
+  const c = document.getElementById('rain');
+  if (!c) return;
+  const ctx = c.getContext('2d');
 
-  const sky = { w: window.innerWidth, h: window.innerHeight };
+  let w = 0, h = 0, dpr = 1;
+  let drops = [];
+  let pauseUntil = 0;
+
+  const ANG = -15 * Math.PI/180;   // slant angle
+  const SPEED_MIN = 8, SPEED_MAX = 18;
+  const LEN_MIN = 60, LEN_MAX = 120;
+  const DENSITY = 140;             // number of drops
+
   function resize(){
-    sky.w = window.innerWidth;
-    sky.h = window.innerHeight;
-    birdsSvg.setAttribute('viewBox', `0 0 ${Math.max(1440, sky.w)} ${Math.max(900, sky.h)}`);
-  }
-  window.addEventListener('resize', resize, { passive:true });
-  resize();
-
-  /* ---------- Lightning (subtle, occasional) ---------- */
-  function flash(){
-    if (Math.random() < 0.5) return; // keep it rare
-    const pulses = 1 + (Math.random() < 0.35 ? 1 : 0);
-    let i = 0;
-    function pulse(){
-      lightning.style.opacity = (0.12 + Math.random()*0.12).toFixed(2);
-      setTimeout(() => {
-        lightning.style.opacity = '0';
-        i++;
-        if (i < pulses) setTimeout(pulse, 120 + Math.random()*200);
-      }, 120 + Math.random()*120);
-    }
-    pulse();
-  }
-  setInterval(flash, 25000 + Math.random()*15000); // ~25–40s
-
-  /* ---------- Birds (tiny V silhouettes) ---------- */
-  const NS = "http://www.w3.org/2000/svg";
-  const flock = [];
-
-  function makeBird(){
-    const g = document.createElementNS(NS, 'g');
-    const p = document.createElementNS(NS, 'path');
-    p.setAttribute('d', 'M0 0 L10 -6 L20 0');
-    p.setAttribute('fill', 'none');
-    p.setAttribute('stroke', 'rgba(220,220,220,0.55)');
-    p.setAttribute('stroke-width', '1.4');
-    g.appendChild(p);
-    birdsSvg.appendChild(g);
-
-    const scale = 0.8 + Math.random()*0.9;
-    const y = Math.floor(sky.h * (0.18 + Math.random()*0.30));
-    const dir = Math.random() < 0.5 ? 1 : -1;
-    const startX = dir > 0 ? -40 : sky.w + 40;
-
-    const speed = (30 + Math.random()*40) * dir; // px/sec
-    const swayAmp = 6 + Math.random()*10;
-    const swayFreq = 0.6 + Math.random()*0.9;
-
-    const b = { g, x:startX, y, dir, speed, swayAmp, swayFreq, scale };
-    flock.push(b);
+    dpr = Math.max(1, window.devicePixelRatio || 1);
+    w = c.clientWidth = window.innerWidth;
+    h = c.clientHeight = window.innerHeight;
+    c.width = Math.floor(w * dpr);
+    c.height = Math.floor(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-  function maybeSpawnBird(){
-    if (flock.length > 3) return;        // cap population
-    if (Math.random() < 0.02) makeBird(); // very rare
+  function rand(a,b){ return a + Math.random()*(b-a); }
+
+  function makeDrop(){
+    return {
+      x: Math.random()*(w+400) - 200,
+      y: Math.random()*(h+400) - 200,
+      v: rand(SPEED_MIN, SPEED_MAX),
+      len: rand(LEN_MIN, LEN_MAX),
+      a: rand(.08, .18),  // slightly brighter for visibility
+    };
   }
-  setInterval(maybeSpawnBird, 3000);
 
-  function tick(){
-    const t = performance.now()/1000;
-    for (let i = flock.length - 1; i >= 0; i--){
-      const b = flock[i];
-      b.x += (b.speed / 60);
-      const sway = Math.sin(t * b.swayFreq) * b.swayAmp;
-      const angle = Math.sin(t * 0.7) * 6;
+  function populate(){
+    drops = Array.from({length: DENSITY}, makeDrop);
+  }
 
-      b.g.setAttribute('transform',
-        `translate(${b.x}, ${b.y + sway}) rotate(${angle}) scale(${b.scale})`
-      );
+  // brief pause if user scrolls extremely fast (prevents streaking artifacts)
+  let lastY = window.scrollY, lastT = performance.now();
+  addEventListener('scroll', () => {
+    const t = performance.now();
+    const dy = Math.abs(window.scrollY - lastY);
+    const dt = Math.max(1, t - lastT);
+    const vel = (dy/dt) * 1000;
+    if (vel > 1200) pauseUntil = t + 180;
+    lastY = window.scrollY; lastT = t;
+  }, { passive:true });
 
-      if ((b.dir > 0 && b.x > sky.w + 80) || (b.dir < 0 && b.x < -80)){
-        birdsSvg.removeChild(b.g);
-        flock.splice(i,1);
+  function draw(){
+    const now = performance.now();
+    // draw even if document.hidden; skip only during tiny pause
+    if (now >= pauseUntil){
+      ctx.clearRect(0, 0, w, h);
+      ctx.save();
+      ctx.translate(w/2, h/2);
+      ctx.rotate(ANG);
+      ctx.translate(-w/2, -h/2);
+      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+
+      for (const d of drops){
+        ctx.globalAlpha = d.a;
+        ctx.beginPath();
+        ctx.moveTo(d.x, d.y);
+        ctx.lineTo(d.x, d.y + d.len);
+        ctx.stroke();
+
+        d.y += d.v;
+        if (d.y - d.len > h + 200){
+          // recycle
+          d.x = Math.random()*(w+400) - 200;
+          d.y = -rand(20, 200);
+          d.v = rand(SPEED_MIN, SPEED_MAX);
+          d.len = rand(LEN_MIN, LEN_MAX);
+          d.a = rand(.08, .18);
+        }
       }
+      ctx.restore();
     }
-    requestAnimationFrame(tick);
+    requestAnimationFrame(draw);
   }
-  tick();
 
+  addEventListener('resize', resize);
+  resize();
+  populate();
+  requestAnimationFrame(draw);
 })();
