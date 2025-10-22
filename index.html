@@ -2,53 +2,131 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Taashfeen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Taashfeen — Portfolio</title>
   <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Portfolio of Taashfeen — projects in Swift, Java, and Python." />
 </head>
 <body>
 
-  <!-- Background music -->
-  <audio id="bg-music" src="music.mp3" autoplay loop muted></audio>
-  <button id="mute-toggle" aria-label="Toggle Music">🔇</button>
+  <!-- Sticky Nav -->
+  <header class="site-nav">
+    <a href="#home" class="logo">Taashfeen</a>
+    <nav class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+      <button id="mute-toggle" class="icon-btn" aria-label="Toggle background music" aria-pressed="true" title="Toggle music">🔇</button>
+    </nav>
+  </header>
 
-  <!-- Main content -->
-  <div class="info">
-    <p class="name">Taashfeen</p>
-    <p class="desc">A passionate CS student, interested in everything computer and robotics related.</p>
-    <p class="click hidden" id="clickToContinue">Click to continue</p>
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <!-- Background music -->
+    <audio id="bg-music" src="music.mp3" autoplay loop muted></audio>
 
-    <div class="links hidden" id="linkSection">
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
+    <div class="hero-card">
+      <h1 class="name">Taashfeen</h1>
+      <p class="desc">CS student building things across Swift, Java, and Python — with a focus on cognition, productivity, and practical tools.</p>
+      <a class="cta" href="#projects" aria-label="Skip to projects">View Projects ↓</a>
     </div>
-  </div>
+  </section>
+
+  <!-- Projects -->
+  <main id="projects" class="container">
+    <h2 class="section-title">Projects</h2>
+
+    <div class="grid">
+      <!-- Fix the Artifact -->
+      <article class="card">
+        <header class="card-head">
+          <h3>Fix the Artifact</h3>
+          <span class="badge">Java</span>
+        </header>
+        <p>
+          A Java-based puzzle where players reconstruct archaeological artifacts. 
+          Focused on concentration, accessibility, and gentle learning through interaction.
+        </p>
+        <div class="card-actions">
+          <a class="btn" href="https://github.com/TSAshraf/Fix-The-Artefact" target="_blank" rel="noreferrer">View Repo</a>
+          <a class="btn ghost" href="/projects/fix-the-artifact.html">Read case study →</a>
+        </div>
+      </article>
+
+      <!-- NeuroTrain -->
+      <article class="card">
+        <header class="card-head">
+          <h3>NeuroTrain</h3>
+          <span class="badge">SwiftUI</span>
+        </header>
+        <p>
+          Cognitive training suite featuring Stroop, Dual N-Back, Reaction Time, Memory Span, and Go/No-Go. 
+          Tracks accuracy/RT and adapts difficulty over time.
+        </p>
+        <div class="card-actions">
+          <span class="pill">Demo coming soon</span>
+          <a class="btn ghost" href="/projects/neurotrain.html">Read case study →</a>
+        </div>
+      </article>
+
+      <!-- FocusFlow -->
+      <article class="card">
+        <header class="card-head">
+          <h3>FocusFlow</h3>
+          <span class="badge">SwiftUI</span>
+        </header>
+        <p>
+          Productivity & mindfulness in one: plan tasks, run Pomodoro sessions, and unwind with meditation timers. 
+          Local notifications, session history, and customizable themes.
+        </p>
+        <div class="card-actions">
+          <span class="pill">Demo coming soon</span>
+          <a class="btn ghost" href="/projects/focusflow.html">Read case study →</a>
+        </div>
+      </article>
+
+      <!-- Financial Tools -->
+      <article class="card">
+        <header class="card-head">
+          <h3>Financial Tools</h3>
+          <span class="badge">Python / Web</span>
+        </header>
+        <p>
+          Practical calculators and analytics: loans & mortgages with amortization schedules, savings growth, and portfolio metrics. 
+        </p>
+        <div class="card-actions">
+          <a class="btn" href="https://github.com/TSAshraf/Financial_Tools" target="_blank" rel="noreferrer">View Repo</a>
+          <a class="btn ghost" href="/projects/financial-tools.html">Read case study →</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- Contact -->
+  <section id="contact" class="container contact">
+    <h2 class="section-title">Contact</h2>
+    <p>
+      Email: <a href="mailto:YOUR_EMAIL_HERE">YOUR_EMAIL_HERE</a> ·
+      <a href="https://github.com/TSAshraf" target="_blank" rel="noreferrer">GitHub</a> ·
+      <a href="https://www.linkedin.com/in/YOUR_HANDLE" target="_blank" rel="noreferrer">LinkedIn</a>
+    </p>
+  </section>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Taashfeen</p>
+  </footer>
 
   <script>
+    // Smooth scroll (native via CSS scroll-behavior, here just year + music)
+    document.getElementById('year').textContent = new Date().getFullYear();
+
     const music = document.getElementById('bg-music');
     const muteBtn = document.getElementById('mute-toggle');
-    const clickMsg = document.getElementById('clickToContinue');
-    const linkSection = document.getElementById('linkSection');
-
-    // Show "Click to continue" after 3 seconds
-    setTimeout(() => {
-      clickMsg.classList.remove("hidden");
-      clickMsg.classList.add("fade-in");
-    }, 3000);
-
-    // On click, reveal buttons
-    clickMsg.addEventListener('click', () => {
-      linkSection.classList.remove("hidden");
-      linkSection.classList.add("fade-in");
-      clickMsg.style.display = "none"; // hide the click message
-    });
-
-    // Mute/unmute
+    // Toggle mute on click
     muteBtn.addEventListener('click', () => {
       music.muted = !music.muted;
       muteBtn.textContent = music.muted ? '🔇' : '🔊';
+      muteBtn.setAttribute('aria-pressed', String(!music.muted));
     });
   </script>
-
 </body>
 </html>
