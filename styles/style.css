@@ -13,34 +13,33 @@ body{
 }
 
 /* ===== Layering =====
-   z:0 -> rain, birds, lightning
-   z:1 -> landscape (bottom band) + fog
-   z:2 -> page content
+   z:1 -> rain, birds, lightning
+   z:2 -> landscape (bottom band) + fog
+   z:3 -> page content
 */
 #rain{
   position: fixed; inset: 0; width: 100vw; height: 100vh;
-  z-index: 0; pointer-events: none;
+  z-index: 1; pointer-events: none;
 }
 
-/* Birds layer */
 #birds{
   position: fixed; inset: 0; width: 100vw; height: 100vh;
-  z-index: 0; pointer-events: none;
+  z-index: 1; pointer-events: none;
 }
 
-/* Lightning pulse */
+/* Lightning pulse overlay (transparent when not flashing) */
 #lightning{
   position: fixed; inset: 0;
   background: radial-gradient(circle at 60% 20%, rgba(255,255,255,0.25), rgba(255,255,255,0.05) 40%, rgba(255,255,255,0) 70%);
   opacity: 0;
-  z-index: 0; pointer-events: none;
+  z-index: 1; pointer-events: none;
   transition: opacity .25s ease-out;
 }
 
 /* Fixed bottom band */
 #landscape{
   position: fixed; left: 0; right: 0; bottom: 0;
-  height: 34vh; z-index: 1; pointer-events: none; overflow: hidden;
+  height: 34vh; z-index: 2; pointer-events: none; overflow: hidden;
 
   /* Smooth reveal near footer */
   opacity: 0;
@@ -57,7 +56,7 @@ body{
 /* Fog above horizon */
 #fog{
   position: fixed; left:0; right:0; bottom: 24vh;
-  height: 18vh; z-index: 1; pointer-events: none;
+  height: 18vh; z-index: 2; pointer-events: none;
   opacity: .12;
   background:
     radial-gradient(120% 60% at 30% 60%, rgba(255,255,255,.20), rgba(255,255,255,0) 60%),
@@ -72,7 +71,7 @@ body{
 }
 
 /* Content layer */
-#page{ position: relative; z-index: 2; padding-bottom: calc(34vh + 24px); }
+#page{ position: relative; z-index: 3; padding-bottom: calc(34vh + 24px); }
 
 /* ===== Layout ===== */
 .container{ max-width:1200px; margin:0 auto; padding:0 5vw; }
