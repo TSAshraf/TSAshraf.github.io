@@ -77,3 +77,39 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-
   .project{ grid-template-columns:1fr; gap:28px; margin-bottom:120px; }
   .project-image, .project-text{ order: unset; }
 }
+
+/* --- BG layers must cover the viewport and sit under content --- */
+#parallax,
+#rain{
+  position: fixed;
+  inset: 0;
+  width: 100vw;           /* important on some browsers */
+  height: 100vh;          /* important on some browsers */
+  z-index: 0;             /* under content */
+  pointer-events: none;
+}
+
+/* Content wrapper sits above */
+#page{
+  position: relative;
+  z-index: 1;
+}
+
+/* Body & all sections must be transparent (no solid paint blocking BG) */
+html{ background:#2a2f32; }  /* fallback only */
+body{ background: transparent !important; }
+
+#page,
+header, main, footer,
+.intro, .project, .container{
+  background: transparent !important;
+}
+
+/* Keep only translucent cards, not section backgrounds */
+.project-text{
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+/* (Optional) remove any stray borders/panels that look like a divider */
+hr, .section-divider{ border: 0; background: transparent; height: 0; }
