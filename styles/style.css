@@ -17,7 +17,7 @@ html[data-theme="light"]{
   --text: #1b1b1b;
   --muted: #444;
   --accent: #c53f3f;
-  --border: rgba(0,0,0,0.1);
+  --border: rgba(255,255,255,0.1);
 
   --rainColor: rgba(0,0,0,0.45); /* day: black */
 }
