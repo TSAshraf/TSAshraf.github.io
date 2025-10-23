@@ -17,26 +17,16 @@ body{
    z:2 -> landscape (bottom band) + fog
    z:3 -> page content
 */
-#rain{
-  position: fixed; inset: 0; width: 100vw; height: 100vh;
-  z-index: 1; pointer-events: none;
-}
-#birds{
-  position: fixed; inset: 0; width: 100vw; height: 100vh;
-  z-index: 1; pointer-events: none;
-}
+#rain{ position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
+#birds{ position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
 #lightning{
   position: fixed; inset: 0;
   background: radial-gradient(circle at 60% 20%, rgba(255,255,255,0.25), rgba(255,255,255,0.05) 40%, rgba(255,255,255,0) 70%);
-  opacity: 0;
-  z-index: 1; pointer-events: none;
-  transition: opacity .25s ease-out;
+  opacity: 0; z-index: 1; pointer-events: none; transition: opacity .25s ease-out;
 }
 #landscape{
-  position: fixed; left: 0; right: 0; bottom: 0;
-  height: 34vh; z-index: 2; pointer-events: none; overflow: hidden;
-  opacity: 0; transform: translateY(16px);
-  transition: opacity .8s ease, transform .8s ease;
+  position: fixed; left: 0; right: 0; bottom: 0; height: 34vh; z-index: 2; pointer-events: none; overflow: hidden;
+  opacity: 0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease;
   -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
   mask-image: linear-gradient(to top, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
 }
@@ -44,8 +34,7 @@ body{
 #landscape-svg{ width:100%; height:100%; display:block; }
 
 #fog{
-  position: fixed; left:0; right:0; bottom: 24vh;
-  height: 18vh; z-index: 2; pointer-events: none;
+  position: fixed; left:0; right:0; bottom: 24vh; height: 18vh; z-index: 2; pointer-events: none;
   opacity: .12;
   background:
     radial-gradient(120% 60% at 30% 60%, rgba(255,255,255,.20), rgba(255,255,255,0) 60%),
@@ -62,82 +51,43 @@ body{
 #page{ position: relative; z-index: 3; padding-bottom: calc(34vh + 24px); }
 .container{ max-width:1200px; margin:0 auto; padding:0 5vw; }
 
-/* ===== HERO ===== */
-.hero{
+/* ===== Intro (same panel, with local clouds) ===== */
+.intro{
+  margin: 16vh auto 8vh;
   position: relative;
-  min-height: clamp(70vh, 78vh, 90vh);
-  display: grid;
-  place-items: center;
-  padding: 14vh 0 10vh;
-  isolation: isolate; /* so clouds can sit behind text */
+  isolation: isolate;                /* local stacking so clouds sit behind text */
+  min-height: 28vh;
 }
-.hero::before{
-  content:"";
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(100% 60% at 50% 18%, rgba(0,0,0,0.10), rgba(0,0,0,0.55) 70%),
-    linear-gradient(to bottom, rgba(0,0,0,0.12), rgba(0,0,0,0.32));
-  z-index:-1;
+.intro__title{
+  max-width: 28ch;
+  font-weight: 800;
+  font-size: clamp(2.4rem, 5.4vw, 4rem);
+  line-height: 1.08;
+  margin: 0;
 }
 
-/* drifting clouds inside hero */
-.hero-clouds{
-  position:absolute; inset:0;
-  z-index:-1; pointer-events:none;
-  overflow:hidden;
-  opacity:.18; /* keep very subtle */
+/* local cloud layer that only affects the intro area */
+.intro--with-clouds .intro__clouds{
+  position:absolute; inset:-8% -10%;
+  z-index:-1; pointer-events:none; opacity:.16;
   filter: blur(2px) saturate(.85);
+  overflow:hidden;
 }
-.cloud{
-  position:absolute; width:60vw; height:40vh;
+.puff{
+  position:absolute; width:56vw; height:34vh;
   background:
     radial-gradient(60% 50% at 40% 60%, rgba(255,255,255,.25), rgba(255,255,255,0) 60%),
     radial-gradient(55% 45% at 70% 40%, rgba(255,255,255,.18), rgba(255,255,255,0) 60%);
-  animation: drift linear infinite;
+  animation: puffDrift linear infinite;
 }
-.c1{ top:8%; left:-25%; animation-duration: 80s; }
-.c2{ top:22%; left:-35%; animation-duration: 105s; transform: scale(1.1); }
-.c3{ top:35%; left:-20%; animation-duration: 130s; transform: scale(1.25); opacity:.85; }
-@keyframes drift{
+.p1{ top:-6%; left:-28%; animation-duration: 85s; }
+.p2{ top:10%; left:-36%; animation-duration: 110s; transform: scale(1.12); }
+.p3{ top:22%; left:-22%; animation-duration: 135s; transform: scale(1.22); opacity:.85; }
+
+@keyframes puffDrift{
   0%{ transform: translateX(0) scale(var(--s,1)); }
   100%{ transform: translateX(120vw) scale(var(--s,1)); }
 }
-
-.hero__inner{ max-width: 1100px; margin: 0 auto; padding: 0 5vw; text-align: left; }
-.hero__title{
-  max-width: 24ch;
-  font-weight: 800;
-  font-size: clamp(2.4rem, 5.6vw, 4.2rem); /* bigger headline */
-  line-height: 1.08;
-  margin: 0 0 1.1rem;
-}
-.hero__kicker{
-  max-width: 52ch;
-  color: var(--muted);
-  margin: 0 0 1.7rem;
-  font-size: clamp(1rem, 1.4vw, 1.1rem);
-}
-.hero__cta{ display:flex; gap:12px; }
-
-/* Buttons */
-.btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:10px 16px; border-radius:10px; font-weight:600; text-decoration:none;
-  transition: transform .15s ease, background .2s ease, border-color .2s ease;
-}
-.btn:hover{ transform: translateY(-1px); }
-.btn--primary{ background: var(--accent); color:#0b120f; }
-.btn--primary:hover{ background:#c8ffd9; }
-.btn--ghost{ color:var(--text); border:1px solid var(--border); background:var(--card); }
-.btn--ghost:hover{ border-color: rgba(255,255,255,0.25); }
-
-/* scroll cue */
-.scroll-cue{
-  position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
-  background: transparent; border: 0; color: #bcd; font-size: 20px;
-  opacity: .6; cursor: pointer;
-}
-.scroll-cue:hover{ opacity: 1; }
 
 /* ===== Projects (magazine style) ===== */
 .projects{
@@ -154,6 +104,7 @@ body{
 .project:nth-child(even) .project-image-link{ order: 2; }
 .project:nth-child(even) .project-info{ order: 1; }
 
+/* Cinematic image cards */
 .project-image-link{
   display:block;
   width: 100%;
@@ -173,6 +124,7 @@ body{
 .project-image-link:hover{ transform: translateY(-2px); box-shadow: 0 26px 70px rgba(0,0,0,.45); }
 .project-image-link:hover .project-image{ filter: brightness(1) contrast(1.05); }
 
+/* Text cards beside images */
 .project-info{
   background: var(--card);
   border: 1px solid var(--border);
@@ -183,6 +135,7 @@ body{
 .project-info h3{ margin:0 0 .5rem; font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight:700; }
 .project-info p{ margin:0 0 .8rem; color:var(--muted); line-height:1.55; }
 
+/* Links */
 .link-main{
   color: var(--accent);
   font-weight: 600;
