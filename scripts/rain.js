@@ -1,4 +1,5 @@
 // Subtle diagonal rain across the viewport.
+// Now theme-aware via CSS variable --rain-color (set in :root / [data-theme]).
 (() => {
   const c = document.getElementById('rain');
   if (!c) return;
@@ -11,7 +12,7 @@
   const ANG = -15 * Math.PI/180;   // slant angle
   const SPEED_MIN = 8, SPEED_MAX = 18;
   const LEN_MIN = 60, LEN_MAX = 120;
-  const DENSITY = 140;             // number of drops
+  const DENSITY = 140;
 
   function resize(){
     dpr = Math.max(1, window.devicePixelRatio || 1);
@@ -30,7 +31,7 @@
       y: Math.random()*(h+400) - 200,
       v: rand(SPEED_MIN, SPEED_MAX),
       len: rand(LEN_MIN, LEN_MAX),
-      a: rand(.08, .18),  // slightly brighter for visibility
+      a: rand(.08, .18),
     };
   }
 
@@ -38,7 +39,7 @@
     drops = Array.from({length: DENSITY}, makeDrop);
   }
 
-  // brief pause if user scrolls extremely fast (prevents streaking artifacts)
+  // small pause when user scrolls extremely fast (avoid streaking)
   let lastY = window.scrollY, lastT = performance.now();
   addEventListener('scroll', () => {
     const t = performance.now();
@@ -49,9 +50,13 @@
     lastY = window.scrollY; lastT = t;
   }, { passive:true });
 
+  function currentRainColor(){
+    const cs = getComputedStyle(document.documentElement);
+    return cs.getPropertyValue('--rain-color').trim() || 'rgba(255,255,255,0.85)';
+  }
+
   function draw(){
     const now = performance.now();
-    // draw even if document.hidden; skip only during tiny pause
     if (now >= pauseUntil){
       ctx.clearRect(0, 0, w, h);
       ctx.save();
@@ -59,7 +64,7 @@
       ctx.rotate(ANG);
       ctx.translate(-w/2, -h/2);
       ctx.lineWidth = 1.2;
-      ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+      ctx.strokeStyle = currentRainColor();
 
       for (const d of drops){
         ctx.globalAlpha = d.a;
@@ -70,7 +75,6 @@
 
         d.y += d.v;
         if (d.y - d.len > h + 200){
-          // recycle
           d.x = Math.random()*(w+400) - 200;
           d.y = -rand(20, 200);
           d.v = rand(SPEED_MIN, SPEED_MAX);
