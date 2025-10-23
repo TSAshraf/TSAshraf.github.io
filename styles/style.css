@@ -7,16 +7,16 @@
   --muted: #b8bec2;
   --accent: #e45b5b;
   --border: rgba(255,255,255,0.1);
-  --rain-color: rgba(255,255,255,0.8);
+  --rain-color: rgba(255, 255, 255, 0.8); /* White rain for night */
 }
 
 html[data-theme="light"] {
-  --bg: #f5f7f8;
+  --bg: #fdfdfd;
   --text: #0f1418;
   --muted: #47525a;
   --accent: #c53030;
   --border: rgba(0,0,0,0.1);
-  --rain-color: rgba(0,0,0,0.3);
+  --rain-color: rgba(0, 0, 0, 0.15); /* Black rain for day */
 }
 
 body {
@@ -24,6 +24,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font: 16px/1.6 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  transition: background 0.6s ease, color 0.6s ease;
 }
 
 /* ===== Theme Toggle ===== */
@@ -55,6 +56,24 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 1;
+  transition: opacity 0.6s ease, background 0.6s ease;
+}
+
+/* ===== Rain Layer ===== */
+#rain {
+  background: repeating-linear-gradient(
+    180deg,
+    var(--rain-color) 0px,
+    var(--rain-color) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+  animation: rainFall 0.5s linear infinite;
+  opacity: 0.3;
+}
+@keyframes rainFall {
+  from { background-position-y: 0; }
+  to { background-position-y: 8px; }
 }
 
 /* ===== Page Wrapper ===== */
