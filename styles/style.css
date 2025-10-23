@@ -54,10 +54,18 @@ body{
 
 /* ===== Atmospheric layers ===== */
 
-/* Rain container sits behind the landscape band (z-index 1); content is 3 */
+/* Order: rain (4) > page (3) > landscape band (2) > bg (body) */
 #rain{
-  position: fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;
+  position: fixed; inset:0; pointer-events:none;
+  z-index: 4;                /* was 1 */
+  overflow:hidden;
 }
+
+#landscape{ z-index: 2; }
+#page{ position: relative; z-index: 3; }
+
+/* Safety: ensure these don’t introduce opaque backgrounds */
+header, .container, .intro, main, .projects, .project-info { background: transparent; }
 
 /* Raindrops — DOM-based (so we can theme colors) */
 .raindrop{
