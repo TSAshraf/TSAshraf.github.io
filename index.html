@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Taashfeen — Portfolio</title>
-  <meta name="description" content="Projects in Swift, Java, and Python — cognition, productivity, practical tools." />
+  <meta name="description" content="Projects in Swift, Java, and Python — cognition, productivity, and practical tools." />
   <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
@@ -36,12 +36,37 @@
   <!-- Page content (top layer) -->
   <div id="page">
 
-    <header class="intro container">
-      <h1>Taashfeen is a CS student focused on cognition, productivity, and practical tools.</h1>
+    <!-- ===== HERO (new) ===== -->
+    <header class="hero">
+      <!-- drifting cloud layer inside hero -->
+      <div class="hero-clouds" aria-hidden="true">
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+        <div class="cloud c3"></div>
+      </div>
+
+      <div class="hero__inner container">
+        <h1 class="hero__title">
+          Taashfeen builds quiet tools for thinking—focused on cognition,
+          steady productivity, and practical systems.
+        </h1>
+
+        <p class="hero__kicker">
+          Software that measures what matters, stays out of the way, and helps you focus.
+        </p>
+
+        <div class="hero__cta">
+          <a href="#projects" class="btn btn--primary">See projects</a>
+          <a href="mailto:YOUR_EMAIL" class="btn btn--ghost">Contact</a>
+        </div>
+      </div>
+
+      <button class="scroll-cue" aria-label="Scroll to projects"
+        onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})">↓</button>
     </header>
 
     <main class="container">
-      <section class="projects">
+      <section id="projects" class="projects">
 
         <!-- Fix the Artifact -->
         <div class="project">
