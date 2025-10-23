@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body>
+
+  <!-- Day/Night toggle -->
+  <button id="theme-toggle" aria-label="Toggle day/night" title="Toggle day/night">🌙</button>
 
   <!-- Global rain (fixed, behind content, above background) -->
   <canvas id="rain" aria-hidden="true"></canvas>
@@ -36,7 +39,7 @@
   <!-- Page content (top layer) -->
   <div id="page">
 
-    <!-- Intro panel (same place as before), now with its own soft cloud layer -->
+    <!-- Intro panel (same spot; with local clouds behind text) -->
     <header class="intro container intro--with-clouds">
       <div class="intro__clouds" aria-hidden="true">
         <span class="puff p1"></span>
@@ -48,7 +51,6 @@
         Taashfeen builds quiet tools for thinking—focused on cognition,
         steady productivity, and practical systems.
       </h1>
-      <!-- (Optional subline: add a <p class="intro__kicker">…</p> if you want) -->
     </header>
 
     <main class="container">
@@ -57,7 +59,7 @@
         <!-- Fix the Artifact -->
         <div class="project">
           <a href="/projects/fix-the-artifact.html" class="project-image-link">
-            <img src="assets/Fantasy-Background.jpg" alt="Fix the Artifact screenshot" class="project-image" />
+            <img src="assets/screenshots/fix.jpg" alt="Fix the Artifact screenshot" class="project-image" />
           </a>
           <div class="project-info card">
             <h3>Fix the Artifact</h3>
@@ -132,6 +134,27 @@
   <script src="scripts/landscape.js"></script>
   <!-- Rain background -->
   <script src="scripts/rain.js"></script>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+  <script>
+    // ——— Theme bootstrap ———
+    (function(){
+      const root = document.documentElement;
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = stored || (prefersDark ? 'dark' : 'light');
+      root.setAttribute('data-theme', initial);
+      const btn = document.getElementById('theme-toggle');
+      btn.textContent = initial === 'dark' ? '🌙' : '☀️';
+
+      btn.addEventListener('click', () => {
+        const now = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', now);
+        localStorage.setItem('theme', now);
+        btn.textContent = now === 'dark' ? '🌙' : '☀️';
+      });
+    })();
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
