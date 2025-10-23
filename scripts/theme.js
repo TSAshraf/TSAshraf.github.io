@@ -1,3 +1,4 @@
+// Day/Night toggle with persistence
 const toggle = document.getElementById('theme-toggle');
 const html = document.documentElement;
 
@@ -11,7 +12,9 @@ toggle.addEventListener('click', () => {
   updateThemeIcon();
 });
 
-if (localStorage.getItem('theme')) {
-  html.dataset.theme = localStorage.getItem('theme');
+// Initialize from saved preference if present
+const stored = localStorage.getItem('theme');
+if (stored === 'light' || stored === 'dark') {
+  html.dataset.theme = stored;
 }
 updateThemeIcon();
