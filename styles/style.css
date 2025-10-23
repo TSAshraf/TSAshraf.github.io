@@ -1,8 +1,8 @@
 /* ===== Base / Themes ===== */
 * { box-sizing: border-box; }
 
+/* Night */
 :root {
-  /* Night */
   --bg: #0f1418;
   --text: #eaeaea;
   --muted: #b8bec2;
@@ -13,8 +13,8 @@
   --drop-night: rgba(255,255,255,0.45); /* rain drops */
 }
 
+  /* Day */
 html[data-theme="light"]{
-  /* Day (sunlit) */
   --bg: #f8f5ef;
   --text: #1d1c19;
   --muted: #524f46;
@@ -79,7 +79,6 @@ header, .container, .intro, main, .projects, .project-info { background: transpa
   will-change: transform, opacity;
 }
 html[data-theme="light"] .raindrop{ background: var(--drop-day); }
-
 @keyframes fall{
   to{
     transform: translateY(110vh);
@@ -182,7 +181,6 @@ html[data-theme="light"] .raindrop{ background: var(--drop-day); }
   background: linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0));
   transition: opacity .35s ease;
 }
-
 .project-image{
   width:100%; display:block; aspect-ratio: 16 / 9; object-fit: cover;
   filter: brightness(.92) contrast(1.05);
@@ -200,7 +198,6 @@ html[data-theme="light"] .raindrop{ background: var(--drop-day); }
   0%{ background-position: 0% 0; }
   100%{ background-position: 200% 0; }
 }
-
 .project-image-link:hover { transform: translateY(-4px); box-shadow: 0 36px 110px rgba(0,0,0,.5); }
 .project-image-link:hover::after{ opacity:1; }
 .project-image-link:hover .project-image{ filter: brightness(1.05) contrast(1.1); }
@@ -222,7 +219,6 @@ html[data-theme="light"] .raindrop{ background: var(--drop-day); }
   border-bottom: 2px solid transparent; transition: border-color .3s ease, color .3s ease;
 }
 .link-main:hover{ border-color: var(--accent); }
-
 .link-secondary{
   color: var(--muted); text-decoration:none; margin-left: 10px; transition: color .3s ease;
 }
