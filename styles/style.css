@@ -128,9 +128,10 @@ html[data-theme="light"] .raindrop{ background: var(--drop-day); }
 
 /* ===== Intro ===== */
 .intro{
-  margin: 14vh auto 8vh;
+  margin: 0;
   text-align: left;
-  max-width: 30ch;
+  width: 90%;
+  max-width: none;
 }
 .intro__title{
   font-weight: 800;
