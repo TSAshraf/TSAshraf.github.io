@@ -97,10 +97,16 @@ header, .container, .intro, main, .projects, .project-info { background: transpa
   will-change: transform, opacity;
 }
 html[data-theme="light"] .raindrop{ background: var(--drop-day); }
-@keyframes fall{
-  0%   { transform: translate3d(var(--x,0), -5vh, 0); opacity: 0; }
-  10%  { opacity: 0.9; }
-  100% { transform: translate3d(var(--x,0), 105vh, 0); opacity: 0; }
+@keyframes fall {
+  0% {
+    transform: translate3d(calc(var(--x, 0) - 10vw), -5vh, 0);
+    opacity: 0;
+  }
+  10% { opacity: 0.9; }
+  100% {
+    transform: translate3d(calc(var(--x, 0) + 10vw), 105vh, 0);
+    opacity: 0;
+  }
 }
 
 /* Fog — subtle drifting gradient */
