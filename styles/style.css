@@ -35,14 +35,14 @@ body{
   transition: background .6s ease, color .6s ease;
 }
 
-/* Container that we accidentally removed earlier */
+/* Layout container */
 .container{
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 5vw;
 }
 
-/* Theme toggle */
+/* ===== Theme Toggle ===== */
 #theme-toggle{
   position: fixed; top:16px; right:16px; z-index:99;
   width:42px; height:42px; border-radius:10px;
@@ -53,7 +53,7 @@ body{
 #theme-toggle:hover{ transform: translateY(-2px); border-color: var(--accent); }
 
 /* ===== Atmos layers ===== */
-#rain, #birds, #lightning, #fog{
+#rain, #fog, #lightning{
   position: fixed; inset:0; pointer-events:none; z-index:1;
   transition: opacity .6s ease, background .6s ease;
 }
@@ -75,7 +75,7 @@ body{
   to  { background-position-y: 8px; }
 }
 
-/* Fixed landscape band — initially hidden! */
+/* Fixed landscape band — initially hidden */
 #landscape{
   position: fixed; left:0; right:0; bottom:0;
   height: 34vh; z-index:2; pointer-events:none; overflow:hidden;
@@ -87,11 +87,10 @@ body{
 #landscape.landscape--visible{ opacity: 1; transform: translateY(0); }
 #landscape-svg{ width:100%; height:100%; display:block; }
 
-/* Page content sits above layers */
+/* Page content above layers */
 #page{
   position: relative; z-index: 3;
-  /* Ensure footer isn't covered by the fixed band */
-  padding-bottom: calc(34vh + 24px);
+  padding-bottom: calc(34vh + 24px); /* prevent footer overlap */
 }
 
 /* ===== Intro ===== */
@@ -121,7 +120,7 @@ body{
   gap: clamp(1.6rem, 3vw, 3rem);
 }
 
-/* Alternate */
+/* Alternate sides */
 .project:nth-child(even) .project-image-link{ order:2; }
 .project:nth-child(even) .project-info{ order:1; }
 
@@ -132,7 +131,7 @@ body{
   box-shadow: var(--shadow);
   transform: translateZ(0);
   transition: transform .45s ease, box-shadow .45s ease, filter .45s ease;
-  background: #111; /* fallback bg so empty images don't look like a huge void */
+  background: #111; /* fallback so empty images don't look broken */
 }
 
 /* Gradient overlay on hover */
@@ -148,10 +147,8 @@ body{
   transition: filter .4s ease;
 }
 
-/* If image fails to load, show a subtle skeleton */
-.project-image[onerror],
-.project-image:not([src]), 
-.project-image[src=""]{
+/* Skeleton fallback when image missing */
+.project-image:not([src]), .project-image[src=""]{
   background:
     linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.08), rgba(255,255,255,.04));
   background-size: 200% 100%;
