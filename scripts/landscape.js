@@ -1,4 +1,4 @@
-// Fixed bottom band: stamp silhouettes, gentle drift, reveal near footer.
+// Fixed bottom band: stamp silhouettes and add subtle drift
 (() => {
   const band  = document.getElementById('landscape');
   const back  = document.getElementById('layer-back');
@@ -6,7 +6,7 @@
   const front = document.getElementById('layer-front');
   if (!band || !back || !mid || !front) return;
 
-  const HORIZON_Y = 312; // matches horizon <rect> y in index.html
+  const HORIZON_Y = 312; // must match <rect y="312"> in index.html
 
   function stamp(group, d, step){
     for (let x = -60; x < 1500; x += step){
@@ -27,38 +27,14 @@
   stamp(mid,   MID,   56);
   stamp(front, FRONT, 64);
 
-  // Ambient drift
+  // Ambient micro-drift
   let t0 = performance.now();
   function drift(){
     const t = (performance.now() - t0) / 1000;
-    const dxBack  = Math.sin(t * 0.05) * 6;
-    const dxMid   = Math.sin(t * 0.06 + 1) * 10;
-    const dxFront = Math.sin(t * 0.08 + 2) * 14;
-    back .setAttribute('transform', `translate(${dxBack},0)`);
-    mid  .setAttribute('transform', `translate(${dxMid},0)`);
-    front.setAttribute('transform', `translate(${dxFront},0)`);
+    back .setAttribute('transform', `translate(${Math.sin(t * 0.05) * 6},0)`);
+    mid  .setAttribute('transform', `translate(${Math.sin(t * 0.06 + 1) * 10},0)`);
+    front.setAttribute('transform', `translate(${Math.sin(t * 0.08 + 2) * 14},0)`);
     requestAnimationFrame(drift);
   }
   drift();
-
-  // Reveal band near footer
-  const trigger = document.getElementById('landscape-trigger');
-
-  function setVisible(v){
-    band.classList.toggle('landscape--visible', !!v);
-  }
-
-  if (trigger && 'IntersectionObserver' in window){
-    const io = new IntersectionObserver(
-      entries => setVisible(entries[0]?.isIntersecting),
-      {
-        root: null,
-        threshold: 0,
-        rootMargin: '0px 0px -20% 0px' // tweak for earlier/later reveal
-      }
-    );
-    io.observe(trigger);
-  } else {
-    setVisible(true); // fallback
-  }
 })();
