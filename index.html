@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="dark light" />
   <title>Taashfeen | Tools for Thought</title>
   <link rel="stylesheet" href="styles/style.css" />
-  <meta name="color-scheme" content="light dark" />
 </head>
 <body>
 
-  <!-- Theme (Day/Night) toggle -->
+  <!-- Day/Night toggle -->
   <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
 
   <!-- Atmospheric layers -->
@@ -17,50 +17,39 @@
   <div id="fog" aria-hidden="true"></div>
   <div id="lightning" aria-hidden="true"></div>
 
-  <!-- Landscape band (hidden until near footer) -->
+  <!-- Fixed landscape band (fades near footer) -->
   <div id="landscape" aria-hidden="true">
-    <!-- simple stylized “stalks/peaks” svg -->
-    <svg id="landscape-svg" viewBox="0 0 100 20" preserveAspectRatio="none">
-      <rect x="0" y="19" width="100" height="1" fill="rgba(255,255,255,0.6)"/>
-      <g fill="#d9d9d9" opacity="0.9">
-        <polygon points="0,20 2,14 4,20" />
-        <polygon points="5,20 7,12 9,20" />
-        <polygon points="10,20 12,15 14,20" />
-        <polygon points="15,20 17,10 19,20" />
-        <polygon points="20,20 22,13 24,20" />
-        <polygon points="25,20 27,8 29,20" />
-        <polygon points="30,20 32,12 34,20" />
-        <polygon points="35,20 37,9 39,20" />
-        <polygon points="40,20 42,12 44,20" />
-        <polygon points="45,20 47,7 49,20" />
-        <polygon points="50,20 52,11 54,20" />
-        <polygon points="55,20 57,9 59,20" />
-        <polygon points="60,20 62,13 64,20" />
-        <polygon points="65,20 67,8 69,20" />
-        <polygon points="70,20 72,12 74,20" />
-        <polygon points="75,20 77,10 79,20" />
-        <polygon points="80,20 82,14 84,20" />
-        <polygon points="85,20 87,11 89,20" />
-        <polygon points="90,20 92,13 94,20" />
-        <polygon points="95,20 97,8 99,20" />
-      </g>
+    <svg
+      id="landscape-svg"
+      viewBox="0 0 1440 360"
+      preserveAspectRatio="xMidYMid slice"
+      role="img"
+      aria-label="Silhouette landscape band"
+    >
+      <!-- Horizon line (y must match HORIZON_Y in landscape.js) -->
+      <rect y="312" width="1440" height="3.5" fill="#d9d9d9" opacity=".33"></rect>
+
+      <!-- Layers stamped by landscape.js -->
+      <g id="layer-back"  fill="#3a3f42" opacity=".45"></g>
+      <g id="layer-mid"   fill="#2f3437" opacity=".70"></g>
+      <g id="layer-front" fill="#202426" opacity=".95"></g>
     </svg>
   </div>
 
-  <!-- Main page content -->
-  <main id="page">
-    <div class="container">
-
-      <!-- Intro / hero copy -->
+  <!-- Main Page -->
+  <div id="page">
+    <header class="container">
       <section class="intro">
         <h1 class="intro__title">
-          Tools for thought.<br/>
-          Built quietly,<br/>
+          Tools for thought.<br>
+          Built quietly,<br>
           with intent.
         </h1>
       </section>
+    </header>
 
-      <!-- Projects list -->
+    <!-- Projects -->
+    <main class="container">
       <section class="projects">
 
         <!-- Project 1 -->
@@ -72,7 +61,7 @@
             <h3>Fix the Artifact</h3>
             <p>A Java-based puzzle where players reconstruct archaeological artifacts. Zoom, saves, curated music.</p>
             <a href="#" class="link-main">Read case study</a>
-            <a href="https://github.com/TSAshraf/Fix-The-Artefact" class="link-secondary">View repo</a>
+            <a href="https://github.com/YOUR_GITHUB/Fix-The-Artefact" class="link-secondary" target="_blank" rel="noopener">View repo</a>
           </div>
         </article>
 
@@ -83,9 +72,9 @@
           </a>
           <div class="project-info">
             <h3>NeuroTrain</h3>
-            <p>A SwiftUI cognitive training suite: Stroop, Dual N-Back, Reaction Time, Memory Span, and Go/No-Go.</p>
+            <p>A SwiftUI cognitive training suite featuring Stroop, Dual N-Back, Reaction Time, and Memory Span tasks.</p>
             <a href="#" class="link-main">Read case study</a>
-            <a href="#" class="link-secondary">View repo</a>
+            <a href="https://github.com/YOUR_GITHUB/NeuroTrain" class="link-secondary" target="_blank" rel="noopener">View repo</a>
           </div>
         </article>
 
@@ -96,55 +85,54 @@
           </a>
           <div class="project-info">
             <h3>FocusFlow</h3>
-            <p>To-Do, Pomodoro, and Meditation in a single SwiftUI app. Local notifications, session tracking, themes.</p>
+            <p>To-Do, Pomodoro, and Meditation in one SwiftUI app. Local notifications, session tracking, and themes.</p>
             <a href="#" class="link-main">Read case study</a>
-            <a href="#" class="link-secondary">View repo</a>
+            <a href="https://github.com/YOUR_GITHUB/FocusFlow" class="link-secondary" target="_blank" rel="noopener">View repo</a>
           </div>
         </article>
 
         <!-- Project 4 -->
         <article class="project">
           <a class="project-image-link" href="#" aria-label="Open Financial Tools case study">
-            <img class="project-image" src="images/financial-tools.jpg" alt="Financial Tools screenshot">
+            <img class="project-image" src="images/finance.jpg" alt="Financial Tools screenshot">
           </a>
           <div class="project-info">
             <h3>Financial Tools</h3>
             <p>Python calculators & analytics: mortgages, amortization schedules, savings growth, portfolio metrics.</p>
             <a href="#" class="link-main">Read case study</a>
-            <a href="https://github.com/TSAshraf/Financial_Tools" class="link-secondary">View repo</a>
+            <a href="https://github.com/YOUR_GITHUB/Financial_Tools" class="link-secondary" target="_blank" rel="noopener">View repo</a>
           </div>
         </article>
 
-        <!-- Project 5 (Visual Novel idea) -->
+        <!-- Project 5 (optional) -->
         <article class="project">
-          <a class="project-image-link" href="#" aria-label="Open Visual Novel case study">
-            <img class="project-image" src="images/visual-novel.jpg" alt="Visual Novel concept">
+          <a class="project-image-link" href="#" aria-label="Open The Rainhouse case study">
+            <img class="project-image" src="images/novel.jpg" alt="The Rainhouse visual novel image">
           </a>
           <div class="project-info">
-            <h3>The Rainhouse (Concept)</h3>
-            <p>An atmospheric visual novel exploring memory and repetition. Built with Ren’Py, scored with subtle piano and rain.</p>
+            <h3>The Rainhouse (Prototype)</h3>
+            <p>A short interactive narrative exploring memory and repetition. Built in Ren’Py. Atmosphere over action.</p>
             <a href="#" class="link-main">Read case study</a>
-            <a href="#" class="link-secondary">View repo</a>
+            <a href="https://github.com/YOUR_GITHUB/Rainhouse" class="link-secondary" target="_blank" rel="noopener">View repo</a>
           </div>
         </article>
 
       </section>
 
-      <!-- Sentinel for landscape band -->
-      <div id="landscape-trigger" aria-hidden="true"></div>
+      <!-- Sentinel to reveal the landscape near the footer -->
+      <div id="landscape-trigger" aria-hidden="true" style="height:1px;"></div>
+    </main>
 
-      <!-- Footer -->
-      <footer class="footer">
-        <p>Contact:
-          <a href="mailto:YOUR_EMAIL">Email</a> ·
-          <a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a> ·
-          <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
-        </p>
-        <p>© 2025 Taashfeen. Built quietly, with intent.</p>
-      </footer>
-
-    </div>
-  </main>
+    <footer class="footer container">
+      <p>
+        Contact:
+        <a href="mailto:YOUR_EMAIL">YOUR_EMAIL</a> ·
+        <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/YOUR_LINKEDIN" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
+      <p>© 2025 Taashfeen. Built quietly, with intent.</p>
+    </footer>
+  </div>
 
   <!-- Scripts -->
   <script src="scripts/theme.js"></script>
