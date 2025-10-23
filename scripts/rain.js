@@ -1,49 +1,34 @@
-// DOM-based rain so we can theme the drop color for day/night mode.
+// Minimal DOM-based rain spawner (only effect enabled)
 (() => {
-  const container = document.getElementById("rain");
-  if (!container) return;
+  const root = document.getElementById('rain');
+  if (!root) return;
 
-  // Clear any previous drops (hot reload safety)
-  container.innerHTML = "";
+  const N = 60;                // number of concurrent drops
+  const drops = new Set();
 
-  // Adjust this to change intensity/perf
-  const DROP_COUNT = Math.min(220, Math.floor(window.innerWidth / 6) + 120);
+  function spawn() {
+    if (!document.body.contains(root)) return;
+    if (drops.size >= N) return;
 
-  for (let i = 0; i < DROP_COUNT; i++) {
-    const drop = document.createElement("div");
-    drop.className = "raindrop";
+    const d = document.createElement('div');
+    d.className = 'raindrop';
+    // random horizontal seed for the diagonal transform
+    d.style.setProperty('--x', Math.random() * 100 + 'vw');
+    // randomize a tiny bit
+    d.style.animationDuration = (550 + Math.random()*300) + 'ms';
+    d.style.animationDelay = (-Math.random()*400) + 'ms';
 
-    // Randomized horizontal position & animation
-    const startX = Math.random() * 100;        // vw
-    const delay  = Math.random() * 2.2;        // seconds
-    const dur    = 0.6 + Math.random() * 1.4;  // seconds
+    d.addEventListener('animationend', () => {
+      drops.delete(d);
+      d.remove();
+    });
 
-    drop.style.left = `${startX}vw`;
-    drop.style.animationDuration = `${dur}s`;
-    drop.style.animationDelay = `${delay}s`;
-
-    container.appendChild(drop);
+    drops.add(d);
+    root.appendChild(d);
   }
 
-  // Recalculate on resize (debounced)
-  let t;
-  window.addEventListener("resize", () => {
-    clearTimeout(t);
-    t = setTimeout(() => {
-      // simple rebuild on resize
-      container.innerHTML = "";
-      const count = Math.min(220, Math.floor(window.innerWidth / 6) + 120);
-      for (let i = 0; i < count; i++) {
-        const d = document.createElement("div");
-        d.className = "raindrop";
-        const x = Math.random() * 100;
-        const dl = Math.random() * 2.2;
-        const du = 0.6 + Math.random() * 1.4;
-        d.style.left = `${x}vw`;
-        d.style.animationDuration = `${du}s`;
-        d.style.animationDelay = `${dl}s`;
-        container.appendChild(d);
-      }
-    }, 200);
-  });
+  // keep seeding drops
+  const timer = setInterval(spawn, 60);
+  // safety on navigation
+  window.addEventListener('beforeunload', () => clearInterval(timer));
 })();
