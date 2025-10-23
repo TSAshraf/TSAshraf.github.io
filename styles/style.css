@@ -38,11 +38,15 @@ body{
   transition: background .3s ease, color .3s ease;
 }
 
-/* Layout container — tighter & centered */
-.container{
-  max-width: 1120px;        /* keeps things from spanning too wide */
+/* Restrict all main writing sections to 80% of viewport width */
+.container,
+.intro,
+.projects,
+.project-info,
+.footer {
+  width: 80vw;
+  max-width: 1120px; /* still keeps an upper bound on large screens */
   margin: 0 auto;
-  padding: 0 24px;
 }
 
 /* ===== Theme Toggle ===== */
