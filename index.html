@@ -12,7 +12,7 @@
   <!-- Day/Night toggle -->
   <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
 
-  <!-- Atmospheric layers -->
+  <!-- Atmospheric layers (rain/fog/lightning) -->
   <div id="rain" aria-hidden="true"></div>
   <div id="fog" aria-hidden="true"></div>
   <div id="lightning" aria-hidden="true"></div>
@@ -26,7 +26,7 @@
       role="img"
       aria-label="Silhouette landscape band"
     >
-      <!-- Horizon line (y must match HORIZON_Y in landscape.js) -->
+      <!-- Horizon line — MUST match HORIZON_Y in landscape.js -->
       <rect y="312" width="1440" height="3.5" fill="#d9d9d9" opacity=".33"></rect>
 
       <!-- Layers stamped by landscape.js -->
