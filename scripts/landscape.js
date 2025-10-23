@@ -6,13 +6,13 @@
   const front = document.getElementById('layer-front');
   if (!band || !back || !mid || !front) return;
 
-  const HORIZON_Y = 312; // MUST match the <rect y="312"> in the SVG above
+  const HORIZON_Y = 312; // matches horizon <rect> y in index.html
 
   function stamp(group, d, step){
     for (let x = -60; x < 1500; x += step){
       const p = document.createElementNS("http://www.w3.org/2000/svg","path");
       p.setAttribute('d', d);
-      // place base on horizon; shapes extend UP (negative y)
+      // base on horizon; shapes extend UP (negative y)
       p.setAttribute('transform', `translate(${x},${HORIZON_Y})`);
       group.appendChild(p);
     }
@@ -51,7 +51,11 @@
   if (trigger && 'IntersectionObserver' in window){
     const io = new IntersectionObserver(
       entries => setVisible(entries[0]?.isIntersecting),
-      { root: null, threshold: 0, rootMargin: '0px 0px -20% 0px' }
+      {
+        root: null,
+        threshold: 0,
+        rootMargin: '0px 0px -20% 0px' // tweak for earlier/later reveal
+      }
     );
     io.observe(trigger);
   } else {
