@@ -11,6 +11,10 @@
   --shadow: 0 28px 84px rgba(0,0,0,0.45);
   --highlight: rgba(255,255,255,0.05);
   --drop-night: rgba(255,255,255,0.45); /* rain drops */
+  --rainColor: rgba(255,255,255,0.5); /* white at night */
+  --rainLength: 18px;
+  --rainThickness: 2px;
+  --rainSpeed: 650ms;
 }
 
   /* Day */
@@ -23,6 +27,10 @@ html[data-theme="light"]{
   --shadow: 0 24px 72px rgba(205,180,140,0.25);
   --highlight: rgba(255,240,210,0.4);
   --drop-day: rgba(0,0,0,0.35);        /* rain drops */
+  --rainColor: rgba(0,0,0,0.45);      /* black in day */
+  --rainLength: 18px;
+  --rainThickness: 2px;
+  --rainSpeed: 650ms;
 }
 
 html, body { height: 100%; }
@@ -55,14 +63,23 @@ body{
 /* ===== Atmospheric layers ===== */
 
 /* Order: rain (4) > page (3) > landscape band (2) > bg (body) */
-#rain{
-  position: fixed; inset:0; pointer-events:none;
-  z-index: 4;                /* was 1 */
-  overflow:hidden;
+#rain{ 
+  position: fixed; 
+  inset: 0; 
+  z-index: 4;       
+  pointer-events: none;
+  overflow: hidden;
 }
 
-#landscape{ z-index: 2; }
-#page{ position: relative; z-index: 3; }
+#landscape{ 
+  z-index: 2; 
+}
+
+#page{ 
+  position: 
+  relative; 
+  z-index: 3; 
+}
 
 /* Safety: ensure these don’t introduce opaque backgrounds */
 header, .container, .intro, main, .projects, .project-info { background: transparent; }
@@ -70,20 +87,20 @@ header, .container, .intro, main, .projects, .project-info { background: transpa
 /* Raindrops — DOM-based (so we can theme colors) */
 .raindrop{
   position: absolute;
-  width: 2px;
-  height: 18px;
+  width: var(--rainThickness);
+  height: var(--rainLength);
+  background: var(--rainColor);
   left: 0; bottom: 100%;
-  background: var(--drop-night);
+  border-radius: 999px;
   opacity: 0.9;
-  animation: fall linear infinite;
+  animation: fall var(--rainSpeed) linear infinite;
   will-change: transform, opacity;
 }
 html[data-theme="light"] .raindrop{ background: var(--drop-day); }
 @keyframes fall{
-  to{
-    transform: translateY(110vh);
-    opacity: 0.25;
-  }
+  0%   { transform: translate3d(var(--x,0), -5vh, 0); opacity: 0; }
+  10%  { opacity: 0.9; }
+  100% { transform: translate3d(var(--x,0), 105vh, 0); opacity: 0; }
 }
 
 /* Fog — subtle drifting gradient */
