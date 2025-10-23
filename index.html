@@ -12,12 +12,10 @@
   <!-- Day/Night toggle -->
   <button id="theme-toggle" aria-label="Toggle theme">☀️</button>
 
-  <!-- Atmospheric layers -->
+  <!-- Atmospheric layers (only rain kept) -->
   <div id="rain" aria-hidden="true"></div>
-  <div id="fog" aria-hidden="true"></div>
-  <div id="lightning" aria-hidden="true"></div>
 
-  <!-- Fixed landscape band (fades near footer) -->
+  <!-- Fixed landscape band (stalks) -->
   <div id="landscape" aria-hidden="true">
     <svg
       id="landscape-svg"
@@ -36,17 +34,17 @@
     </svg>
   </div>
 
-  <!-- Main Page -->
+  <!-- Page -->
   <div id="page">
-    <header class="container">
-      <section class="intro">
-        <h1 class="intro__title">
-          Tools for thought.<br>
-          Built quietly,<br>
-          with intent.
-        </h1>
-      </section>
-    </header>
+
+    <!-- Simple title (no hero panel) -->
+    <div class="container">
+      <h1 class="page-title">
+        Tools for thought.<br>
+        Built quietly,<br>
+        with intent.
+      </h1>
+    </div>
 
     <!-- Projects -->
     <main class="container">
@@ -54,66 +52,53 @@
 
         <!-- Project 1 -->
         <article class="project">
-          <a class="project-image-link" href="projects/fix-the-artefact.html" aria-label="Open Fix the Artifact case study">
+          <a class="project-image-link" href="projects/fix-the-artifact.html" aria-label="Open Fix the Artifact case study">
             <img class="project-image" src="assets/Fantasy-Background.jpg" alt="Fix the Artifact screenshot">
           </a>
           <div class="project-info">
             <h3>Fix the Artifact</h3>
             <p>A Java-based puzzle where players reconstruct archaeological artifacts. Zoom, saves, curated music.</p>
-            <a href="#" class="link-main">Read case study</a>
-            <a href="https://github.com/TSAshraf/Fix_The_Artefact" class="link-secondary" target="_blank" rel="noopener">View repo</a>
+            <a href="projects/fix-the-artifact.html" class="link-main">Read case study</a>
+            <a href="https://github.com/YOUR_GITHUB/Fix-The-Artefact" class="link-secondary" target="_blank" rel="noopener">View repo</a>
           </div>
         </article>
 
         <!-- Project 2 -->
         <article class="project">
-          <a class="project-image-link" href="#" aria-label="Open NeuroTrain case study">
+          <a class="project-image-link" href="projects/neurotrain.html" aria-label="Open NeuroTrain case study">
             <img class="project-image" src="images/neurotrain.jpg" alt="NeuroTrain screenshot">
           </a>
           <div class="project-info">
             <h3>NeuroTrain</h3>
             <p>A SwiftUI cognitive training suite featuring Stroop, Dual N-Back, Reaction Time, and Memory Span tasks.</p>
-            <a href="#" class="link-main">Coming soon</a>
-            <a href="#" class="link-secondary" target="_blank" rel="noopener">Coming soon</a>
+            <a href="projects/neurotrain.html" class="link-main">Read case study</a>
+            <a href="https://github.com/YOUR_GITHUB/NeuroTrain" class="link-secondary" target="_blank" rel="noopener">View repo</a>
           </div>
         </article>
 
         <!-- Project 3 -->
         <article class="project">
-          <a class="project-image-link" href="#" aria-label="Open FocusFlow case study">
+          <a class="project-image-link" href="projects/focusflow.html" aria-label="Open FocusFlow case study">
             <img class="project-image" src="images/focusflow.jpg" alt="FocusFlow screenshot">
           </a>
           <div class="project-info">
             <h3>FocusFlow</h3>
             <p>To-Do, Pomodoro, and Meditation in one SwiftUI app. Local notifications, session tracking, and themes.</p>
-            <a href="#" class="link-main">Coming soon</a>
-            <a href="#" class="link-secondary" target="_blank" rel="noopener">Coming soon</a>
+            <a href="projects/focusflow.html" class="link-main">Read case study</a>
+            <a href="https://github.com/YOUR_GITHUB/FocusFlow" class="link-secondary" target="_blank" rel="noopener">View repo</a>
           </div>
         </article>
 
         <!-- Project 4 -->
         <article class="project">
-          <a class="project-image-link" href="#" aria-label="Open Financial Tools case study">
+          <a class="project-image-link" href="projects/financial-tools.html" aria-label="Open Financial Tools case study">
             <img class="project-image" src="images/finance.jpg" alt="Financial Tools screenshot">
           </a>
           <div class="project-info">
             <h3>Financial Tools</h3>
             <p>Python calculators & analytics: mortgages, amortization schedules, savings growth, portfolio metrics.</p>
-            <a href="#" class="link-main">Coming soon</a>
-            <a href="#" class="link-secondary" target="_blank" rel="noopener">Coming soon</a>
-          </div>
-        </article>
-
-        <!-- Project 5 (optional) -->
-        <article class="project">
-          <a class="project-image-link" href="#" aria-label="Open The Rainhouse case study">
-            <img class="project-image" src="images/novel.jpg" alt="The Rainhouse visual novel image">
-          </a>
-          <div class="project-info">
-            <h3>The Rainhouse (Prototype)</h3>
-            <p>A short interactive narrative exploring memory and repetition. Built in Ren’Py. Atmosphere over action.</p>
-            <a href="#" class="link-main">Coming soon</a>
-            <a href="#" class="link-secondary" target="_blank" rel="noopener">Coming soon</a>
+            <a href="projects/financial-tools.html" class="link-main">Read case study</a>
+            <a href="https://github.com/YOUR_GITHUB/Financial_Tools" class="link-secondary" target="_blank" rel="noopener">View repo</a>
           </div>
         </article>
 
@@ -126,9 +111,9 @@
     <footer class="footer container">
       <p>
         Contact:
-        <a href="mailto:taashfeena@gmail.com">YOUR_EMAIL</a> ·
-        <a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a> ·
-        <a href="www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:YOUR_EMAIL">YOUR_EMAIL</a> ·
+        <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/YOUR_LINKEDIN" target="_blank" rel="noopener">LinkedIn</a>
       </p>
       <p>© 2025 Taashfeen. Built quietly, with intent.</p>
     </footer>
@@ -137,6 +122,5 @@
   <!-- Scripts -->
   <script src="scripts/theme.js"></script>
   <script src="scripts/landscape.js"></script>
-  <script src="scripts/rain.js"></script>
 </body>
 </html>
