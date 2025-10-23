@@ -2,71 +2,64 @@
 * { box-sizing: border-box; }
 
 :root {
-  /* Night Mode 🌙 */
+  /* Night Mode */
   --bg: #0f1418;
   --text: #eaeaea;
   --muted: #b8bec2;
   --accent: #e45b5b;
   --border: rgba(255,255,255,0.1);
-  --rain-color: rgba(255, 255, 255, 0.8); /* White rain for night */
-  --shadow: 0 28px 84px rgba(0, 0, 0, 0.45);
+  --rain-color: rgba(255,255,255,0.8);
+  --shadow: 0 28px 84px rgba(0,0,0,0.45);
   --highlight: rgba(255,255,255,0.05);
 }
 
-html[data-theme="light"] {
-  /* Day Mode ☀️ */
-  --bg: #f8f5ef; /* Sunlit warm off-white */
+html[data-theme="light"]{
+  /* Day / Sunlit */
+  --bg: #f8f5ef;
   --text: #1d1c19;
   --muted: #524f46;
   --accent: #c53f3f;
   --border: rgba(0,0,0,0.1);
-  --rain-color: rgba(0, 0, 0, 0.18); /* Black rain during day */
-  --shadow: 0 24px 72px rgba(205, 180, 140, 0.25);
-  --highlight: rgba(255, 240, 210, 0.4);
+  --rain-color: rgba(0,0,0,0.18);
+  --shadow: 0 24px 72px rgba(205,180,140,0.25);
+  --highlight: rgba(255,240,210,0.4);
 }
 
-body {
-  margin: 0;
+html, body { height: 100%; }
+
+body{
+  margin:0;
   background: var(--bg);
   color: var(--text);
-  font: 16px/1.6 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  transition: background 0.6s ease, color 0.6s ease;
+  font: 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  transition: background .6s ease, color .6s ease;
 }
 
-/* ===== Theme Toggle ===== */
-#theme-toggle {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--highlight);
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 99;
-}
-#theme-toggle:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent);
+/* Container that we accidentally removed earlier */
+.container{
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 5vw;
 }
 
-/* ===== Layers ===== */
-#rain, #birds, #lightning, #fog, #landscape {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  transition: opacity 0.6s ease, background 0.6s ease;
+/* Theme toggle */
+#theme-toggle{
+  position: fixed; top:16px; right:16px; z-index:99;
+  width:42px; height:42px; border-radius:10px;
+  border:1px solid var(--border); background: var(--highlight);
+  color: var(--text); display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition: all .2s ease;
+}
+#theme-toggle:hover{ transform: translateY(-2px); border-color: var(--accent); }
+
+/* ===== Atmos layers ===== */
+#rain, #birds, #lightning, #fog{
+  position: fixed; inset:0; pointer-events:none; z-index:1;
+  transition: opacity .6s ease, background .6s ease;
 }
 
-/* ===== Rain Layer ===== */
-#rain {
+/* Rain */
+#rain{
   background: repeating-linear-gradient(
     180deg,
     var(--rain-color) 0px,
@@ -74,143 +67,139 @@ body {
     transparent 1px,
     transparent 8px
   );
-  animation: rainFall 0.5s linear infinite;
-  opacity: 0.3;
+  animation: rainFall .5s linear infinite;
+  opacity: .3;
 }
-@keyframes rainFall {
-  from { background-position-y: 0; }
-  to { background-position-y: 8px; }
+@keyframes rainFall{
+  from{ background-position-y: 0; }
+  to  { background-position-y: 8px; }
 }
 
-/* ===== Page Wrapper ===== */
-#page {
-  position: relative;
-  z-index: 3;
+/* Fixed landscape band — initially hidden! */
+#landscape{
+  position: fixed; left:0; right:0; bottom:0;
+  height: 34vh; z-index:2; pointer-events:none; overflow:hidden;
+  opacity: 0; transform: translateY(16px);
+  transition: opacity .8s ease, transform .8s ease;
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to top, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+}
+#landscape.landscape--visible{ opacity: 1; transform: translateY(0); }
+#landscape-svg{ width:100%; height:100%; display:block; }
+
+/* Page content sits above layers */
+#page{
+  position: relative; z-index: 3;
+  /* Ensure footer isn't covered by the fixed band */
   padding-bottom: calc(34vh + 24px);
 }
 
 /* ===== Intro ===== */
-.intro {
+.intro{
   margin: 14vh auto 8vh;
-  position: relative;
   text-align: left;
   max-width: 30ch;
 }
-.intro__title {
+.intro__title{
   font-weight: 800;
-  font-size: clamp(2.8rem, 6vw, 4.6rem);
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
   line-height: 1.05;
 }
 
-/* ===== Projects Section ===== */
-.projects {
+/* ===== Projects ===== */
+.projects{
   display: grid;
-  gap: clamp(4rem, 7vw, 8rem);
+  gap: clamp(3rem, 6vw, 6rem);
   margin: 3rem 0 8rem;
 }
 
-/* Layout */
-.project {
+/* Image-left / text-right */
+.project{
   display: grid;
   grid-template-columns: 1.8fr 1fr;
   align-items: center;
-  gap: clamp(2rem, 3.5vw, 4rem);
-}
-.project:nth-child(even) .project-image-link {
-  order: 2;
-}
-.project:nth-child(even) .project-info {
-  order: 1;
+  gap: clamp(1.6rem, 3vw, 3rem);
 }
 
-/* ===== Image Cards ===== */
-.project-image-link {
-  position: relative;
-  display: block;
-  width: 100%;
-  border-radius: 20px;
-  overflow: hidden;
-  transform: translateZ(0);
-  transition: transform 0.45s ease, box-shadow 0.45s ease, filter 0.45s ease;
+/* Alternate */
+.project:nth-child(even) .project-image-link{ order:2; }
+.project:nth-child(even) .project-info{ order:1; }
+
+/* Image card */
+.project-image-link{
+  position: relative; display:block; width:100%;
+  border-radius: 20px; overflow:hidden;
   box-shadow: var(--shadow);
+  transform: translateZ(0);
+  transition: transform .45s ease, box-shadow .45s ease, filter .45s ease;
+  background: #111; /* fallback bg so empty images don't look like a huge void */
 }
 
-/* Hover feedback: image lift + overlay */
-.project-image-link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0));
-  opacity: 0;
-  transition: opacity 0.35s ease;
+/* Gradient overlay on hover */
+.project-image-link::after{
+  content:""; position:absolute; inset:0; opacity:0;
+  background: linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0));
+  transition: opacity .35s ease;
 }
 
-.project-image-link:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 36px 110px rgba(0, 0, 0, 0.5);
-}
-.project-image-link:hover::after {
-  opacity: 1;
-}
-.project-image {
-  width: 100%;
-  display: block;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  filter: brightness(0.92) contrast(1.05);
-  transition: filter 0.4s ease;
-}
-.project-image-link:hover .project-image {
-  filter: brightness(1.05) contrast(1.1);
+.project-image{
+  width:100%; display:block; aspect-ratio: 16 / 9; object-fit: cover;
+  filter: brightness(.92) contrast(1.05);
+  transition: filter .4s ease;
 }
 
-/* ===== Text Cards ===== */
-.project-info {
-  background: transparent;
-  border: none;
-  padding: 0;
-  max-width: 640px;
+/* If image fails to load, show a subtle skeleton */
+.project-image[onerror],
+.project-image:not([src]), 
+.project-image[src=""]{
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.08), rgba(255,255,255,.04));
+  background-size: 200% 100%;
+  animation: skeleton 1.2s linear infinite;
 }
-.project-info h3 {
-  margin: 0 0 0.5rem;
-  font-size: clamp(1.3rem, 2vw, 1.8rem);
-  font-weight: 700;
-}
-.project-info p {
-  margin: 0 0 1.2rem;
-  color: var(--muted);
-  line-height: 1.6;
+@keyframes skeleton{
+  0%{ background-position: 0% 0; }
+  100%{ background-position: 200% 0; }
 }
 
-/* ===== Links ===== */
-.link-main {
-  color: var(--accent);
-  font-weight: 600;
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.3s ease, color 0.3s ease;
+.project-image-link:hover { transform: translateY(-4px); box-shadow: 0 36px 110px rgba(0,0,0,.5); }
+.project-image-link:hover::after{ opacity:1; }
+.project-image-link:hover .project-image{ filter: brightness(1.05) contrast(1.1); }
+
+/* Text block (transparent) */
+.project-info{
+  background: transparent; border: none; padding: 0; max-width: 640px;
 }
-.link-main:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+.project-info h3{
+  margin: 0 0 .5rem; font-size: clamp(1.2rem, 2vw, 1.7rem); font-weight: 700;
 }
-.link-secondary {
-  color: var(--muted);
-  text-decoration: none;
-  margin-left: 10px;
-  transition: color 0.3s ease;
+.project-info p{
+  margin: 0 0 1rem; color: var(--muted); line-height: 1.6;
 }
-.link-secondary:hover {
-  color: var(--accent);
+
+/* Links */
+.link-main{
+  color: var(--accent); font-weight:600; text-decoration:none;
+  border-bottom: 2px solid transparent; transition: border-color .3s ease, color .3s ease;
 }
+.link-main:hover{ border-color: var(--accent); }
+
+.link-secondary{
+  color: var(--muted); text-decoration:none; margin-left: 10px; transition: color .3s ease;
+}
+.link-secondary:hover{ color: var(--accent); }
+
+/* Footer */
+.footer{ margin:60px auto; text-align:center; color: var(--muted); }
+.footer a{ color: var(--accent); text-decoration:none; }
+.footer a:hover{ text-decoration: underline; }
 
 /* Responsive */
-@media (max-width: 1024px) {
-  .project {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-  .project-info {
-    max-width: 760px;
-  }
+@media (max-width: 1024px){
+  .project{ grid-template-columns: 1fr; gap: 2rem; }
+  .project-info{ max-width: 760px; }
+}
+@media (max-width: 900px){
+  #landscape{ height: 30vh; }
+  #page{ padding-bottom: calc(30vh + 20px); }
 }
