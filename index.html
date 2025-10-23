@@ -36,33 +36,19 @@
   <!-- Page content (top layer) -->
   <div id="page">
 
-    <!-- ===== HERO (new) ===== -->
-    <header class="hero">
-      <!-- drifting cloud layer inside hero -->
-      <div class="hero-clouds" aria-hidden="true">
-        <div class="cloud c1"></div>
-        <div class="cloud c2"></div>
-        <div class="cloud c3"></div>
+    <!-- Intro panel (same place as before), now with its own soft cloud layer -->
+    <header class="intro container intro--with-clouds">
+      <div class="intro__clouds" aria-hidden="true">
+        <span class="puff p1"></span>
+        <span class="puff p2"></span>
+        <span class="puff p3"></span>
       </div>
 
-      <div class="hero__inner container">
-        <h1 class="hero__title">
-          Taashfeen builds quiet tools for thinking—focused on cognition,
-          steady productivity, and practical systems.
-        </h1>
-
-        <p class="hero__kicker">
-          Software that measures what matters, stays out of the way, and helps you focus.
-        </p>
-
-        <div class="hero__cta">
-          <a href="#projects" class="btn btn--primary">See projects</a>
-          <a href="mailto:YOUR_EMAIL" class="btn btn--ghost">Contact</a>
-        </div>
-      </div>
-
-      <button class="scroll-cue" aria-label="Scroll to projects"
-        onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})">↓</button>
+      <h1 class="intro__title">
+        Taashfeen builds quiet tools for thinking—focused on cognition,
+        steady productivity, and practical systems.
+      </h1>
+      <!-- (Optional subline: add a <p class="intro__kicker">…</p> if you want) -->
     </header>
 
     <main class="container">
