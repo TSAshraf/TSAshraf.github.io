@@ -2,21 +2,27 @@
 * { box-sizing: border-box; }
 
 :root {
+  /* Night Mode 🌙 */
   --bg: #0f1418;
   --text: #eaeaea;
   --muted: #b8bec2;
   --accent: #e45b5b;
   --border: rgba(255,255,255,0.1);
   --rain-color: rgba(255, 255, 255, 0.8); /* White rain for night */
+  --shadow: 0 28px 84px rgba(0, 0, 0, 0.45);
+  --highlight: rgba(255,255,255,0.05);
 }
 
 html[data-theme="light"] {
-  --bg: #fdfdfd;
-  --text: #0f1418;
-  --muted: #47525a;
-  --accent: #c53030;
+  /* Day Mode ☀️ */
+  --bg: #f8f5ef; /* Sunlit warm off-white */
+  --text: #1d1c19;
+  --muted: #524f46;
+  --accent: #c53f3f;
   --border: rgba(0,0,0,0.1);
-  --rain-color: rgba(0, 0, 0, 0.15); /* Black rain for day */
+  --rain-color: rgba(0, 0, 0, 0.18); /* Black rain during day */
+  --shadow: 0 24px 72px rgba(205, 180, 140, 0.25);
+  --highlight: rgba(255, 240, 210, 0.4);
 }
 
 body {
@@ -36,7 +42,7 @@ body {
   height: 42px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--highlight);
   color: var(--text);
   display: flex;
   align-items: center;
@@ -126,7 +132,7 @@ body {
   overflow: hidden;
   transform: translateZ(0);
   transition: transform 0.45s ease, box-shadow 0.45s ease, filter 0.45s ease;
-  box-shadow: 0 28px 84px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow);
 }
 
 /* Hover feedback: image lift + overlay */
