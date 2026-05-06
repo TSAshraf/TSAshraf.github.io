@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="case-moody">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Crows and Owls — Case Study</title>
+    <meta name="description" content="Case study for Crows and Owls — a monochrome browser-based narrative game built with HTML5 Canvas, vanilla JavaScript, and Howler.js.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☾</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Case Study Hero -->
+<header class="case-hero container">
+    <a href="../series/monochrome-narratives.html" class="case-back">← Back to Monochrome Narratives</a>
+    <h1 class="case-title">Crows and Owls</h1>
+    <p class="case-summary">A monochrome browser-based narrative game about atmosphere, cumulative choice, and the weight of watching. Built from scratch with HTML5 Canvas and vanilla JavaScript. Part of the Monochrome Narratives series.</p>
+
+    <div class="case-meta">
+        <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer, Developer & Writer</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Type</span>
+            <span class="case-meta-value">Narrative Game</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Stack</span>
+            <span class="case-meta-value">JavaScript, HTML5 Canvas, Howler.js</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Series</span>
+            <span class="case-meta-value"><a href="../series/monochrome-narratives.html" style="color: var(--accent);">Monochrome Narratives</a></span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Focus</span>
+            <span class="case-meta-value">Atmosphere & Interaction Design</span>
+        </div>
+    </div>
+
+    <div class="case-actions">
+        <a href="#" class="btn btn-primary">Play Online</a>
+        <a href="#" class="btn">View on GitHub</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Overview -->
+    <section class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-text">
+            <p>Crows and Owls is a short narrative game played entirely in the browser. It uses monochrome visuals, sparse audio, and minimal interaction to create a contemplative experience about observation, presence, and the passing of time.</p>
+            <p>There are no health bars, no score, no fail state. The player moves through a sequence of scenes, making small choices that accumulate quietly. The game remembers what you chose — not to punish or reward, but to shape the tone of what comes next.</p>
+        </div>
+    </section>
+
+    <!-- Design Goal -->
+    <section class="case-section">
+        <h2 class="case-section-title">Why I Made This</h2>
+        <div class="case-section-text">
+            <p>I wanted to explore what a game feels like when you strip away almost everything. No colour. No UI chrome. No obvious mechanics. Just a landscape, some text, and the feeling that your presence matters.</p>
+            <p>Most narrative games signal their choices loudly — dialogue trees, branching paths, consequence warnings. I was interested in the opposite: choices that feel small in the moment but leave a trace. The kind of decisions you only notice in retrospect.</p>
+            <p>The monochrome palette wasn't an aesthetic limitation — it was a design choice. Removing colour forces every other element to carry more weight: composition, contrast, timing, sound.</p>
+        </div>
+    </section>
+
+    <!-- Player Experience -->
+    <section class="case-section">
+        <h2 class="case-section-title">Player Experience</h2>
+        <div class="case-section-text">
+            <p>The game opens on a dark field. A figure — you — stands at the edge. Text appears slowly. You read it, and then you choose: move forward, or wait.</p>
+            <p>Each scene is a composition: a landscape rendered on canvas, ambient sound layered through Howler.js, and narrative text that responds to your accumulated choices. Some scenes are long. Some are a single line. The pacing is deliberate — silence is part of the design.</p>
+            <p>By the end, the world you've moved through reflects the pattern of your choices. Not dramatically — subtly. A different sky. A different sound. A line of text that could have been something else.</p>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="case-section">
+        <h2 class="case-section-title">Key Features</h2>
+        <div class="case-section-text">
+            <ul>
+                <li><strong>Cumulative choice system</strong> — decisions don't branch the story; they shift its tone. The game tracks a quiet internal state that colours the narrative without exposing the mechanics.</li>
+                <li><strong>Procedural monochrome landscapes</strong> — each scene is rendered on HTML5 Canvas with layered procedural elements: horizon lines, treelines, atmospheric gradients, particle systems for weather.</li>
+                <li><strong>Spatial audio design</strong> — Howler.js manages layered ambient tracks that crossfade based on scene state. Wind, distant crows, silence — each is placed intentionally.</li>
+                <li><strong>Typographic pacing</strong> — text appears character by character with variable timing. Pauses are written into the script, not just the rendering. Punctuation breathes differently.</li>
+                <li><strong>Minimal interaction model</strong> — no inventory, no menus, no HUD. Interaction is reduced to movement and occasional binary choices presented as text.</li>
+                <li><strong>Responsive canvas</strong> — the game scales to any viewport without breaking composition. Landscape ratios adapt, and text positioning is relative to the scene geometry.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="case-section">
+        <h2 class="case-section-title">Screenshots</h2>
+        <div class="case-gallery">
+            <figure class="case-gallery-item">
+                <img src="../assets/Crows and Owls/01_title_screen.png" alt="Crows and Owls — title screen">
+                <figcaption class="case-gallery-caption">Title screen</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Crows and Owls/02_day_one.png" alt="Crows and Owls — day one">
+                <figcaption class="case-gallery-caption">Day one — the landscape opens</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Crows and Owls/03_opening_scene.png" alt="Crows and Owls — opening scene">
+                <figcaption class="case-gallery-caption">Opening scene — a figure at the edge of a dark field</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Crows and Owls/04_narrative_text.png" alt="Crows and Owls — narrative text">
+                <figcaption class="case-gallery-caption">Narrative text — typographic pacing over the landscape</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Crows and Owls/05_encounter.png" alt="Crows and Owls — encounter">
+                <figcaption class="case-gallery-caption">An encounter</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Crows and Owls/06_walking.png" alt="Crows and Owls — walking">
+                <figcaption class="case-gallery-caption">Walking — movement through the monochrome landscape</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Crows and Owls/07_choices_or_narrative.png" alt="Crows and Owls — choices">
+                <figcaption class="case-gallery-caption">A quiet choice — the kind you only notice in retrospect</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Crows and Owls/08_scene.png" alt="Crows and Owls — scene">
+                <figcaption class="case-gallery-caption">Scene composition — layered atmospheric depth</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Crows and Owls/09_day1_alternate.png" alt="Crows and Owls — alternate day one">
+                <figcaption class="case-gallery-caption">Day one — an alternate tone shaped by earlier choices</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Crows and Owls/10_choices.png" alt="Crows and Owls — choice moment">
+                <figcaption class="case-gallery-caption">Choices — small decisions that leave a trace</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section class="case-section">
+        <h2 class="case-section-title">Technical Architecture</h2>
+        <div class="case-section-text">
+            <p>The entire game runs in the browser with zero dependencies beyond Howler.js for audio. No build tools, no frameworks — just vanilla JavaScript and a canvas element.</p>
+        </div>
+        <div class="case-architecture">Crows and Owls
+├── engine/
+│   ├── canvas.js       — Rendering pipeline, scene composition, layering
+│   ├── scenes.js       — Scene graph, transitions, state management
+│   ├── choices.js      — Cumulative choice tracker, tone calculation
+│   └── typewriter.js   — Character-by-character text renderer with pacing
+├── audio/
+│   ├── manager.js      — Howler.js wrapper, crossfade logic, spatial mixing
+│   └── tracks/         — Ambient loops, one-shots, silence layers
+├── data/
+│   ├── script.json     — Narrative content, choice definitions, pacing marks
+│   └── scenes.json     — Scene definitions, visual parameters, audio mappings
+├── render/
+│   ├── landscape.js    — Procedural horizon, treeline, gradient generation
+│   ├── weather.js      — Particle systems: rain, fog, ash
+│   └── figures.js      — Minimal character silhouettes
+└── index.html          — Single entry point, fullscreen canvas</div>
+        <div class="case-section-text" style="margin-top: 16px;">
+            <p>The rendering pipeline uses requestAnimationFrame with a scene-based compositor. Each scene defines its visual layers, and the engine renders them in order with blending. Scene transitions use opacity crossfades timed to the audio.</p>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section class="case-section">
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="case-section-text">
+            <p>Building Crows and Owls taught me that restraint is its own kind of complexity. Removing colour, UI elements, and explicit mechanics didn't simplify the project — it raised the bar for everything that remained. Every pixel of contrast, every millisecond of text timing, every decibel of ambient sound had to earn its place.</p>
+            <p>The cumulative choice system was the most interesting technical challenge. Traditional branching creates an exponential content problem. The tone-shifting approach let me create the feeling of meaningful choice without needing dozens of alternate paths — the same scene, described differently, feels like a different world.</p>
+            <p>This project also solidified my interest in the intersection of software engineering and experience design. The technical work — canvas rendering, audio management, state tracking — was in service of an emotional goal. That's the kind of engineering I find most rewarding.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

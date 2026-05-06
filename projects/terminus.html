@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="case-moody">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Terminus — Case Study</title>
+    <meta name="description" content="Case study for Terminus — a looping train game about repetition, agency, and the passengers you can't save, built with HTML5 Canvas and Pretext.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../series/monochrome-narratives.html">Series</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☾</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Case Study Hero -->
+<header class="case-hero container">
+    <a href="../series/monochrome-narratives.html" class="case-back">← Back to Monochrome Narratives</a>
+    <h1 class="case-title">Terminus</h1>
+    <p class="case-summary">The next station is Acheron. A looping train game about six passengers you can talk to, throw from the carriage, or ignore entirely. The train never stops. The loop never explains itself. The only colour in the game appears when someone falls. Part of the Monochrome Narratives series.</p>
+
+    <div class="case-meta">
+        <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer, Developer & Writer</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Type</span>
+            <span class="case-meta-value">Narrative Game</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Stack</span>
+            <span class="case-meta-value">JavaScript, HTML5 Canvas, Pretext</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Series</span>
+            <span class="case-meta-value"><a href="../series/monochrome-narratives.html" style="color: var(--accent);">Monochrome Narratives</a></span>
+        </div>
+    </div>
+
+    <div class="case-actions">
+        <a href="../Monochrome Narratives/Terminus/index.html" class="btn btn-primary">Play</a>
+        <a href="#" class="btn">View on GitHub</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Overview -->
+    <section class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-text">
+            <p>Terminus is a looping narrative game played in the browser. You wake on a train with no memory of boarding. Five cars stretch ahead of you. Six named passengers sit in various seats. A sixth car is sealed — no handle on your side. A PA announcement welcomes you aboard. The train moves. It doesn't stop.</p>
+            <p>Each loop resets the world but preserves what you've done. Throw a passenger from the train and they reappear next loop, changed. Ignore everyone and the game notices. The system doesn't punish or reward — it accumulates. Eventually, every passenger walks through the sealed door on their own.</p>
+        </div>
+    </section>
+
+    <!-- Design Goal -->
+    <section class="case-section">
+        <h2 class="case-section-title">Why I Made This</h2>
+        <div class="case-section-text">
+            <p>The earlier games in the series explored atmosphere through landscape, archaeology, and domesticity. Terminus explores it through confinement and repetition. I wanted to build a game where the player's relationship to the system — not the story — is the thing that changes.</p>
+            <p>The premise comes from a simple question: what happens when the most violent action available is also the most informative? Throwing a passenger from the train is the only way to see the hallucination — the only colour in the entire game. But it also advances that passenger toward disappearance. The game creates a tension between curiosity and consequence that doesn't resolve.</p>
+            <p>Structurally, the loop mechanic let me explore something the earlier games couldn't: how repetition changes meaning. The same PA announcement heard ten times becomes sinister. The same car description read after everyone is gone becomes a different sentence. The writing doesn't change — the player does.</p>
+        </div>
+    </section>
+
+    <!-- Player Experience -->
+    <section class="case-section">
+        <h2 class="case-section-title">Player Experience</h2>
+        <div class="case-section-text">
+            <p>You move between five train cars using arrow keys. Each car is rendered as a monochrome interior — seats, windows, doors, overhead luggage racks. Passengers sit or stand depending on how many times they've been thrown. You can approach anyone and talk to them, or open the action menu to throw them from the carriage.</p>
+            <p>When someone is thrown, the game cuts to a hallucination sequence — the only moment colour appears. Deep arterial red fills the screen. Fragments of liturgical text scroll across layered planes. Seated figures made of repeated words appear in rows. A central wound pulses. Then it ends, and you're back on the train.</p>
+            <p>Each passenger has six tiers of dialogue, unlocked by cumulative throws. The Talker describes a room with a speaking wound. The Counter tallies resets on the wall. The Liar gives a different name each time. The Mother holds a child who never wakes. The Sleeper's eyes are always closed — until they aren't. The Mute never speaks. By tier five, every passenger walks through the sealed door and disappears.</p>
+            <p>If you do nothing — take no action for consecutive loops — the game shifts. Narration becomes third-person. Descriptions become bureaucratic. The PA announcement shortens to a single word. Eventually the game resets itself, with or without you.</p>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="case-section">
+        <h2 class="case-section-title">Key Features</h2>
+        <div class="case-section-text">
+            <ul>
+                <li><strong>Loop system with persistent state</strong> — each loop resets the train but preserves throw counts, dialogue tiers, and population changes. Progress is saved to localStorage across sessions.</li>
+                <li><strong>Six named passengers with tiered dialogue</strong> — 36 unique dialogue trees (6 passengers x 6 tiers). Each passenger's language and behaviour evolve with every throw, from composed to fragmented to silent.</li>
+                <li><strong>Throw mechanic</strong> — the central action. Throwing a passenger triggers the hallucination and advances their tier. It's the most violent and most revealing thing you can do. The game tracks which you choose.</li>
+                <li><strong>Hallucination sequence</strong> — the only colour in the series. Canvas-rendered red space with three visual layers: structural words at 72px, scrolling sermon fragments, and dense monospace text. Higher tiers add seated figures and a pulsing central wound.</li>
+                <li><strong>Population decay</strong> — nine unnamed passengers thin out over loops. Panickers disappear first, then the still ones, then the followers. One child never disappears. By late loops the train is nearly empty.</li>
+                <li><strong>Inactivity detection</strong> — the game monitors player engagement. Consecutive loops of no action trigger escalating do-nothing phases: narration shifts to third person, descriptions become minimal, eventually the loop force-resets.</li>
+                <li><strong>Pretext Canvas text rendering</strong> — all narrative text rendered directly on Canvas using Pretext's DOM-free layout engine. Text is part of the scene composition, not an overlay.</li>
+                <li><strong>Sealed car</strong> — Car 6 has no handle on the player's side. All tier-five passengers walk through it. What's on the other side is never shown.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="case-section">
+        <h2 class="case-section-title">Screenshots</h2>
+        <div class="case-gallery">
+            <figure class="case-gallery-item">
+                <img src="../assets/Terminus/04-pa-announcement.png" alt="Terminus — PA announcement">
+                <figcaption class="case-gallery-caption">PA announcement — the next station is Acheron</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Terminus/05-car-description.png" alt="Terminus — car interior">
+                <figcaption class="case-gallery-caption">Car interior — monochrome train rendered on Canvas</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Terminus/06-action-menu.png" alt="Terminus — action menu">
+                <figcaption class="case-gallery-caption">Action menu — talk, throw, or walk away</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Terminus/07-dialogue-choices.png" alt="Terminus — dialogue choices">
+                <figcaption class="case-gallery-caption">Dialogue choices — branching conversation with a passenger</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Terminus/08-throw-narration.png" alt="Terminus — throw narration">
+                <figcaption class="case-gallery-caption">Throw narration — the moment before the fall</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Terminus/10-throw-aftermath.png" alt="Terminus — aftermath">
+                <figcaption class="case-gallery-caption">Aftermath — returning to the train after the hallucination</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section class="case-section">
+        <h2 class="case-section-title">Technical Architecture</h2>
+        <div class="case-section-text">
+            <p>Terminus uses ES modules with no bundler or build step. Pretext is included as a local library for Canvas text layout. State is persisted to localStorage. The game runs entirely client-side.</p>
+        </div>
+        <div class="case-architecture">Terminus
+├── js/
+│   ├── config.js      — Canvas dimensions, palette, train layout, timing constants
+│   ├── utils.js       — SeededRNG, EventBus, SaveManager (localStorage persistence)
+│   ├── state.js       — Loop tracking, per-passenger throw tiers, population state
+│   ├── renderer.js    — All Canvas drawing: train cars, characters, hallucination sequence
+│   ├── narrative.js   — Pretext-powered text rendering, typewriter pacing, speaker labels
+│   ├── data.js        — All narrative content: 36 dialogue trees, PA variants, fragments
+│   ├── scenes.js      — TrainScene and HallucinationScene state machines
+│   ├── game.js        — Main loop, input handling, game state coordinator
+│   └── lib/
+│       └── pretext/   — DOM-free text measurement, layout, line-breaking
+│           ├── analysis.js
+│           ├── bidi.js
+│           ├── layout.js
+│           ├── line-break.js
+│           └── measurement.js
+├── css/
+│   └── style.css      — Title screen, UI chrome, choice buttons
+└── index.html         — Single entry point</div>
+        <div class="case-section-text" style="margin-top: 16px;">
+            <p>The renderer draws train interiors as flat geometric compositions — rectangular seats, trapezoidal windows, door frames with handle details. The hallucination system switches the renderer to a layered text-art mode: large structural words, scrolling fragments, and dense background text are drawn at different opacities and speeds across the Canvas, with the background interpolating from monochrome to deep red.</p>
+            <p>State management is the most complex in the series. The <code>GameState</code> class tracks loop count, per-passenger throw tiers (0–5), named passenger positions, unnamed passenger arrays (thinned each loop), dialogue history, and inactivity counters. The entire state serialises to JSON and persists via localStorage, so progress survives across sessions.</p>
+            <p>Pretext handles all narrative text layout. The typewriter reveal system calls <code>prepare()</code> once per text block to cache character measurements, then <code>layout()</code> per frame during the reveal — fast enough for 60fps because the expensive measurement pass is cached.</p>
+        </div>
+    </section>
+
+    <!-- Place in Series -->
+    <section class="case-section">
+        <h2 class="case-section-title">Place in the Series</h2>
+        <div class="case-section-text">
+            <p>Terminus is the fourth game in the <a href="../series/monochrome-narratives.html" style="color: var(--accent);">Monochrome Narratives</a> series. It's the first to break the monochrome constraint — the hallucination sequence uses deep reds, making it the only colour in the entire series. That violation is deliberate: the red marks the moments where the system reveals itself.</p>
+            <p>It's also the most systems-driven game in the series. Crows and Owls tracks cumulative tone. The Layer Below tracks excavation progress. Still Life tracks attention toward a single object. Terminus tracks six passengers across five throw tiers, a decaying unnamed population, inactivity counters, and loop state — all persisted across sessions. The complexity is invisible to the player, but it's what makes the repetition feel alive.</p>
+            <p>Thematically, the series continues to expand. Landscape, archaeology, domesticity, and now confinement. Each game asks a version of the same question: what does it feel like to pay attention to something that doesn't ask for it? Terminus adds a darker follow-up: what does it feel like to act on something that doesn't resist?</p>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section class="case-section">
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="case-section-text">
+            <p>The hardest part of Terminus was writing six characters who become more interesting the worse you treat them. Each passenger needed to be compelling enough at tier zero that you'd want to talk to them, but their real depth only emerges through the throw mechanic. The Liar's composure cracks across tiers. The Counter's system collapses into a single number. The Sleeper's eyes open. Getting those arcs right — making the violence feel like discovery rather than cruelty — was the central writing challenge.</p>
+            <p>The do-nothing path was the most surprising thing to design. I expected it to be a footnote — most players will interact. But the game's response to inaction turned out to be some of the strongest writing in the project. When the narration shifts to third person and starts describing you as "the seated one," the discomfort is different from anything the throw mechanic creates. You stop being the subject and become inventory.</p>
+            <p>The hallucination sequence taught me how powerful a single colour can be after sustained restraint. Three games of pure monochrome, and then red. Players don't see a colour — they feel a rupture. That effect only works because of everything that came before it in the series. Terminus couldn't be the first game. It had to earn that red.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

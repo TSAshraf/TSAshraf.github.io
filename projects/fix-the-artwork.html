@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Fix the Artwork — Case Study</title>
+    <meta name="description" content="Case study for Fix the Artwork — a browser-based jigsaw puzzle extending Fix the Artefact into a web-native, art-focused experience.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☾</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Case Study Hero -->
+<header class="case-hero container">
+    <a href="../series/jigsaw-collection.html" class="case-back">← Back to Jigsaw Collection</a>
+    <h1 class="case-title">Fix the Artwork</h1>
+    <p class="case-summary">A browser-based jigsaw puzzle that brings artwork reconstruction to the web. An offshoot of Fix the Artefact — rebuilt for the browser with a focus on art appreciation, smooth interaction, and accessible play.</p>
+
+    <div class="case-meta">
+        <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer & Developer</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Type</span>
+            <span class="case-meta-value">Interactive Web App</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Stack</span>
+            <span class="case-meta-value">HTML5 Canvas, JavaScript, CSS</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Origin</span>
+            <span class="case-meta-value">Offshoot of <a href="fix-the-artefact.html" style="color: var(--accent);">Fix the Artefact</a></span>
+        </div>
+    </div>
+
+    <div class="case-actions">
+        <a href="#" class="btn btn-primary">Play Online</a>
+        <a href="#" class="btn">View on GitHub</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Overview -->
+    <section class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-text">
+            <p>Fix the Artwork takes the core idea behind Fix the Artefact — reconstructing images as a puzzle — and moves it to the browser. Instead of archaeological artefacts in a museum kiosk, the focus shifts to artworks: paintings, illustrations, and visual compositions that reward close looking.</p>
+            <p>The project is a deliberate reinterpretation rather than a port. The interaction model, visual design, and technical architecture were all rethought for the web, taking advantage of what the browser does well while solving the constraints that came with the original Java desktop application.</p>
+        </div>
+    </section>
+
+    <!-- Design Goal -->
+    <section class="case-section">
+        <h2 class="case-section-title">Why I Made This</h2>
+        <div class="case-section-text">
+            <p>Fix the Artefact worked as a dissertation project, but it was locked inside a Java desktop app. I wanted to see what the same concept looked like when it could run anywhere — no install, no setup, just a URL.</p>
+            <p>Shifting the subject matter from artefacts to artwork also changed the design problem. Artwork demands more visual fidelity, smoother interaction, and a presentation layer that doesn't compete with the image. The puzzle needed to feel like a gallery, not a game UI.</p>
+            <p>This was also a chance to apply what I'd learned from the first version: what the user testing revealed, what the accessibility review flagged, and what felt clumsy in the original interaction model.</p>
+        </div>
+    </section>
+
+    <!-- Player Experience -->
+    <section class="case-section">
+        <h2 class="case-section-title">User Experience</h2>
+        <div class="case-section-text">
+            <p>Users select an artwork from a curated gallery. The image is divided into jigsaw pieces rendered on an HTML5 Canvas. Pieces can be dragged, rotated, and snapped into place with smooth visual feedback — soft shadows when lifting, a subtle settle animation on placement.</p>
+            <p>The surrounding UI is deliberately minimal. No score counters, no timers, no leaderboards. The emphasis is on the act of looking closely at an image and understanding its composition through the process of reassembly.</p>
+            <p>Completing a puzzle reveals the full artwork alongside contextual information: the artist, the period, a short description of the work's significance. The educational layer is present but never forced.</p>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="case-section">
+        <h2 class="case-section-title">Key Features</h2>
+        <div class="case-section-text">
+            <ul>
+                <li><strong>Canvas-based puzzle engine</strong> — pieces are generated dynamically from any source image with configurable grid sizes and organic jigsaw edge shapes.</li>
+                <li><strong>Smooth drag and snap</strong> — lift, move, and place pieces with responsive visual feedback. Proximity-based snapping with a satisfying lock animation.</li>
+                <li><strong>Piece rotation</strong> — optional rotation adds difficulty without cluttering the interface. Controlled via scroll wheel or tap gesture.</li>
+                <li><strong>Curated artwork gallery</strong> — a selection of paintings and illustrations chosen for visual variety and puzzle suitability.</li>
+                <li><strong>Responsive layout</strong> — the canvas and UI adapt to any screen size. Playable on desktop and tablet without compromise.</li>
+                <li><strong>Accessibility</strong> — keyboard controls for piece selection and placement, high-contrast outlines, and screen reader announcements for progress and completion.</li>
+                <li><strong>Zero dependencies</strong> — vanilla JavaScript, no frameworks. Fast load, no build step required.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="case-section">
+        <h2 class="case-section-title">Screenshots</h2>
+        <div class="case-gallery">
+            <figure class="case-gallery-item">
+                <img src="../assets/Fantasy-Background.jpg" alt="Fix the Artwork — puzzle in progress">
+                <figcaption class="case-gallery-caption">Puzzle in progress — pieces scattered on the canvas workspace</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Fantasy-Background.jpg" alt="Fix the Artwork — artwork gallery">
+                <figcaption class="case-gallery-caption">Artwork selection gallery with curated collection</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Fantasy-Background.jpg" alt="Fix the Artwork — snap feedback">
+                <figcaption class="case-gallery-caption">Snap feedback — piece locking into position with settle animation</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Fantasy-Background.jpg" alt="Fix the Artwork — completion view">
+                <figcaption class="case-gallery-caption">Completion view with full artwork and contextual information</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section class="case-section">
+        <h2 class="case-section-title">Technical Architecture</h2>
+        <div class="case-section-text">
+            <p>The entire application runs client-side in the browser with zero external dependencies. The puzzle engine handles piece generation, hit detection, snap logic, and rendering in a single requestAnimationFrame loop.</p>
+        </div>
+        <div class="case-architecture">Fix the Artwork
+├── engine/
+│   ├── puzzle.js        — Piece generation, edge shapes, grid layout
+│   ├── canvas.js        — Rendering pipeline, layering, viewport management
+│   ├── interaction.js   — Drag handling, snap detection, rotation input
+│   └── animation.js     — Lift shadows, snap settle, completion transitions
+├── gallery/
+│   ├── artworks.json    — Artwork metadata, descriptions, artist info
+│   └── images/          — Source artwork files (optimised for web)
+├── ui/
+│   ├── selector.js      — Artwork gallery browser
+│   ├── controls.js      — Difficulty picker, hint toggle, reset
+│   └── completion.js    — End state display, artwork info reveal
+├── accessibility/
+│   ├── keyboard.js      — Arrow-key piece selection and placement
+│   └── announcer.js     — Live region updates for screen readers
+├── styles/
+│   └── app.css          — Minimal UI styling, responsive layout
+└── index.html           — Single entry point</div>
+        <div class="case-section-text" style="margin-top: 16px;">
+            <p>Piece edges use Bezier curves generated from a seed, ensuring consistent interlocking shapes. Hit detection uses path-based point-in-polygon testing on the canvas context. The snap system groups connected pieces so they move as clusters once joined.</p>
+        </div>
+    </section>
+
+    <!-- Relationship to Fix the Artefact -->
+    <section class="case-section">
+        <h2 class="case-section-title">Relationship to Fix the Artefact</h2>
+        <div class="case-section-text">
+            <p>Fix the Artefact was the starting point — it proved the concept and identified the design problems worth solving. Fix the Artwork is the iteration that addresses them:</p>
+            <ul>
+                <li><strong>Platform</strong> — Java desktop → browser. No install barrier, works on any device with a modern browser.</li>
+                <li><strong>Interaction quality</strong> — Swing drag-and-drop → Canvas with smooth animation. The tactile quality of moving pieces improved significantly.</li>
+                <li><strong>Subject matter</strong> — archaeological artefacts → artwork. A broader, more accessible content library.</li>
+                <li><strong>Accessibility</strong> — bolt-on accommodations → built-in from the start. Keyboard controls and screen reader support were part of the architecture, not afterthoughts.</li>
+                <li><strong>Deployment</strong> — standalone executable → static files. Hostable anywhere, cacheable, instantly shareable via URL.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section class="case-section">
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="case-section-text">
+            <p>Rebuilding a project from scratch in a different technology taught me more than the original build. Decisions I'd made unconsciously in Java — layout management, event handling, rendering strategy — had to be made deliberately in the browser. That forced clarity.</p>
+            <p>The biggest lesson was about interaction feel. The Java version worked correctly but felt mechanical. Moving to Canvas with requestAnimationFrame and adding subtle animation details — lift shadows, easing on snaps, a slight bounce on completion — made the same puzzle feel genuinely different to use. Correctness isn't enough; feel matters.</p>
+            <p>Working without frameworks was a deliberate choice. For a project this focused, the overhead of React or a game engine would have added complexity without solving real problems. Vanilla JavaScript kept the feedback loop tight and the bundle nonexistent.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

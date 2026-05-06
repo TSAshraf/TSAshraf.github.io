@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>LookingGlass — Case Study</title>
+    <meta name="description" content="Case study for LookingGlass — a native macOS menu bar app that turns the built-in camera into an ambient mirror with privacy-first Photos integration.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Case Study Hero -->
+<header class="case-hero container">
+    <a href="../series/mac-tools.html" class="case-back">&larr; Back to Mac Tools</a>
+    <h1 class="case-title">LookingGlass</h1>
+    <p class="case-summary">A native macOS menu bar app that turns the built-in camera into an ambient mirror. Drops a live camera feed from the menu bar on hover or click, captures photos straight to the Photos library with iCloud sync, and stays out of the way otherwise. Part of the Mac Tools series.</p>
+
+    <div class="case-meta">
+        <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer &amp; Developer</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Type</span>
+            <span class="case-meta-value">macOS Utility</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Stack</span>
+            <span class="case-meta-value">Swift, SwiftUI, AppKit, AVFoundation, Photos, Combine, Carbon Hot Keys, ServiceManagement</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Series</span>
+            <span class="case-meta-value"><a href="../series/mac-tools.html" style="color: var(--accent);">Mac Tools</a></span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Focus</span>
+            <span class="case-meta-value">Ambient Camera &amp; Privacy-First Capture</span>
+        </div>
+    </div>
+
+    <div class="case-actions">
+        <a href="https://github.com/TSAshraf/LookingGlass/releases/latest/download/LookingGlass.zip" download class="btn btn-primary">Download</a>
+        <a href="https://github.com/TSAshraf/LookingGlass" target="_blank" rel="noopener" class="btn">View on GitHub</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Overview -->
+    <section class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-text">
+            <p>LookingGlass is a macOS application that puts a quick-access mirror in the menu bar. Hover the icon for a passive preview, click for the full popover with a shutter button, and capture goes straight into the Photos library with iCloud sync if you have it. The hand-mirror icon, drawn rather than picked from SF Symbols, is its only persistent footprint.</p>
+            <p>The "did I get spinach in my teeth" moment doesn't deserve launching Photo Booth. macOS doesn't ship a quick mirror, FaceTime is the wrong tool, and the camera that's already two inches above the screen sits unused most of the day. LookingGlass collapses that into one icon &mdash; or a hover, for the same answer with even less effort.</p>
+        </div>
+    </section>
+
+    <!-- Why I Made This -->
+    <section class="case-section">
+        <h2 class="case-section-title">Why I Made This</h2>
+        <div class="case-section-text">
+            <p>I check my reflection a dozen times a day before meetings, calls, or stepping out, and every time I'd open Photo Booth, wait for it to launch, navigate to camera mode, and close it again. It's a five-second task wrapped in thirty seconds of overhead. The hardware is right there; the software was the bottleneck.</p>
+            <p>I also wanted something that respected privacy at the system level rather than as a promise. macOS has had an add-only Photos permission since 2020 &mdash; apps can write new assets without ever being able to read or enumerate the user's library &mdash; but most apps still ask for full access because it's the default in older code samples. LookingGlass declares only the add-only key, so the system itself enforces that the app cannot read your photos. The user sees "LookingGlass would like to add to your Photos Library", not "access", and macOS lists the app as Add Only in Settings with no toggle to escalate.</p>
+        </div>
+    </section>
+
+    <!-- User Experience -->
+    <section class="case-section">
+        <h2 class="case-section-title">User Experience</h2>
+        <div class="case-section-text">
+            <p>The menu bar icon is a small hand-mirror silhouette &mdash; an outlined oval with a short handle, drawn with NSBezierPath rather than picked from SF Symbols so it reads as the app's own mark at the menu bar's tiny render size. It uses a template image so it adapts to whatever menu bar appearance the user is on, and otherwise occupies no space.</p>
+            <p>Hovering the icon drops down a 220&times;160 live preview &mdash; just the camera feed, no controls, no chrome. Once it appears it stays put for at least 1.5 seconds even if the cursor leaves immediately, which prevents the kind of flicker a small target would otherwise produce from natural mouse jitter. Walk away and it dismisses with a 250ms grace.</p>
+            <p>Click the icon and the full 360&times;320 popover takes its place: the same live feed plus a circular shutter button. Hit space or click the shutter and the screen flashes white, the photo saves, and a small "Saved to Photos" toast confirms before fading. The preview is horizontally mirrored by default so the experience matches a real mirror &mdash; left and right match what you see &mdash; and the captured photo carries the same flip, so you don't have to remember to mirror it again later.</p>
+            <p>Right-clicking the icon brings up a context menu in the same checkmark-toggle style as MediaBar: mirror image on/off, self-timer (none / 3s / 10s), camera picker (FaceTime HD plus any Continuity Camera, External, or Desk View source the system reports), a floating-window toggle, global hotkey toggle, launch-at-login, and a manual "Check for Updates&hellip;" item. Selections persist across launches via UserDefaults.</p>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="case-section">
+        <h2 class="case-section-title">Key Features</h2>
+        <div class="case-section-text">
+            <ul>
+                <li><strong>Three-state interaction</strong> &mdash; idle is just the icon, hover is a passive preview, click is the full tool with the shutter. Each state lives only as long as the user's attention is on it: hover dismisses on exit, the popover dismisses on outside click, and the camera session itself stops as soon as nothing is showing it.</li>
+                <li><strong>Privacy-first Photos integration</strong> &mdash; the bundle declares only <code>NSPhotoLibraryAddUsageDescription</code>, never the read-write key, and the code only ever calls <code>PHPhotoLibrary.requestAuthorization(for: .addOnly)</code>. The OS enforces this at the API level: even if the source tried to enumerate, fetch, or display existing photos, those calls would fail. macOS Settings shows the app as "Add Only", with no UI to grant it more.</li>
+                <li><strong>Mirrored capture pipeline</strong> &mdash; both <code>AVCaptureVideoPreviewLayer.connection.isVideoMirrored</code> and <code>AVCapturePhotoOutput.connection(with: .video)?.isVideoMirrored</code> are updated reactively when the user toggles the menu item, so the preview and the saved file always match. Avoids the common bug where the user sees themselves mirrored but the photo is reversed.</li>
+                <li><strong>Detachable floating window</strong> &mdash; the right-click "Floating Mirror" toggle pops a borderless 320&times;280 <code>NSWindow</code> at <code>.floating</code> level, with <code>collectionBehavior</code> set so it joins all spaces and survives full-screen apps. <code>isMovableByWindowBackground</code> lets the user drag it from anywhere on the surface. Useful for keeping a peripheral mirror visible while working in another app, where the popover would otherwise auto-dismiss on click-outside.</li>
+                <li><strong>Continuity Camera and external camera support</strong> &mdash; <code>AVCaptureDevice.DiscoverySession</code> enumerates <code>.builtInWideAngleCamera</code>, <code>.external</code>, <code>.continuityCamera</code>, and <code>.deskViewCamera</code> (with <code>#available</code> fallbacks for older macOS). The selected device persists in UserDefaults by <code>uniqueID</code>; if the previously selected camera is gone on next launch (iPhone disconnected, external unplugged), the app falls back to <code>AVCaptureDevice.default(for: .video)</code> rather than failing.</li>
+                <li><strong>Global hotkey via Carbon's <code>RegisterEventHotKey</code></strong> &mdash; Apple has not shipped a Cocoa replacement for system-wide hotkeys, but the Carbon API is still maintained, dependency-free, and registers &#8997;&#8984;M as a process-owned hotkey that fires regardless of which app is frontmost. The handler is a C callback that hops back to the main thread to toggle the popover.</li>
+                <li><strong>Launch at Login via <code>SMAppService</code></strong> &mdash; registers the bundle as a login item using macOS 13's modern API, which doesn't require the prompt-for-permission dance the older <code>LSSharedFileList</code> flow needed. Gracefully no-ops on older systems via <code>#available</code>.</li>
+                <li><strong>Self-timer with countdown overlay</strong> &mdash; picking 3- or 10-Second Timer replaces the immediate-shutter behavior with a one-per-second countdown rendered as a large rounded numeral over the live preview. A single <code>Timer</code> on the main run loop drives a <code>@Published</code> integer; SwiftUI re-renders the overlay automatically with a <code>.transition(.scale.combined(with: .opacity))</code> between numbers.</li>
+                <li><strong>Anti-flicker hover state machine</strong> &mdash; the menu bar icon is roughly 16 points square, small enough that a steady hand on a trackpad still produces enough pixel jitter to fire <code>mouseEntered:</code> / <code>mouseExited:</code> dozens of times per second. Once the hover preview appears, a 1.5-second minimum-show floor blocks any dismiss request from firing the close. After that minimum, the standard 250ms post-exit grace period takes over.</li>
+                <li><strong>Update checker via the GitHub Releases API</strong> &mdash; manual "Check for Updates&hellip;" plus a once-per-day silent background check on launch. Hits <code>api.github.com/repos/&lt;owner&gt;/&lt;repo&gt;/releases/latest</code>, compares the tag to <code>CFBundleShortVersionString</code> with <code>NSString.compare(_:options: .numeric)</code> for proper semver ordering, and surfaces a "1.0.x is available" alert with a Download button that opens the release page. Avoids the Sparkle dependency at the cost of in-place auto-install &mdash; fine for a small utility.</li>
+                <li><strong>Hand-rolled .app bundle</strong> &mdash; no Xcode, no Package.swift, no SPM. The project compiles via <code>swiftc</code> with the right framework flags, drops the binary into <code>LookingGlass.app/Contents/MacOS/</code>, copies the Info.plist, generates a PkgInfo file, and ad-hoc signs with the entitlements file. Releasing a new version is one command (<code>./release.sh 1.0.1</code>) &mdash; bumps <code>CFBundleShortVersionString</code> and <code>CFBundleVersion</code>, builds, and zips with <code>ditto</code> for proper macOS metadata preservation.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="case-section">
+        <h2 class="case-section-title">Screenshots</h2>
+        <div class="case-gallery">
+            <figure class="case-gallery-item">
+                <img src="../assets/LookingGlass/01-menu-bar-icon.png" alt="LookingGlass — menu bar icon" style="max-height: 64px; width: auto; object-fit: contain;">
+                <figcaption class="case-gallery-caption">Idle state &mdash; hand-mirror silhouette drawn with NSBezierPath, template image that adapts to light and dark menu bars</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/LookingGlass/02-hover-preview.png" alt="LookingGlass — hover preview">
+                <figcaption class="case-gallery-caption">Hover state &mdash; 220&times;160 live preview drops down on icon hover, no controls or chrome, with a 1.5-second minimum show before it can dismiss</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/LookingGlass/03-popover.png" alt="LookingGlass — full popover">
+                <figcaption class="case-gallery-caption">Click state &mdash; 360&times;320 popover with circular shutter, captures straight to the Photos library with iCloud sync</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/LookingGlass/04-floating-window.png" alt="LookingGlass — floating mirror window">
+                <figcaption class="case-gallery-caption">Floating state &mdash; borderless always-on-top NSWindow at .floating level, draggable from anywhere, joinable across spaces and full-screen apps</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section class="case-section">
+        <h2 class="case-section-title">Technical Architecture</h2>
+        <div class="case-section-text">
+            <p>Built as a hand-rolled .app bundle that compiles with <code>swiftc</code> and Command Line Tools &mdash; no Xcode required. SwiftUI handles popover and window content, AppKit owns the status item, popovers, NSWindow, and tracking areas, AVFoundation manages camera capture, Combine wires camera state into the SwiftUI views, and Carbon Hot Keys provides the system-wide &#8997;&#8984;M shortcut.</p>
+        </div>
+        <div class="case-architecture">LookingGlass/
+&boxvr;&boxh;&boxh; App/
+&boxv;   &boxvr;&boxh;&boxh; LookingGlassApp.swift           &mdash; @main SwiftUI App, NSApplicationDelegateAdaptor
+&boxv;   &boxur;&boxh;&boxh; AppDelegate.swift               &mdash; Status item, popover, hover state, right-click menu
+&boxvr;&boxh;&boxh; Services/
+&boxv;   &boxvr;&boxh;&boxh; CameraManager.swift             &mdash; AVCaptureSession, photo output, mirror, timer, devices
+&boxv;   &boxvr;&boxh;&boxh; HotKeyManager.swift             &mdash; Carbon RegisterEventHotKey wrapper
+&boxv;   &boxvr;&boxh;&boxh; LaunchAtLogin.swift             &mdash; SMAppService.mainApp wrapper (macOS 13+)
+&boxv;   &boxur;&boxh;&boxh; UpdateChecker.swift             &mdash; GitHub Releases API client + semver comparison
+&boxvr;&boxh;&boxh; Views/
+&boxv;   &boxvr;&boxh;&boxh; MirrorView.swift                &mdash; Main popover SwiftUI: preview, shutter, countdown
+&boxv;   &boxvr;&boxh;&boxh; CameraPreviewView.swift         &mdash; NSViewRepresentable for AVCaptureVideoPreviewLayer
+&boxv;   &boxvr;&boxh;&boxh; HoverPreviewView.swift          &mdash; Compact 220&times;160 hover variant
+&boxv;   &boxur;&boxh;&boxh; FloatingMirrorController.swift  &mdash; NSWindow at .floating level
+&boxvr;&boxh;&boxh; Info.plist                          &mdash; LSUIElement, camera + add-only Photos usage
+&boxvr;&boxh;&boxh; LookingGlass.entitlements           &mdash; Empty (non-sandboxed, ad-hoc signed)
+&boxvr;&boxh;&boxh; build.sh                            &mdash; swiftc &rarr; .app bundle + ad-hoc codesign
+&boxur;&boxh;&boxh; release.sh                          &mdash; version bump + build + zip via ditto</div>
+        <div class="case-section-text" style="margin-top: 16px;">
+            <p><code>CameraManager</code> is the source of truth for camera state. It owns the <code>AVCaptureSession</code> on a private serial queue and exposes <code>@Published</code> properties for status, mirror, timer, and selected device, all routed through <code>DispatchQueue.main</code> for SwiftUI updates. Capture is a one-shot: <code>AVCapturePhotoSettings</code> &rarr; <code>photoOutput.capturePhoto(with:delegate:)</code> &rarr; <code>AVCapturePhotoCaptureDelegate.photoOutput(_:didFinishProcessingPhoto:error:)</code> &rarr; <code>PHPhotoLibrary.performChanges</code> with <code>.addOnly</code> authorization.</p>
+            <p><code>AppDelegate</code> is unusually substantial because it owns the entire menu bar lifecycle: the <code>NSStatusItem</code>, two popovers (hover and main), the <code>FloatingMirrorController</code>, the global hotkey, the outside-click monitor, and the right-click context menu. The hover state machine is implemented as a private nested <code>HoverTracker</code> <code>NSObject</code> &mdash; <code>NSTrackingArea</code> invokes <code>mouseEntered:</code> / <code>mouseExited:</code> on its owner via runtime selector lookup, and the Swift method signatures need the <code>with</code> label dropped so the generated Objective-C selectors actually match. NSResponder gets this for free via Apple's bridging metadata; a plain <code>NSObject</code> does not.</p>
+            <p><code>NSPopover</code> is configured with <code>.applicationDefined</code> behavior rather than <code>.transient</code>. LSUIElement apps don't always receive clean <code>resignActive</code> events, and <code>.transient</code> interprets that as outside-click and dismisses the popover at unpredictable moments. <code>.applicationDefined</code> puts dismissal under app control: a global <code>NSEvent.addGlobalMonitorForEvents</code> on <code>.leftMouseDown</code> / <code>.rightMouseDown</code> closes the popover when something outside the process is clicked. The monitor only runs while the popover is visible &mdash; registered on show, removed in <code>popoverDidClose</code>.</p>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section class="case-section">
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="case-section-text">
+            <p>Most of the interesting work in LookingGlass turned out to be in the small interaction details, not the camera plumbing. AVFoundation handles the camera fine &mdash; the hard part was making a menu bar app that doesn't feel jittery, doesn't dismiss when you don't want it to, and stays out of the way when you do.</p>
+            <p>The single biggest time sink was the popover lifecycle for LSUIElement apps. <code>NSPopover.transient</code> is documented to close on outside clicks, but in practice it closes on any event the app interprets as deactivation &mdash; which for an accessory app with no Dock icon is "frequently." Switching to <code>.applicationDefined</code> and writing a global mouse-down monitor took ten lines; figuring out why I needed to was the days-long part.</p>
+            <p>The hover preview surfaced the same kind of issue at a smaller scale. The status bar icon is something like 16 points square, and a steady hand on a trackpad still produces enough pixel jitter to fire <code>mouseEntered:</code> and <code>mouseExited:</code> dozens of times in a second. The fix is a UI pattern more than a code one &mdash; once the preview appears, it refuses to dismiss for 1.5 seconds &mdash; and not the kind of thing you'd think to write until you've seen the alternative.</p>
+            <p>The privacy-first Photos integration felt worth the time it took. macOS exposes two Photos permissions &mdash; the older read-write "Photos Library" and the newer write-only "Photos Library Add Only" &mdash; but most apps still ask for the full version because that's the default in older code samples. Being explicit about declaring only <code>NSPhotoLibraryAddUsageDescription</code> means the user sees an "add to" prompt instead of "access," and macOS lists the app as Add Only in Settings, where there's no toggle to grant it more. It's a one-line change with system-enforced consequences, and most apps haven't made it.</p>
+            <p>Like MediaBar, LookingGlass does one thing &mdash; but the thing is so small that the design constraint became <em>do nothing unless asked</em>. A second of hover and you see yourself; a click and you can capture; otherwise the app is invisible. The hand-rolled build pipeline (no Xcode, just <code>swiftc</code> and a shell script) is the same idea applied to the project itself: as little machinery as possible to do exactly what's needed, no more.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

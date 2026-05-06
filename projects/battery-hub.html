@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Battery Hub — Case Study</title>
+    <meta name="description" content="Case study for Battery Hub — a native macOS menu bar utility that consolidates battery levels for MacBook and Bluetooth devices into a single interface.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Case Study Hero -->
+<header class="case-hero container">
+    <a href="../series/mac-tools.html" class="case-back">&larr; Back to Mac Tools</a>
+    <h1 class="case-title">Battery Hub</h1>
+    <p class="case-summary">A native macOS menu bar utility that replaces the system battery icon. Consolidates battery levels for your MacBook and all connected Bluetooth devices into a single, customisable interface. Part of the Mac Tools series.</p>
+
+    <div class="case-meta">
+        <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer &amp; Developer</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Type</span>
+            <span class="case-meta-value">macOS Utility</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Stack</span>
+            <span class="case-meta-value">Swift, SwiftUI, IOKit, IOBluetooth, Combine</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Series</span>
+            <span class="case-meta-value"><a href="../series/mac-tools.html" style="color: var(--accent);">Mac Tools</a></span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Focus</span>
+            <span class="case-meta-value">System Integration &amp; Native UI</span>
+        </div>
+    </div>
+
+    <div class="case-actions">
+        <a href="https://github.com/TSAshraf/BatteryHub/releases/latest/download/BatteryHub.dmg" download class="btn btn-primary">Download</a>
+        <a href="https://github.com/TSAshraf/BatteryHub" target="_blank" rel="noopener" class="btn">View on GitHub</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Overview -->
+    <section class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-text">
+            <p>Battery Hub is a macOS menu bar application that consolidates battery information for your MacBook and all connected Bluetooth devices into one place. It replaces the native battery icon entirely, showing device-level battery status through ring or list visualisations.</p>
+            <p>macOS scatters battery information across the menu bar, Control Center, and a Batteries widget &mdash; each showing partial data in a different place. Battery Hub brings it all into a single click from the menu bar, with the level of detail and customisation that the native tools lack.</p>
+        </div>
+    </section>
+
+    <!-- Why I Made This -->
+    <section class="case-section">
+        <h2 class="case-section-title">Why I Made This</h2>
+        <div class="case-section-text">
+            <p>I use AirPods daily and found myself repeatedly opening Control Center or the Batteries widget just to check levels. The native battery icon only shows the MacBook's charge &mdash; connected devices require navigating to a completely different interface.</p>
+            <p>I wanted a single menu bar icon that showed everything at a glance: MacBook, AirPods, any other connected Bluetooth device. And I wanted it to feel native &mdash; not like a third-party overlay, but like something Apple should have built.</p>
+        </div>
+    </section>
+
+    <!-- User Experience -->
+    <section class="case-section">
+        <h2 class="case-section-title">User Experience</h2>
+        <div class="case-section-text">
+            <p>The app replaces the system battery icon in the menu bar with a custom rendered icon that matches Apple's design language. Hovering shows a compact ring view of all connected devices. Clicking opens the full popover with detailed battery information and settings.</p>
+            <p>Users can switch between two layout modes: a ring view with circular progress indicators (matching the style of Apple's Batteries widget) or a list view with horizontal progress bars for a more compact display. Device names, percentages, and menu bar display options are all toggleable.</p>
+            <p>The tool auto-detects any connected Bluetooth device that reports a battery level &mdash; AirPods, Magic Mouse, Magic Keyboard, game controllers, third-party headphones &mdash; and displays them alongside the MacBook's internal battery.</p>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="case-section">
+        <h2 class="case-section-title">Key Features</h2>
+        <div class="case-section-text">
+            <ul>
+                <li><strong>Custom menu bar icon</strong> &mdash; renders using native ControlCenter assets for pixel-perfect consistency. Colour-coded: green when charging, red at low levels, yellow in Low Power Mode. Optional percentage text on either side.</li>
+                <li><strong>Dual layout modes</strong> &mdash; ring view with circular progress indicators and SF Symbol device icons, or list view with horizontal progress bars. Switchable in settings.</li>
+                <li><strong>Hover and click popovers</strong> &mdash; hovering the menu bar icon shows a compact ring preview; clicking opens the full interface with settings. Two distinct NSPopover instances with different behaviours.</li>
+                <li><strong>Automatic device discovery</strong> &mdash; enumerates all connected Bluetooth devices via system_profiler, classifies them by type (AirPods, mouse, keyboard, controller), and identifies AirPods models (Pro, Gen 3, Max).</li>
+                <li><strong>Real-time updates</strong> &mdash; combines IOKit power source change notifications for instant MacBook battery updates with configurable polling intervals (30s, 60s, 120s) for Bluetooth devices.</li>
+                <li><strong>Low Power Mode toggle</strong> &mdash; switch Low Power Mode directly from the popover without opening System Settings. Uses a sudoers helper for passwordless toggling.</li>
+                <li><strong>AirPods battery merging</strong> &mdash; intelligently combines left and right AirPods into a single display when battery levels match, splitting them when they diverge.</li>
+                <li><strong>Persistent settings</strong> &mdash; all preferences (layout mode, display toggles, poll interval, percentage position) saved to UserDefaults and restored on launch.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="case-section">
+        <h2 class="case-section-title">Screenshots</h2>
+        <div class="case-gallery">
+            <figure class="case-gallery-item">
+                <img src="../assets/BatteryHub/01-hover-rings.png" alt="Battery Hub — compact hover popover with ring indicators">
+                <figcaption class="case-gallery-caption">Hover popover &mdash; compact ring view on mouse over</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/BatteryHub/03-list-view.png" alt="Battery Hub — list view with progress bars">
+                <figcaption class="case-gallery-caption">List view &mdash; horizontal progress bars with device icons</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/BatteryHub/02-rings-settings.png" alt="Battery Hub — ring view with settings panel">
+                <figcaption class="case-gallery-caption">Ring view with settings &mdash; layout toggle, display options, poll interval</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/BatteryHub/04-list-settings.png" alt="Battery Hub — list view with settings and Low Power Mode">
+                <figcaption class="case-gallery-caption">List view with settings &mdash; Low Power Mode enabled</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/BatteryHub/05-menu-bar-icon.png" alt="Battery Hub — menu bar icon with percentage" style="max-height: 64px; width: auto; object-fit: contain;">
+                <figcaption class="case-gallery-caption">Menu bar icon &mdash; custom rendered with percentage and charging bolt</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section class="case-section">
+        <h2 class="case-section-title">Technical Architecture</h2>
+        <div class="case-section-text">
+            <p>Built as a Swift Package Manager executable targeting macOS 13+. The app uses SwiftUI for views, AppKit for menu bar integration, and Combine for reactive state management across the application.</p>
+        </div>
+        <div class="case-architecture">BatteryHub
+&boxvr;&boxh;&boxh; App/
+&boxv;   &boxur;&boxh;&boxh; BatteryHubApp.swift     &mdash; Entry point, NSStatusItem, popover management
+&boxvr;&boxh;&boxh; Models/
+&boxv;   &boxur;&boxh;&boxh; Device.swift            &mdash; Device model, type enum, SF Symbol mapping
+&boxvr;&boxh;&boxh; Services/
+&boxv;   &boxvr;&boxh;&boxh; DeviceManager.swift     &mdash; Central state, polling, IOKit notifications
+&boxv;   &boxvr;&boxh;&boxh; InternalBatteryService  &mdash; IOKit power source queries
+&boxv;   &boxur;&boxh;&boxh; BluetoothBatteryService &mdash; system_profiler parsing, device classification
+&boxur;&boxh;&boxh; Views/
+    &boxvr;&boxh;&boxh; PopoverView.swift       &mdash; Main container, layout switching
+    &boxvr;&boxh;&boxh; RingDeviceView.swift    &mdash; Circular progress with SF Symbol centre
+    &boxvr;&boxh;&boxh; ListDeviceView.swift    &mdash; Horizontal bar with icon and percentage
+    &boxvr;&boxh;&boxh; MenuBarIconRenderer     &mdash; Custom icon compositing from system assets
+    &boxur;&boxh;&boxh; SettingsView.swift      &mdash; Preferences panel</div>
+        <div class="case-section-text" style="margin-top: 16px;">
+            <p>The DeviceManager acts as the central state coordinator, combining IOKit power source change notifications (for instant MacBook updates) with timer-based Bluetooth polling. All settings are reactive via Combine &mdash; changing a preference immediately updates both the popover UI and the menu bar icon rendering. The menu bar icon itself is composited from native ControlCenter.app assets to match the system style exactly.</p>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section class="case-section">
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="case-section-text">
+            <p>This was my first native macOS application, and the biggest learning curve was understanding the relationship between SwiftUI and AppKit. The menu bar required NSStatusItem (AppKit), but the popover content is SwiftUI &mdash; bridging the two frameworks cleanly took some iteration. The hover popover interaction, using a custom NSView subclass for mouse tracking, was particularly instructive.</p>
+            <p>Working with IOKit and IOBluetooth also exposed a side of macOS development that feels very different from web work. There are no clean REST endpoints &mdash; you query power sources through C-level APIs, parse system profiler output, and handle edge cases around device connectivity. Getting AirPods case battery level right, or correctly merging left and right earbuds into a single display, required careful handling of incomplete or inconsistent data.</p>
+            <p>The project reinforced something I care about: that small, focused tools can be more valuable than large applications. Battery Hub does one thing, but it does it better than the three separate interfaces Apple provides.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

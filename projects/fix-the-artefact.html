@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Fix the Artefact — Case Study</title>
+    <meta name="description" content="Case study for Fix the Artefact — a Java-based museum jigsaw puzzle focused on usability, accessibility, and educational interaction.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☾</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Case Study Hero -->
+<header class="case-hero container">
+    <a href="../series/jigsaw-collection.html" class="case-back">← Back to Jigsaw Collection</a>
+    <h1 class="case-title">Fix the Artefact</h1>
+    <p class="case-summary">A gamified museum jigsaw puzzle grounded in constructivist learning theory, gamification research, and multimodal design. 38 Java source files, ~11,250 lines of code, five ancient civilisations, 75 curated artefacts — built as a final-year dissertation and evaluated through heuristic analysis and usability testing.</p>
+
+    <div class="case-meta">
+        <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer, Developer & Researcher</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Type</span>
+            <span class="case-meta-value">Dissertation Project</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Stack</span>
+            <span class="case-meta-value">Java 21, Swing, Gradle, Gson</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Focus</span>
+            <span class="case-meta-value">Educational UX & Accessibility</span>
+        </div>
+    </div>
+
+    <div class="case-actions">
+        <a href="https://github.com/TSAshraf/Fix_The_Artefact/releases/latest/download/FixThePot-macOS.zip" download class="btn btn-primary btn-platform" aria-label="Download for macOS">Download <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516.024.034 1.52.087 2.475-1.258.955-1.345.762-2.391.728-2.43Zm3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422.212-2.189 1.675-2.789 1.698-2.854.023-.065-.597-.79-1.254-1.157a3.692 3.692 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56.244.729.625 1.924 1.273 2.796.576.984 1.34 1.667 1.659 1.899.319.232 1.219.386 1.843.067.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758.347-.79.505-1.217.473-1.282Z"/></svg></a>
+        <a href="https://github.com/TSAshraf/Fix_The_Artefact/releases/latest/download/FixThePot-Windows.zip" download class="btn btn-platform" aria-label="Download for Windows">Download <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="7" height="7"/><rect x="8" y="0" width="7" height="7"/><rect x="0" y="8" width="7" height="7"/><rect x="8" y="8" width="7" height="7"/></svg></a>
+        <a href="https://github.com/TSAshraf/Fix_The_Artefact" target="_blank" rel="noopener" class="btn">View on GitHub</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Overview -->
+    <section class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-text">
+            <p>Fix the Artefact is an interactive jigsaw puzzle application that lets users explore and reconstruct archaeological artefacts from five ancient civilisations: Egypt, Rome, Greece, Cyprus, and the Ancient Near East. Each civilisation contains 15 curated artefacts sourced primarily from the National Museums Liverpool and the British Museum, with verified provenance data linking every object to its archaeological site.</p>
+            <p>The project extends a second-year prototype — a basic drag-and-drop puzzle with hardcoded metadata and no persistence — into a fully structured educational tool. The dissertation grounds every design decision in research: constructivist learning theory informs the puzzle interaction, gamification theory shapes the progression system, multimodal learning theory drives the combination of visual, auditory, kinaesthetic, and textual channels, and metacognitive prompting research motivates the reflection prompt system.</p>
+            <p>The goal was to address a gap identified in the literature: digital museum interfaces prioritise information delivery over educational engagement, while commercial puzzle games excel at engagement but produce no transferable cultural knowledge. This project sits at the intersection — mechanically polished, pedagogically grounded.</p>
+        </div>
+    </section>
+
+    <!-- Research Foundation -->
+    <section class="case-section">
+        <h2 class="case-section-title">Research Foundation</h2>
+        <div class="case-section-text">
+            <p>The design is grounded in three established frameworks from educational and design research:</p>
+            <ul>
+                <li><strong>Constructivist learning theory</strong> — physically reconstructing an artefact demands spatial reasoning, pattern recognition, and sustained visual analysis, placing the learner in an active role rather than a passive one. Reflection prompts and micro-narratives extend this beyond procedural skill into conceptual engagement with the subject matter.</li>
+                <li><strong>Gamification theory</strong> — an experience-point system with exponential levelling, 18 distinct achievements spanning completion milestones and challenge goals (e.g. completing a puzzle without using the hint system), and adjustable difficulty levels (Easy 2×2, Medium 3×3, Hard 4×4, Custom) maintain motivation across sessions.</li>
+                <li><strong>Multimodal learning theory</strong> — four channels operate simultaneously: visual engagement through artefact imagery and themed backgrounds, auditory stimulus through selectable ambient lo-fi music, kinaesthetic interaction through drag-and-drop assembly, and textual meaning-making through micro-narratives written in a humanising rather than encyclopaedic register.</li>
+            </ul>
+            <p>These frameworks informed specific design decisions: reflection prompts are placed before and after puzzles (not during) to exploit the pre-testing effect and post-completion receptiveness. Micro-narratives are written to connect objects to the people who made and used them. The timeline is ordered chronologically rather than alphabetically because it situates artefacts within a historical narrative.</p>
+        </div>
+    </section>
+
+    <!-- User Experience -->
+    <section class="case-section">
+        <h2 class="case-section-title">User Experience</h2>
+        <div class="case-section-text">
+            <p>The navigation flow is: Menu → Collections → Map → Timeline/Catalogue → Game. Users select a civilisation from the collections panel, which opens an interactive map with animated site markers showing archaeological locations — Vounous, Kouklia/Palaepaphos, and Central Cyprus for the Cyprus collection; equivalent sites for each civilisation.</p>
+            <p>Selecting a site opens a chronologically ordered timeline with artefact thumbnails, date ranges, and micro-narrative descriptions. Choosing an artefact loads the jigsaw play area — a full-screen workspace where traditional interlocking pieces (generated using cubic Bezier curves) are scattered over a themed atmospheric background. An icon-based toolbar provides controls for navigation, music, restart, timer, info panel, completed image overlay, hint system, zoom, and difficulty selection.</p>
+            <p>Before the puzzle begins, an optional pre-puzzle prediction question asks the user to guess something about the artefact — its purpose, its origin, its age. This exploits the pre-testing effect: even an incorrect prediction primes the learner to attend more carefully when the answer is revealed. After completion, a post-puzzle reflection question invites open-ended thinking about what the artefact reveals. Both prompts are dismissible — mandatory educational interventions in game contexts are consistently associated with reduced engagement.</p>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="case-section">
+        <h2 class="case-section-title">Key Features</h2>
+        <div class="case-section-text">
+            <ul>
+                <li><strong>Five civilisation collections</strong> — Ancient Cyprus, Egypt, Greece, the Ancient Near East, and Rome. Each contains 15 curated artefacts with verified provenance, sourced from National Museums Liverpool and the British Museum.</li>
+                <li><strong>Interactive geographic map</strong> — the Cyprus map is rendered from real OpenStreetMap coastline data (25,823 coordinate pairs simplified to 112 via the Douglas-Peucker algorithm, smoothed with quadratic Bezier curves). Archaeological sites are plotted at verified geographic positions with animated pulsing markers and hover labels showing site name, region, and artefact count.</li>
+                <li><strong>Bezier curve jigsaw pieces</strong> — traditional interlocking shapes generated using cubic Bezier segments (three per edge: neck-in, bulb, neck-out). Tab size scales to 20% of the smaller piece dimension, ensuring correct proportions across all difficulty levels. Hit detection uses the actual Bezier contour via <code>Shape.contains()</code> rather than bounding rectangles.</li>
+                <li><strong>Four-tier progressive hint system</strong> — Tier 0: no assistance. Tier 1: edge pieces highlighted. Tier 2: corner pieces only. Tier 3: single target piece highlighted with placement zone marked. Designed to preserve agency and support the "Unaided" achievement.</li>
+                <li><strong>Reflection prompts</strong> — pre-puzzle prediction questions (multiple choice) and post-puzzle reflection questions (open-ended), grounded in metacognitive prompting and pre-testing effect research.</li>
+                <li><strong>Profile and progression system</strong> — named profiles with configurable avatars (5 attributes: style, hair, eyes, lips, skin), XP with exponential levelling, 18 achievements, and a favourites list. Profile state persists across sessions via JSON serialisation.</li>
+                <li><strong>Chronological timeline</strong> — artefacts ordered by date within each collection, with micro-narratives that connect objects to the people who made them. A Bronze Age jug's description notes that its red-black colouring came from firing technique rather than pigment — connecting the object to craft decisions.</li>
+                <li><strong>Full light/dark theme system</strong> — implemented via the Observer pattern. <code>ThemeManager</code> maintains a registry of all <code>ThemeAware</code> components. Theme palettes contain 13 base colours, 8 overlay colours, and 6 font configurations, split into sub-palettes for different visual contexts.</li>
+                <li><strong>Complete keyboard navigation</strong> — all core actions accessible without a mouse, implemented via a <code>KeyboardFocusManager</code> listener that fires regardless of which component holds focus. Shortcuts suppress during text input to prevent conflicts.</li>
+                <li><strong>Distributable packaged build</strong> — Gradle produces a JAR with JavaFX runtime libraries and platform-specific launch scripts (<code>run.sh</code>, <code>run.bat</code>, macOS <code>.app</code> bundle). Tested on a clean machine without IDE or build environment.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="case-section">
+        <h2 class="case-section-title">Screenshots</h2>
+        <div class="case-gallery">
+            <figure class="case-gallery-item">
+                <img src="../assets/fix%20the%20artefact/Jigsaw%20Play%20area.png" alt="Fix the Artefact — jigsaw puzzle play area with Bezier curve pieces">
+                <figcaption class="case-gallery-caption">Jigsaw play area — interlocking Bezier curve pieces over an atmospheric Colosseum backdrop, icon-based toolbar below</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/fix%20the%20artefact/Catalogue%20.png" alt="Fix the Artefact — Ancient Rome artefact catalogue">
+                <figcaption class="case-gallery-caption">Artefact catalogue — chronologically ordered entries with thumbnails, date ranges, and micro-narrative descriptions</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/fix%20the%20artefact/Egypt%20Map.png" alt="Fix the Artefact — Ancient Egypt archaeological sites map">
+                <figcaption class="case-gallery-caption">Ancient Egypt map — animated site markers at verified archaeological locations, pyramids in the atmospheric background</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/fix%20the%20artefact/Cyprus%20Map.png" alt="Fix the Artefact — Ancient Cyprus map rendered from OpenStreetMap data">
+                <figcaption class="case-gallery-caption">Ancient Cyprus map — real coastline from OpenStreetMap data, Bezier-smoothed, with site markers at Vounous, Central Cyprus, and Kouklia</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/fix%20the%20artefact/Rome%20Map.png" alt="Fix the Artefact — Ancient Rome archaeological sites map">
+                <figcaption class="case-gallery-caption">Ancient Rome map — interactive site selection with atmospheric moonlit background</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/fix%20the%20artefact/Greece%20Map.png" alt="Fix the Artefact — Ancient Greece archaeological sites map">
+                <figcaption class="case-gallery-caption">Ancient Greece map — archaeological sites with painted terrain and site count indicators</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Development Process -->
+    <section class="case-section">
+        <h2 class="case-section-title">Development Process</h2>
+        <div class="case-section-text">
+            <p>Development followed an iterative, feature-driven model organised into four phases, each with defined completion criteria and regression testing:</p>
+            <ul>
+                <li><strong>Phase 1: UI & UX</strong> — full interface redesign with icon-based controls and state-aware tooltips, floating overlays (replacing blocking modals to support constructivist comparison during assembly), keyboard navigation via <code>KeyboardFocusManager</code>, and a centralised light/dark theme system. Completion criteria: all core actions accessible without a mouse.</li>
+                <li><strong>Phase 2: Persistence & Packaging</strong> — local save/load via Gson JSON serialisation with forward-compatible schema (missing fields default gracefully), profile system with avatar customisation, favourites panel, progressive hint system, and a distributable Gradle build verified on a clean machine.</li>
+                <li><strong>Phase 3: Traditional Pieces & UI Polish</strong> — replaced rectangular grid cuts with cubic Bezier interlocking shapes. Each piece is a <code>Path2D</code> Shape constructed from Bezier segments, rendered via <code>Graphics2D.setClip()</code> with per-pixel transparency using <code>BufferedImage.TYPE_INT_ARGB</code>. Hit detection updated to <code>Shape.contains(Point)</code>.</li>
+                <li><strong>Phase 4: Learning-Theory-Informed Features</strong> — reflection prompts for the Cyprus collection (15 pre-puzzle prediction questions, 15 post-puzzle reflection questions), chronological timeline with micro-narratives, and the interactive geographic world map rendered from real OpenStreetMap data.</li>
+            </ul>
+            <p>Scope was deliberately managed. Cloud save synchronisation was replaced with a robust local system. AI-generated content was replaced with curated micro-narratives grounded in verified artefact metadata. 3D gallery environments were replaced with the interactive geographic map. Gesture controls were replaced with full keyboard shortcut support — more accessible and more reliably testable.</p>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section class="case-section">
+        <h2 class="case-section-title">Technical Architecture</h2>
+        <div class="case-section-text">
+            <p>The application is built in Java 21 using Swing, structured around a single root <code>JFrame</code> (<code>MainFrame</code>) that manages all navigation through a <code>CardLayout</code>. Individual screens are full-panel components swapped in and out of the frame. Panels never reference each other directly — they fire callback events through listener interfaces, and <code>MainFrame</code> orchestrates navigation. This keeps the dependency graph unidirectional.</p>
+        </div>
+        <div class="case-architecture">Fix the Artefact — 38 source files, ~11,250 lines
+├── MainFrame          — Root JFrame, CardLayout navigation, all listener interfaces
+├── Theme system       — Theme enum (Light/Dark) with nested Palette (Base, Overlay, Fonts)
+│                        ThemeManager (singleton, Observer pattern), ThemeAware interface
+├── Persistence        — GameState (nested inner classes), SaveManager (Gson serialisation)
+│                        Platform-specific paths (~/.fix-the-artefact/ or %APPDATA%)
+├── Puzzle engine      — Bezier piece generation (Path2D), snap detection, placement validation
+│                        Progressive hint system (4 tiers), difficulty scaling (2×2 to custom)
+├── UI panels          — Collections, Map, Timeline, Game, Profile, Load, Settings, Favourites
+│                        All overlays: Info, Completed Image, Reflection Prompt, Split Config
+├── Learning features  — ReflectionPromptData/Overlay, TimelineRowPanel, CyprusMapPanel
+├── Audio              — MusicPlayer (JavaFX MediaPlayer), temp file extraction from JAR
+└── Build              — Gradle, platform launchers (run.sh, run.bat, .app bundle)</div>
+        <div class="case-section-text" style="margin-top: 16px;">
+            <p>Key design patterns: Observer for theme propagation, Singleton for <code>ThemeManager</code>, Strategy for theme palettes (adding a theme requires only a new Enum constant with its Palette), and an MVC-inspired separation where <code>GameState</code> is the model, panels are views, and <code>MainFrame</code> with its listener interfaces serves as the controller.</p>
+            <p>Save files use JSON via Gson with default field values for forward compatibility — saves from earlier versions load correctly because new fields initialise to defaults rather than throwing deserialisation errors. Error handling distinguishes missing files (create default), corrupt files (themed error dialog with reset option), and out-of-range values (clamped in the <code>GameState</code> constructor).</p>
+        </div>
+    </section>
+
+    <!-- Evaluation -->
+    <section class="case-section">
+        <h2 class="case-section-title">Evaluation</h2>
+        <div class="case-section-text">
+            <p>The project was evaluated through three stages: continuous regression testing, a structured heuristic evaluation, and small-sample usability testing.</p>
+            <p><strong>Regression testing</strong> used defined checklists covering overlay lifecycle behaviour, toggle state consistency, keyboard navigation, and theme consistency. These were re-run at the end of each development phase. Three regression defects were caught and resolved during development — including one where jigsaw pieces moved back to the unplaced area were still being counted as complete, fixed by revising placement validation to check position dynamically rather than relying on a flag set at initial placement.</p>
+            <p><strong>Heuristic evaluation</strong> was conducted against Nielsen's ten usability heuristics, systematically evaluating each of the 8 application screens against all 10 heuristics. 30 findings were recorded with severity ratings (0–4 scale). Findings ranged from visibility of system status issues (hint button not reflecting current tier) to help and documentation gaps (no in-app explanation of the hint tier system). A fix iteration addressed the highest-severity findings before usability testing commenced.</p>
+            <p><strong>Usability testing</strong> involved participants completing a defined task set and providing observational and self-reported feedback on usability and engagement. This was conducted after the fix iteration, ensuring participants interacted with an improved version of the application.</p>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section class="case-section">
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="case-section-text">
+            <p>The biggest lesson from this project was how much research changes the quality of design decisions. The reflection prompt system isn't an obvious feature for a puzzle game — it emerged directly from reading about the pre-testing effect and metacognitive prompting. Without that research, I'd have built a perfectly functional puzzle with no mechanism for deeper engagement with the artefacts.</p>
+            <p>The Bezier curve piece generation was the most algorithmically complex component. Getting the tab geometry right — three Bezier segments per edge, proportional sizing at 20% of the smaller piece dimension, complementary edge values enforced via a pre-generated grid — required careful attention to coordinate mathematics. But the payoff was substantial: traditional interlocking shapes transform the puzzle from a grid-alignment exercise into something that demands spatial reasoning.</p>
+            <p>Building keyboard navigation into a drag-and-drop interface forced me to think about interaction models from first principles. The <code>KeyboardFocusManager</code> approach — registering shortcuts at the panel level rather than on individual components — solved real problems with focus management in a UI with many interactive elements and floating overlays.</p>
+            <p>The scope management process was also formative. The original plan included cloud synchronisation, AI-generated content, 3D environments, and gesture controls. Replacing each with a more achievable alternative that preserved the core user value (local persistence instead of cloud, curated micro-narratives instead of AI, geographic maps instead of 3D galleries) produced a better project than attempting everything would have.</p>
+            <p>If I rebuilt this today, I'd consider a web-based version for broader museum deployment and explore the collaborative puzzle-solving direction — the application is currently designed for solo, self-paced exploration, but group interaction could introduce valuable social constructivist dynamics.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

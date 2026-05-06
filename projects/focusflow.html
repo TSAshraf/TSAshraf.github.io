@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>FocusFlow &mdash; Case Study</title>
+    <meta name="description" content="Case study for FocusFlow &mdash; a native macOS menu bar focus timer with Do Not Disturb integration, app blocking, and session tracking.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Case Study Hero -->
+<header class="case-hero container">
+    <a href="../series/mac-tools.html" class="case-back">&larr; Back to Mac Tools</a>
+    <h1 class="case-title">FocusFlow</h1>
+    <p class="case-summary">A native macOS menu bar focus timer that doesn't just count down &mdash; it controls your environment. Activates Do Not Disturb, blocks distracting apps, and tracks your focus sessions. Part of the Mac Tools series.</p>
+
+    <div class="case-meta">
+        <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer &amp; Developer</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Type</span>
+            <span class="case-meta-value">macOS Utility</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Stack</span>
+            <span class="case-meta-value">Swift, SwiftUI, AppKit, Combine, NSWorkspace</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Series</span>
+            <span class="case-meta-value"><a href="../series/mac-tools.html" style="color: var(--accent);">Mac Tools</a></span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Focus</span>
+            <span class="case-meta-value">System Automation &amp; Native UI</span>
+        </div>
+    </div>
+
+    <div class="case-actions">
+        <a href="https://github.com/TSAshraf/FocusFlow/releases/latest/download/FocusFlow.zip" download class="btn btn-primary">Download</a>
+        <a href="https://github.com/TSAshraf/FocusFlow" target="_blank" rel="noopener" class="btn">View on GitHub</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Overview -->
+    <section class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-text">
+            <p>FocusFlow is a macOS menu bar application that manages focus sessions end-to-end. Starting a session doesn't just begin a countdown &mdash; it activates Do Not Disturb, hides distracting applications, and optionally enables background sounds. Ending a session restores everything.</p>
+            <p>Most Pomodoro apps are just timers. The actual work of focusing &mdash; silencing notifications, closing Twitter, putting your phone down &mdash; is left to you. FocusFlow automates the environment so the timer is the last thing you think about, not the first.</p>
+        </div>
+    </section>
+
+    <!-- Why I Made This -->
+    <section class="case-section">
+        <h2 class="case-section-title">Why I Made This</h2>
+        <div class="case-section-text">
+            <p>Starting a focus session on macOS involves multiple manual steps: turning on Do Not Disturb in Control Center, closing distracting apps, opening a timer, and remembering to undo it all when you're done. Each step is friction, and friction kills the habit.</p>
+            <p>I wanted one click in the menu bar that handles all of it. Start focus, the Mac adapts. End focus, it restores. The same design philosophy as Battery Hub &mdash; consolidating scattered system controls into a single, focused interface.</p>
+        </div>
+    </section>
+
+    <!-- User Experience -->
+    <section class="case-section">
+        <h2 class="case-section-title">User Experience</h2>
+        <div class="case-section-text">
+            <p>The app lives in the menu bar with a minimal icon that changes based on session state: a target when idle, a filled circle when focusing, a leaf during breaks. During active sessions, the remaining time appears next to the icon.</p>
+            <p>Hovering over the icon shows a compact floating timer &mdash; either a circular ring or a horizontal bar, depending on the user's preference. Clicking opens the full popover with session controls, and the stats and settings panels expand inline below the timer without replacing it.</p>
+            <p>The idle view presents focus and break duration pickers with a single &ldquo;Start Focus&rdquo; button. During a session, the countdown is displayed inside a progress ring with skip and stop controls. The stats panel shows streak data, a 7-day bar chart, and today's completed sessions.</p>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="case-section">
+        <h2 class="case-section-title">Key Features</h2>
+        <div class="case-section-text">
+            <ul>
+                <li><strong>Pomodoro timer</strong> &mdash; configurable focus sessions (25, 45, or 60 minutes) and breaks (5, 10, or 15 minutes) with auto-chaining. Skip to break, extend breaks, or end sessions early.</li>
+                <li><strong>Do Not Disturb integration</strong> &mdash; automatically activates a macOS Focus mode when a session starts and deactivates it when it ends. Uses Apple Shortcuts for reliable system integration with an AppleScript fallback.</li>
+                <li><strong>App blocking</strong> &mdash; hides user-defined distracting applications via NSWorkspace when a session begins and restores them when it ends. Configured through an in-app picker that lists running applications.</li>
+                <li><strong>Background sounds</strong> &mdash; optionally triggers macOS background sounds (rain, ocean, etc.) during focus sessions via Shortcuts automation.</li>
+                <li><strong>Session tracking</strong> &mdash; persists every completed session with timestamps and duration. Tracks daily streaks, weekly session counts, and focus time totals.</li>
+                <li><strong>Stats dashboard</strong> &mdash; inline expandable panel showing current streak, this week's sessions, a 7-day focus bar chart, and today's session log. Never replaces the timer view.</li>
+                <li><strong>Hover display</strong> &mdash; floating mini-timer appears on mouse hover over the menu bar icon. Two modes: circular ring or horizontal bar, matching the user's preference.</li>
+                <li><strong>Menu bar state</strong> &mdash; dynamic icon (target/circle/leaf) and countdown text with configurable colour (default, accent, or green). Changes in real time as sessions progress.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="case-section">
+        <h2 class="case-section-title">Screenshots</h2>
+        <div class="case-gallery">
+            <figure class="case-gallery-item">
+                <img src="../assets/FocusFlow/01-idle-view.png" alt="FocusFlow &mdash; idle view with duration pickers">
+                <figcaption class="case-gallery-caption">Idle view &mdash; focus and break duration pickers with start button</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/FocusFlow/04-active-session.png" alt="FocusFlow &mdash; active focus session with timer ring">
+                <figcaption class="case-gallery-caption">Active session &mdash; countdown inside progress ring with skip and stop controls</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/FocusFlow/05-active-with-stats.png" alt="FocusFlow &mdash; active session with stats panel expanded">
+                <figcaption class="case-gallery-caption">Stats panel &mdash; streak, weekly chart, and session log expanded below the timer</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/FocusFlow/06-settings.png" alt="FocusFlow &mdash; settings panel with automation and appearance options">
+                <figcaption class="case-gallery-caption">Settings &mdash; timer defaults, automation toggles, appearance, blocked apps, and launch at login</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/FocusFlow/02-hover-ring.png" alt="FocusFlow &mdash; hover ring display" style="max-height: 80px; width: auto; object-fit: contain;">
+                <figcaption class="case-gallery-caption">Hover display &mdash; circular ring mode</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/FocusFlow/03-hover-bar.png" alt="FocusFlow &mdash; hover bar display" style="max-height: 80px; width: auto; object-fit: contain;">
+                <figcaption class="case-gallery-caption">Hover display &mdash; horizontal bar mode</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section class="case-section">
+        <h2 class="case-section-title">Technical Architecture</h2>
+        <div class="case-section-text">
+            <p>Built with Swift and SwiftUI targeting macOS 13+. The app uses AppKit for menu bar integration and Combine for reactive state propagation across services and views.</p>
+        </div>
+        <div class="case-architecture">FocusFlow
+&boxvr;&boxh;&boxh; App/
+&boxv;   &boxvr;&boxh;&boxh; FocusFlowApp.swift       &mdash; Entry point
+&boxv;   &boxur;&boxh;&boxh; AppDelegate.swift        &mdash; NSStatusItem, popovers, hover window, state orchestration
+&boxvr;&boxh;&boxh; Models/
+&boxv;   &boxvr;&boxh;&boxh; Session.swift            &mdash; Focus session with timestamps and duration
+&boxv;   &boxvr;&boxh;&boxh; SessionState.swift       &mdash; Enum: idle, focusing, onBreak
+&boxv;   &boxur;&boxh;&boxh; BlockedApp.swift         &mdash; App bundle ID and display name
+&boxvr;&boxh;&boxh; Services/
+&boxv;   &boxvr;&boxh;&boxh; TimerService.swift       &mdash; Countdown engine, state transitions, Combine publishers
+&boxv;   &boxvr;&boxh;&boxh; SessionStore.swift       &mdash; JSON persistence, statistics calculations
+&boxv;   &boxvr;&boxh;&boxh; AppBlockerService.swift  &mdash; NSWorkspace app hiding and restoration
+&boxv;   &boxvr;&boxh;&boxh; FocusService.swift       &mdash; DND and background sounds via Shortcuts/AppleScript
+&boxv;   &boxur;&boxh;&boxh; NotificationService.swift &mdash; Local notification delivery
+&boxur;&boxh;&boxh; Views/
+    &boxvr;&boxh;&boxh; PopoverView.swift        &mdash; Main container with expandable panels
+    &boxvr;&boxh;&boxh; IdleView.swift           &mdash; Duration pickers and start button
+    &boxvr;&boxh;&boxh; ActiveSessionView.swift  &mdash; Timer ring, blocked apps, controls
+    &boxvr;&boxh;&boxh; BreakView.swift          &mdash; Break countdown with extend/skip
+    &boxvr;&boxh;&boxh; StatsView.swift          &mdash; Streak, chart, session log
+    &boxvr;&boxh;&boxh; SettingsView.swift       &mdash; Preferences and automation toggles
+    &boxvr;&boxh;&boxh; BlockedAppsView.swift    &mdash; Running app picker and block list
+    &boxvr;&boxh;&boxh; HoverView.swift          &mdash; Floating ring/bar timer display
+    &boxur;&boxh;&boxh; TimerRingView.swift      &mdash; Reusable circular progress component</div>
+        <div class="case-section-text" style="margin-top: 16px;">
+            <p>The AppDelegate acts as the central orchestrator, subscribing to TimerService state changes via Combine and triggering side effects: activating DND through FocusService, hiding apps through AppBlockerService, and sending notifications through NotificationService. The popover UI is SwiftUI hosted inside AppKit's NSPopover, with a separate NSPanel for the hover window. All settings use @AppStorage for automatic UserDefaults persistence.</p>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section class="case-section">
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="case-section-text">
+            <p>The most interesting challenge was the Do Not Disturb integration. Apple doesn't expose a public API for controlling Focus modes programmatically &mdash; the solution was to invoke user-created Shortcuts from the app via the command line, with an AppleScript fallback. It's a pragmatic workaround that works reliably while staying within Apple's intended automation patterns.</p>
+            <p>App blocking through NSWorkspace was more straightforward but surfaced edge cases around app lifecycle: what happens if a blocked app is relaunched during a session, or if the user manually quits FocusFlow mid-session? Handling these gracefully required careful state management in the AppDelegate.</p>
+            <p>Building this alongside Battery Hub reinforced the value of a consistent design language across the series. The popover layout, expandable settings panel, hover interaction, and menu bar rendering all follow the same patterns &mdash; which made development faster and keeps the tools feeling like a cohesive suite.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

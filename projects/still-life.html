@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="case-moody">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Still Life — Case Study</title>
+    <meta name="description" content="Case study for Still Life — a monochrome narrative game about a dream that feels like a life, built with HTML5 Canvas and Pretext.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../series/monochrome-narratives.html">Series</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☾</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Case Study Hero -->
+<header class="case-hero container">
+    <a href="../series/monochrome-narratives.html" class="case-back">← Back to Monochrome Narratives</a>
+    <h1 class="case-title">Still Life</h1>
+    <p class="case-summary">A memory in warm light. A seven-chapter narrative game about a life that feels entirely ordinary — terraced houses, a walk to work, a family — until a lamp in the living room starts to look wrong. Part of the Monochrome Narratives series.</p>
+
+    <div class="case-meta">
+        <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer, Developer & Writer</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Type</span>
+            <span class="case-meta-value">Narrative Game</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Stack</span>
+            <span class="case-meta-value">JavaScript, HTML5 Canvas, Pretext</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Series</span>
+            <span class="case-meta-value"><a href="../series/monochrome-narratives.html" style="color: var(--accent);">Monochrome Narratives</a></span>
+        </div>
+    </div>
+
+    <div class="case-actions">
+        <a href="../Monochrome Narratives/Still Life/index.html" class="btn btn-primary">Play</a>
+        <a href="#" class="btn">View on GitHub</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Overview -->
+    <section class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-text">
+            <p>Still Life is a seven-chapter narrative game played in the browser. You live inside a dream that doesn't know it's a dream. A man walks to work through suburban streets, comes home, eats dinner, puts his child to bed. The days accumulate. The routine deepens. Then one evening he notices a lamp in the living room — and something about it is wrong.</p>
+            <p>The game is structured around the tension between domestic familiarity and slow-building unease. The dream is convincing precisely because it's boring. The horror isn't a monster — it's the moment you realise the ordinary was never real.</p>
+        </div>
+    </section>
+
+    <!-- Design Goal -->
+    <section class="case-section">
+        <h2 class="case-section-title">Why I Made This</h2>
+        <div class="case-section-text">
+            <p>The previous games in the series — Crows and Owls, The Layer Below — explored atmosphere through landscape and archaeology. Still Life explores it through domesticity. I wanted to see whether the monochrome constraint could make an ordinary living room feel as heavy as a dark field.</p>
+            <p>The source material is a well-known internet story about a man who lives years inside a dream after being knocked unconscious, building a family and a life before realising none of it exists. It's a premise that works because the mundane details are what make it devastating — the toast smell, the walk to work, the child's bedtime routine. Those details are the dream's architecture.</p>
+            <p>This was also the first game in the series to use Pretext for Canvas-native text rendering, eliminating the HTML overlay system used in the earlier games. That let me integrate text into the visual composition rather than floating it on top.</p>
+        </div>
+    </section>
+
+    <!-- Player Experience -->
+    <section class="case-section">
+        <h2 class="case-section-title">Player Experience</h2>
+        <div class="case-section-text">
+            <p>The game alternates between two scene types: walks through suburban streets and interiors — the living room, the kitchen, the hallway. In walk scenes you move through a parallax townscape. In interior scenes the camera is still and the room occupies the frame.</p>
+            <p>Each chapter covers a period of time. Early chapters feel stable — the routine is established, the choices are small (keep walking or stop at a bench, look at the garden or go inside). As chapters progress, the dream begins to destabilise. Fog thickens. Rain appears. The visual distortion system shifts colours and proportions subtly enough that you're not sure if something changed or if you're imagining it.</p>
+            <p>The lamp is the pivot. It appears in the living room in an early chapter as a background object. By the middle of the game, it draws your attention. By the end, it's the only thing that feels real — and looking at it too closely starts to unravel everything else.</p>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="case-section">
+        <h2 class="case-section-title">Key Features</h2>
+        <div class="case-section-text">
+            <ul>
+                <li><strong>Seven-chapter structure</strong> — the longest game in the series. Each chapter has a seed-based procedural world, its own weather, fog density, and distortion level, creating a progression from clarity to unease.</li>
+                <li><strong>Dual scene types</strong> — walk scenes use parallax scrolling through procedural suburban streets. Interior scenes render a static room with inspectable objects and shifting detail.</li>
+                <li><strong>Dream distortion system</strong> — a per-chapter distortion value subtly warps colours, proportions, and rendering parameters. The effect is cumulative — early chapters look clean, late chapters feel wrong without any single element being obviously broken.</li>
+                <li><strong>The lamp</strong> — a specific object in the living room that the game tracks the player's attention toward. How much you look at it, how often you return to it, feeds back into the distortion system.</li>
+                <li><strong>Pretext Canvas text rendering</strong> — all narrative text is laid out and rendered directly on the Canvas using Pretext's DOM-free measurement and layout engine. No HTML overlays. Text is part of the scene composition.</li>
+                <li><strong>Seeded procedural generation</strong> — each chapter uses a SeededRNG to generate its suburban landscape (houses, trees, fences, chimneys, aerials), ensuring consistency within a chapter while varying the world across the game.</li>
+                <li><strong>Weather systems</strong> — rain count, fog density, and atmospheric gradients are chapter-configurable, reinforcing the mood arc from calm domesticity to disintegration.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="case-section">
+        <h2 class="case-section-title">Screenshots</h2>
+        <div class="case-gallery">
+            <figure class="case-gallery-item">
+                <img src="../assets/Still Life/01_title.jpg" alt="Still Life — title screen">
+                <figcaption class="case-gallery-caption">Title screen</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Still Life/02_ch1_walk.jpg" alt="Still Life — Chapter 1 walk">
+                <figcaption class="case-gallery-caption">Chapter 1 — walking to work through terraced streets</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Still Life/03_ch1_interior_lamp.jpg" alt="Still Life — interior with lamp">
+                <figcaption class="case-gallery-caption">Chapter 1 — the living room, the lamp in the corner</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Still Life/04_ch5_child.jpg" alt="Still Life — Chapter 5 child">
+                <figcaption class="case-gallery-caption">Chapter 5 — the child</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Still Life/05_ch6_confession.jpg" alt="Still Life — Chapter 6 confession">
+                <figcaption class="case-gallery-caption">Chapter 6 — confession</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Still Life/06_ch7_walk_dissolving.jpg" alt="Still Life — Chapter 7 dissolving walk">
+                <figcaption class="case-gallery-caption">Chapter 7 — the walk dissolving</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Still Life/07_ch7_dream_voice.jpg" alt="Still Life — Chapter 7 dream voice">
+                <figcaption class="case-gallery-caption">Chapter 7 — the dream's voice</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/Still Life/08_ch7_final_choice.jpg" alt="Still Life — Chapter 7 final choice">
+                <figcaption class="case-gallery-caption">Chapter 7 — the final choice</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section class="case-section">
+        <h2 class="case-section-title">Technical Architecture</h2>
+        <div class="case-section-text">
+            <p>Still Life uses ES modules with no bundler or build step. Pretext is included as a local library for Canvas text layout. The game runs entirely client-side.</p>
+        </div>
+        <div class="case-architecture">Still Life
+├── js/
+│   ├── config.js      — Canvas dimensions, palette, parallax values, character config
+│   ├── utils.js       — SeededRNG, lerp, clamp, colour interpolation
+│   ├── renderer.js    — All Canvas drawing: sky, houses, trees, interiors, weather, distortion
+│   ├── narrative.js   — Pretext-powered text rendering, typewriter pacing, speaker labels
+│   ├── data.js        — All 7 chapters: narrative nodes, choices, flags, scene configs
+│   ├── scenes.js      — Scene graph, chapter transitions, walk/interior state management
+│   ├── game.js        — Main loop, input handling, game state coordinator
+│   └── lib/
+│       └── pretext/   — DOM-free text measurement, layout, line-breaking (Cheng Lou)
+│           ├── analysis.js
+│           ├── bidi.js
+│           ├── layout.js
+│           ├── line-break.js
+│           └── measurement.js
+├── css/
+│   └── style.css      — Title screen, chapter overlay, choice buttons
+└── index.html         — Single entry point</div>
+        <div class="case-section-text" style="margin-top: 16px;">
+            <p>The renderer draws suburban streets using seeded procedural generation — houses with chimneys, aerials, satellite dishes, front gardens with low walls. The distortion system feeds a per-chapter value into the renderer, subtly warping sky gradients, house proportions, and opacity layers. Interior scenes switch the renderer to a room view with inspectable objects.</p>
+            <p>Pretext handles all text layout: <code>prepare()</code> measures text segments using Canvas <code>measureText()</code> and caches results. <code>layout()</code> calculates line breaks as pure arithmetic. The narrative system calls both per frame during typewriter reveals, which is fast enough for 60fps rendering because the expensive measurement is cached.</p>
+        </div>
+    </section>
+
+    <!-- Place in Series -->
+    <section class="case-section">
+        <h2 class="case-section-title">Place in the Series</h2>
+        <div class="case-section-text">
+            <p>Still Life is the third game in the <a href="../series/monochrome-narratives.html" style="color: var(--accent);">Monochrome Narratives</a> series. It's the longest and the most structurally ambitious — seven chapters compared to Crows and Owls' single arc and The Layer Below's day-based structure.</p>
+            <p>It also marks a technical evolution for the series. The earlier games used HTML overlays for narrative text. Still Life is the first to render text entirely on Canvas using Pretext, which changes the relationship between text and image. Text isn't floating on top of the scene — it's drawn into it, composited as part of the same rendering pipeline. That integration is something I plan to bring back to the earlier games.</p>
+            <p>Thematically, the series is building a range. Crows and Owls is about landscape and observation. The Layer Below is about excavation and attention. Still Life is about domesticity and the slow realisation that something is constructed. Each uses the monochrome constraint differently, but the shared principle holds: mood over mechanics, restraint over spectacle.</p>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section class="case-section">
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="case-section-text">
+            <p>The biggest challenge was making the ordinary compelling. The first three chapters of Still Life are deliberately unremarkable — a man walks to work, comes home, has dinner. The temptation was to introduce the weirdness early, but the story only works if the normality has weight. If the player hasn't felt the routine, the disruption doesn't mean anything.</p>
+            <p>The distortion system taught me about thresholds of perception. A 5% shift in sky gradient is invisible. 10% feels like a mood change. 20% feels wrong. Getting the curve right — the rate at which the dream degrades — was the most important design decision in the game. Too fast and it's obvious. Too slow and people stop playing.</p>
+            <p>Integrating Pretext was worth the effort. The HTML overlay system in the earlier games always felt like a compromise — text sitting in a box on top of the Canvas rather than being part of the scene. With Pretext, text appears where it belongs in the composition. It's a small change that makes the whole experience feel more unified.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>
