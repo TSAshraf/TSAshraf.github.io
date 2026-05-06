@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Mac Tools — Taashfeen</title>
+    <meta name="description" content="A series of native macOS menu bar utilities — small, polished tools that replace or improve scattered system controls.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Series Hero -->
+<header class="series-hero container">
+    <a href="../index.html" class="case-back">&larr; Back to home</a>
+    <h1 class="series-hero-title">Mac Tools</h1>
+    <p class="series-hero-desc">Native macOS utilities that bring scattered system controls into one place. Each tool replaces or improves a built-in macOS feature &mdash; built with Swift and SwiftUI, designed to feel like they belong on the platform.</p>
+    <p class="series-hero-desc" style="margin-top: 12px;">macOS provides the pieces but spreads them across menus, widgets, and Control Center. These tools consolidate related controls into focused, single-purpose interfaces that live in the menu bar.</p>
+    <p class="series-hero-meta" style="margin-top: 16px;">4 tools released &middot; more in development</p>
+</header>
+
+<!-- Entries -->
+<section class="series-entries container">
+
+    <!-- MediaBar -->
+    <article class="series-entry">
+        <a href="../projects/mediabar.html" class="series-entry-thumb-link"><img class="series-entry-thumb" src="../assets/MediaBar/Screenshot%202026-05-06%20at%2016.41.59.png" alt="MediaBar &mdash; expanded view with album art and skip controls"></a>
+        <div class="series-entry-info">
+            <h2 class="series-entry-title">MediaBar</h2>
+            <p class="series-entry-blurb">A native macOS application that turns the MacBook notch into an ambient media controller. Detects whatever is playing &mdash; Spotify, Apple Music, YouTube in any browser, Audible, Podcasts, Apple TV &mdash; and exposes track info, artwork, and controls in a pill that sits flush with the hardware notch.</p>
+            <div class="series-entry-tags">
+                <span class="tag">Swift</span>
+                <span class="tag">SwiftUI</span>
+                <span class="tag">AppKit</span>
+                <span class="tag">MediaRemote</span>
+                <span class="tag">AppleScript</span>
+            </div>
+            <p class="series-entry-meta">macOS 13+ &middot; Notch App</p>
+            <div class="series-entry-actions">
+                <a href="../projects/mediabar.html" class="btn btn-primary">Case Study</a>
+                <a href="https://github.com/TSAshraf/MediaBar/releases/latest/download/MediaBar.zip" download class="btn">Download</a>
+                <a href="https://github.com/TSAshraf/MediaBar" target="_blank" rel="noopener" class="btn">GitHub</a>
+            </div>
+        </div>
+    </article>
+
+    <!-- LookingGlass -->
+    <article class="series-entry">
+        <a href="../projects/lookingglass.html" class="series-entry-thumb-link"><img class="series-entry-thumb" src="../assets/LookingGlass/03-popover.png" alt="LookingGlass &mdash; full popover with shutter button"></a>
+        <div class="series-entry-info">
+            <h2 class="series-entry-title">LookingGlass</h2>
+            <p class="series-entry-blurb">A menu bar app that turns the built-in camera into an ambient mirror. Hover for a passive preview, click for a full popover with a shutter, capture straight to Photos with iCloud sync. Privacy-first Photos integration: declares only the add-only permission so the system itself enforces that the app cannot read your library.</p>
+            <div class="series-entry-tags">
+                <span class="tag">Swift</span>
+                <span class="tag">SwiftUI</span>
+                <span class="tag">AVFoundation</span>
+                <span class="tag">Photos</span>
+                <span class="tag">Carbon Hot Keys</span>
+            </div>
+            <p class="series-entry-meta">macOS 13+ &middot; Menu Bar App</p>
+            <div class="series-entry-actions">
+                <a href="../projects/lookingglass.html" class="btn btn-primary">Case Study</a>
+                <a href="https://github.com/TSAshraf/LookingGlass/releases/latest/download/LookingGlass.zip" download class="btn">Download</a>
+                <a href="https://github.com/TSAshraf/LookingGlass" target="_blank" rel="noopener" class="btn">GitHub</a>
+            </div>
+        </div>
+    </article>
+
+    <!-- Battery Hub -->
+    <article class="series-entry">
+        <a href="../projects/battery-hub.html" class="series-entry-thumb-link"><img class="series-entry-thumb" src="../assets/BatteryHub/02-rings-settings.png" alt="Battery Hub — ring view with settings"></a>
+        <div class="series-entry-info">
+            <h2 class="series-entry-title">Battery Hub</h2>
+            <p class="series-entry-blurb">A menu bar utility that replaces the native macOS battery icon. Shows battery levels for your MacBook and all connected Bluetooth devices &mdash; AirPods, mice, keyboards, controllers &mdash; in a single click. Supports ring and list layouts, customisable display options, and Low Power Mode toggling.</p>
+            <div class="series-entry-tags">
+                <span class="tag">Swift</span>
+                <span class="tag">SwiftUI</span>
+                <span class="tag">IOKit</span>
+                <span class="tag">IOBluetooth</span>
+                <span class="tag">Combine</span>
+            </div>
+            <p class="series-entry-meta">macOS 13+ &middot; Menu Bar App</p>
+            <div class="series-entry-actions">
+                <a href="../projects/battery-hub.html" class="btn btn-primary">Case Study</a>
+                <a href="https://github.com/TSAshraf/BatteryHub/releases/latest/download/BatteryHub.dmg" download class="btn">Download</a>
+                <a href="https://github.com/TSAshraf/BatteryHub" target="_blank" rel="noopener" class="btn">GitHub</a>
+            </div>
+        </div>
+    </article>
+
+    <!-- FocusFlow -->
+    <article class="series-entry">
+        <a href="../projects/focusflow.html" class="series-entry-thumb-link"><img class="series-entry-thumb" src="../assets/FocusFlow/05-active-with-stats.png" alt="FocusFlow &mdash; active session with stats"></a>
+        <div class="series-entry-info">
+            <h2 class="series-entry-title">FocusFlow</h2>
+            <p class="series-entry-blurb">A menu bar focus timer that controls your environment. Starting a session activates Do Not Disturb, hides distracting apps, and optionally enables background sounds. Tracks focus sessions with streaks, weekly charts, and session history &mdash; all without leaving the menu bar.</p>
+            <div class="series-entry-tags">
+                <span class="tag">Swift</span>
+                <span class="tag">SwiftUI</span>
+                <span class="tag">AppKit</span>
+                <span class="tag">NSWorkspace</span>
+                <span class="tag">Combine</span>
+            </div>
+            <p class="series-entry-meta">macOS 13+ &middot; Menu Bar App</p>
+            <div class="series-entry-actions">
+                <a href="../projects/focusflow.html" class="btn btn-primary">Case Study</a>
+                <a href="https://github.com/TSAshraf/FocusFlow/releases/latest/download/FocusFlow.zip" download class="btn">Download</a>
+                <a href="https://github.com/TSAshraf/FocusFlow" target="_blank" rel="noopener" class="btn">GitHub</a>
+            </div>
+        </div>
+    </article>
+
+</section>
+
+<!-- Series Technical Note -->
+<section class="section section-tight">
+    <div class="container">
+        <p class="section-label">Technical Approach</p>
+        <h2 class="section-title">How these are built</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+            <div>
+                <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Shared principles</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65;">Every tool in this series is built natively with Swift and SwiftUI &mdash; no Electron, no web wrappers. They use platform APIs directly (IOKit, IOBluetooth, AppKit) and are designed to feel indistinguishable from system utilities. Each tool lives in the menu bar, respects dark/light mode, and is focused on doing one thing well.</p>
+            </div>
+            <div>
+                <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 8px;">What varies</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65;">Each tool engages different system APIs and interaction patterns. Battery Hub uses IOKit power source notifications and Bluetooth device enumeration. FocusFlow uses NSWorkspace for app lifecycle management, Apple Shortcuts for Focus mode automation, and Combine-driven timer state propagation. MediaBar reaches further into the system &mdash; the private MediaRemote framework via a vendored Perl bridge, AppleScript control of Spotify and Apple Music, and AppleScript JavaScript injection to track live <code>&lt;video&gt;</code> position inside browser tabs. LookingGlass works through AVFoundation for camera capture and Photos with the add-only authorization scope, paired with a Carbon hot-key bridge for the system-wide shortcut.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

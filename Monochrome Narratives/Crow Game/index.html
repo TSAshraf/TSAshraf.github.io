@@ -1,0 +1,2649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crows and Owls</title>
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0908; }
+body { display: flex; align-items: center; justify-content: center; }
+
+/* ── GAME CONTAINER ── */
+#game {
+  position: relative;
+  width: 100%; max-width: 1200px;
+  height: 100vh; max-height: 675px;
+  overflow: hidden; cursor: default; user-select: none;
+  background: #0a0908;
+}
+canvas {
+  position: absolute; left: 0; top: 0;
+  width: 100%; height: 100%;
+}
+
+/* ── NARRATIVE UI ── */
+#ui-narrative {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 0 38px 30px;
+  pointer-events: none;
+  z-index: 10;
+}
+#speaker {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 10px; font-weight: 400;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(160, 155, 148, 0.7);
+  height: 17px;
+}
+#text {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px; line-height: 1.8;
+  color: rgba(210, 205, 198, 0.9);
+  max-width: 55%; min-height: 28px;
+}
+#continue {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  color: rgba(160, 155, 148, 0.5);
+  margin-top: 8px;
+  opacity: 0; transition: opacity 0.4s;
+  animation: pulse 2s ease-in-out infinite;
+}
+#continue.on { opacity: 1; }
+@keyframes pulse { 0%,100%{ opacity: 1; } 50%{ opacity: 0.15; } }
+
+/* ── CHOICE UI ── */
+#ui-choices {
+  position: absolute; bottom: 30px; right: 38px;
+  display: flex; flex-direction: column; align-items: flex-end;
+  gap: 11px; z-index: 15;
+  opacity: 0; transition: opacity 0.55s;
+  pointer-events: none;
+}
+#ui-choices.on { opacity: 1; pointer-events: all; }
+.choice-btn {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px; font-weight: 400;
+  color: rgba(180, 175, 168, 0.7);
+  background: none; border: none;
+  cursor: pointer; padding: 3px 0; text-align: right;
+  transition: color 0.2s, transform 0.2s;
+}
+.choice-btn:hover {
+  color: rgba(210, 205, 198, 1);
+  transform: translateX(-5px);
+}
+
+/* ── ROUTE TAG ── */
+#route-tag {
+  position: absolute; top: 18px; right: 22px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(160, 155, 148, 0.5);
+  text-align: right; z-index: 10;
+  opacity: 0; transition: opacity 0.9s 1s;
+}
+#route-tag.on { opacity: 1; }
+
+/* ── OVERLAYS ── */
+.overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 18px; z-index: 20;
+  pointer-events: none;
+}
+
+/* Title Screen */
+#title-screen {
+  background: rgba(10, 9, 8, 1);
+  transition: opacity 1.8s;
+}
+#title-screen.hidden { opacity: 0; pointer-events: none !important; }
+#title-screen.active { pointer-events: all; }
+#title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px; font-weight: 400;
+  letter-spacing: 0.15em;
+  color: rgba(210, 205, 198, 0.85);
+}
+#title-sub {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 11px; font-weight: 300;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(160, 155, 148, 0.4);
+  margin-top: -8px;
+}
+.title-action {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(210, 205, 198, 0.3);
+  cursor: pointer; margin-top: 30px;
+  transition: color 0.3s;
+  animation: pulse 2s ease-in-out infinite;
+}
+.title-action:hover { color: rgba(210, 205, 198, 0.6); }
+
+/* Day Transition */
+#day-overlay {
+  background: rgba(10, 9, 8, 0);
+  transition: background 1.5s;
+}
+#day-overlay.on {
+  background: rgba(10, 9, 8, 0.95);
+  pointer-events: all;
+}
+#day-label {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 20px; letter-spacing: 0.12em;
+  color: rgba(210, 205, 198, 0);
+  transition: color 1.2s 0.6s;
+}
+#day-overlay.on #day-label { color: rgba(210, 205, 198, 0.8); }
+#day-subtitle {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(160, 155, 148, 0);
+  transition: color 1s 1.2s;
+  margin-top: -8px;
+}
+#day-overlay.on #day-subtitle { color: rgba(160, 155, 148, 0.4); }
+
+/* End Screen */
+#end-screen {
+  background: rgba(10, 9, 8, 0);
+  transition: background 2s;
+}
+#end-screen.on {
+  background: rgba(10, 9, 8, 0.92);
+  pointer-events: all; cursor: pointer;
+}
+#end-label {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px; font-weight: 300;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(210, 205, 198, 0);
+  transition: color 1.2s 0.8s;
+}
+#end-screen.on #end-label { color: rgba(210, 205, 198, 0.8); }
+#end-route {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(160, 155, 148, 0);
+  transition: color 1s 1.5s;
+}
+#end-screen.on #end-route { color: rgba(160, 155, 148, 0.35); }
+#end-again {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(210, 205, 198, 0);
+  transition: color 1s 2.5s;
+  cursor: pointer; margin-top: 20px;
+}
+#end-screen.on #end-again { color: rgba(210, 205, 198, 0.3); }
+
+/* Fade overlay for transitions */
+#fade {
+  position: absolute; inset: 0;
+  background: #0a0908;
+  z-index: 18;
+  opacity: 0; pointer-events: none;
+  transition: opacity 1.2s;
+}
+#fade.on { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ============ HTML SHELL ============ -->
+<div id="game">
+  <canvas id="canvas"></canvas>
+
+  <div id="ui-narrative">
+    <div id="speaker"></div>
+    <div id="text"></div>
+    <div id="continue">— click or press space —</div>
+  </div>
+
+  <div id="ui-choices"></div>
+  <div id="route-tag"></div>
+  <div id="fade"></div>
+
+  <div id="title-screen" class="overlay active">
+    <div id="title">crows and owls</div>
+    <div id="title-sub">a winter in seven days</div>
+    <div id="title-begin" class="title-action">— begin —</div>
+    <div id="title-continue" class="title-action" style="display:none">— continue —</div>
+  </div>
+
+  <div id="day-overlay" class="overlay">
+    <div id="day-label"></div>
+    <div id="day-subtitle"></div>
+  </div>
+
+  <div id="end-screen" class="overlay">
+    <div id="end-label"></div>
+    <div id="end-route"></div>
+    <div id="end-again">— begin again —</div>
+  </div>
+</div>
+
+<!-- ============ JAVASCRIPT ============ -->
+<script>
+'use strict';
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 1: CONSTANTS & CONFIGURATION
+// ════════════════════════════════════════════════════════════════
+
+const WALK_SPEED = 55;
+const DRIFT_SPEED = 28;
+const TYPE_SPEED = 0.030; // seconds per character
+const CHAR_STOP_X = 0.30; // screen fraction where char starts
+const SNOW_COUNT = 80;
+const SAVE_KEY = 'crows_owls_save';
+
+const PALETTE = {
+  skyTop:    '#a8a5a0',
+  skyMid:    '#c3bfb9',
+  skyBottom: '#d1cdc8',
+  ground:    '#d8d4cf',
+  dark:      '#191713',
+  darkest:   '#0c0b09',
+  blood:     '#6b1010',
+  warmGlow:  'rgba(245, 225, 180, 0.06)',
+};
+
+const NIGHT_PALETTE = {
+  skyTop:    '#0a0908',
+  skyMid:    '#111010',
+  skyBottom: '#151413',
+  ground:    '#0e0d0c',
+  dark:      '#080706',
+  darkest:   '#050404',
+};
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 2: UTILITY CLASSES
+// ════════════════════════════════════════════════════════════════
+
+class RNG {
+  constructor(s) { this.s = s >>> 0; }
+  f() {
+    this.s ^= this.s << 13;
+    this.s ^= this.s >>> 17;
+    this.s ^= this.s << 5;
+    return (this.s >>> 0) / 4294967296;
+  }
+  range(a, b) { return a + this.f() * (b - a); }
+  int(a, b) { return Math.floor(this.range(a, b + 1)); }
+}
+
+class EventBus {
+  constructor() { this._h = {}; }
+  on(e, fn) { (this._h[e] = this._h[e] || []).push(fn); }
+  off(e, fn) { if (this._h[e]) this._h[e] = this._h[e].filter(f => f !== fn); }
+  emit(e, d) { if (this._h[e]) this._h[e].forEach(fn => fn(d)); }
+}
+
+const Ease = {
+  linear: t => t,
+  inOut: t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+  out: t => t * (2 - t),
+  in: t => t * t,
+};
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 3: NARRATIVE DATA — ALL 7 DAYS
+// ════════════════════════════════════════════════════════════════
+
+const DAYS = {
+  // ── DAY 1: First Notice ──
+  1: {
+    seed: 7001,
+    weather: 'light-snow',
+    snowCount: 65,
+    subtitle: 'the walk home',
+    worldWidth: 2.2,
+    scenes: [{
+      type: 'walk',
+      startNode: 'intro1',
+      pois: [
+        { worldX: 0.15, node: 'intro1' },
+        { worldX: 0.55, node: 'lamp1', entity: 'lamp-crow' },
+      ],
+      nodes: {
+        intro1: { t: "The walk home.", nx: 'intro2' },
+        intro2: { t: "Same street. Same grey sky. You've stopped counting the days.", nx: 'intro3' },
+        intro3: { t: "Then — something on the lamp post. Dark. Still. Not there yesterday.", resume: true },
+        lamp1: { t: "A crow. Black against pale winter. It watches you without moving.", ch: [
+          { l: "[ look at the crow ]", nx: 'c1', route: { crow: 2, engage: 1 } },
+          { l: "[ notice something else ]", nx: 'b1', route: { crow: 1, owl: 1, aware: 2 } },
+          { l: "[ stop and wait ]", nx: 'l1', route: { crow: 1, aware: 1, engage: 1 } },
+          { l: "[ walk on ]", nx: 'i1', route: { silent: 2 } },
+        ]},
+        c1: { t: "You hold its gaze. A long moment. It tilts its head — slow, deliberate.", nx: 'c2' },
+        c2: { t: "You keep walking. But the weight of being watched stays with you all evening.",
+          end: true, el: "day one  ·  you noticed", rt: "crow  ·  something is beginning", flag: 'looked_at_crow' },
+        b1: { t: "The crow on the lamp. And higher — pale, nearly sky-coloured — an owl. Watching the crow.", nx: 'b2' },
+        b2: { t: "The crow watching you. You in the middle of something you don't have words for yet.", nx: 'b3' },
+        b3: { t: "Neither moves. You don't know what you've stepped into.",
+          end: true, el: "day one  ·  something has begun", rt: "secret  ·  you saw both", flag: 'saw_both' },
+        l1: { t: "You slow. You stop. You couldn't explain why if asked.", nx: 'l2' },
+        l2: { t: "The crow waits as if it expected this. As if it has been waiting longer than today.", nx: 'l3' },
+        l3: { t: "To the east, a pale shape — almost invisible against the trees. You almost missed it.",
+          end: true, el: "day one  ·  you waited", rt: "observant  ·  you saw both", flag: 'saw_both' },
+        i1: { t: "You look away. Just a crow. They're everywhere.", nx: 'i2' },
+        i2: { t: "By the time you're inside, you've already half-forgotten it. Almost.",
+          end: true, el: "day one  ·  you passed through", rt: "silent  ·  you looked away", flag: 'ignored' },
+      }
+    }]
+  },
+
+  // ── DAY 2: Repetition ──
+  2: {
+    seed: 7042,
+    weather: 'light-snow',
+    snowCount: 70,
+    subtitle: 'the same street',
+    worldWidth: 2.4,
+    scenes: [{
+      type: 'walk',
+      startNode: 'd2_1',
+      pois: [
+        { worldX: 0.12, node: 'd2_1' },
+        { worldX: 0.35, node: 'd2_feathers' },
+        { worldX: 0.6, node: 'd2_choice' },
+      ],
+      nodes: {
+        d2_1: { t: "The same walk. You notice you're looking for it before you realise you're looking.", nx: 'd2_2' },
+        d2_2: { t: "The street is quieter today. Colder. The light is flat and close.", resume: true },
+        d2_feathers: { t: "Black feathers at the base of the lamp post. Three of them, splayed like dropped letters.", nx: 'd2_f2' },
+        d2_f2: { t: "And in the hedge — something pale. A feather, but not black. Grey-white, barred. An owl's.", resume: true },
+        d2_choice: { t: "The crow is there again. Same post. Same stillness. A hedge sparrow flees at your approach, but the crow stays.", ch: [
+          { l: "[ leave food for the crow ]", nx: 'd2_feed_crow', route: { crow: 3, engage: 2 }, flag: 'fed_crow' },
+          { l: "[ leave food near the hedge ]", nx: 'd2_feed_owl', route: { owl: 3, engage: 2 }, flag: 'fed_owl' },
+          { l: "[ observe both carefully ]", nx: 'd2_observe', route: { aware: 3, engage: 1 } },
+          { l: "[ keep walking ]", nx: 'd2_pass', route: { silent: 2 } },
+        ]},
+        d2_feed_crow: { t: "You set a crust of bread on the pavement below the lamp. The crow watches your hand, not your face.", nx: 'd2_fc2' },
+        d2_fc2: { t: "You're barely ten steps past when you hear it land. The particular scrape of claws on concrete.",
+          end: true, el: "day two  ·  you fed the crow", rt: "crow  ·  a bond forming" },
+        d2_feed_owl: { t: "You leave a scrap near the base of the hedge, where the pale feather lay.", nx: 'd2_fo2' },
+        d2_fo2: { t: "Nothing moves. But the next morning, the scrap is gone and a pellet of compressed fur and bone sits in its place.",
+          end: true, el: "day two  ·  you fed the owl", rt: "owl  ·  something accepted" },
+        d2_observe: { t: "You stand between them. The crow on the lamp. The owl — you can see it now — in the oak three gardens down.", nx: 'd2_ob2' },
+        d2_ob2: { t: "You look at each in turn. Neither blinks. The space between them feels older than the street.", nx: 'd2_ob3' },
+        d2_ob3: { t: "You leave without choosing. Both of them watch you go.",
+          end: true, el: "day two  ·  you stood between", rt: "secret  ·  balance held", flag: 'observed_both' },
+        d2_pass: { t: "The crow. The feathers. None of it is your business.", nx: 'd2_p2' },
+        d2_p2: { t: "You walk the rest of the street with your head down. The wind picks up behind you.",
+          end: true, el: "day two  ·  you moved on", rt: "silent  ·  distance kept" },
+      }
+    }]
+  },
+
+  // ── DAY 3: First Wound ──
+  3: {
+    seed: 7083,
+    weather: 'medium-snow',
+    snowCount: 90,
+    subtitle: 'what remains',
+    worldWidth: 2.0,
+    bloodOnSnow: true,
+    scenes: [{
+      type: 'walk',
+      startNode: 'd3_1',
+      pois: [
+        { worldX: 0.12, node: 'd3_1' },
+        { worldX: 0.42, node: 'd3_body', entity: 'dead-crow' },
+        { worldX: 0.7, node: 'd3_after' },
+      ],
+      nodes: {
+        d3_1: { t: "Something is wrong before you see it. The air is different. Heavier.", nx: 'd3_2' },
+        d3_2: { t: "Snow falling thicker now. The street the same but not the same.", resume: true },
+        d3_body: { t: "A dead crow on the pavement near the lamp post.", nx: 'd3_b2', fx: 'blood' },
+        d3_b2: { t: "Wings slightly open. As if it fell mid-flight, or was dropped. The snow around it is marked.", nx: 'd3_b3' },
+        d3_b3: { t: "Dark red on white. Small. The only colour you have seen in weeks, and it is this.", ch: [
+          { l: "[ kneel beside it ]", nx: 'd3_kneel', route: { crow: 2, engage: 2 }, flag: 'mourned_crow' },
+          { l: "[ look for the owl ]", nx: 'd3_owl', route: { owl: 2, aware: 1 } },
+          { l: "[ stand still ]", nx: 'd3_still', route: { aware: 2, engage: 1 } },
+          { l: "[ walk past ]", nx: 'd3_away', route: { silent: 2 } },
+        ]},
+        d3_kneel: { t: "You crouch. It is smaller than you thought. Glossy black fading to brown at the edges.", nx: 'd3_k2' },
+        d3_k2: { t: "One eye half-open. You can see your reflection in it, tiny and distorted.", nx: 'd3_k3' },
+        d3_k3: { t: "This is not your crow. You know this immediately and cannot explain how you know.",
+          end: true, el: "day three  ·  blood on snow", rt: "crow  ·  the first wound" },
+        d3_owl: { t: "You look up. The oak. The hedge. The eaves of the houses.", nx: 'd3_o2' },
+        d3_o2: { t: "Nothing. No owl. But on the snow near the hedge — talon marks. Precise, deep, already filling with fresh snow.", nx: 'd3_o3' },
+        d3_o3: { t: "You understand something you wish you didn't.",
+          end: true, el: "day three  ·  blood on snow", rt: "owl  ·  the evidence" },
+        d3_still: { t: "You stand over the body. Snow lands on its feathers and does not melt.", nx: 'd3_s2' },
+        d3_s2: { t: "From the oak: a sound. Not a call. A watching. From the lamp: another crow, looking down at the dead one.", nx: 'd3_s3' },
+        d3_s3: { t: "Two birds and one body and you in the middle of something that has been happening for longer than you.",
+          end: true, el: "day three  ·  blood on snow", rt: "witness  ·  the ground between" },
+        d3_away: { t: "You don't stop. The body is there and then behind you and then you turn the corner.", nx: 'd3_a2' },
+        d3_a2: { t: "At home you wash your hands though you touched nothing.",
+          end: true, el: "day three  ·  you did not stop", rt: "silent  ·  the body behind you" },
+      }
+    }]
+  },
+
+  // ── DAY 4: First Night Visit ──
+  4: {
+    seed: 7124,
+    weather: 'light-snow',
+    snowCount: 50,
+    subtitle: 'the first voice',
+    worldWidth: 1.6,
+    scenes: [
+      // Short walk
+      {
+        type: 'walk',
+        startNode: 'd4_w1',
+        pois: [
+          { worldX: 0.15, node: 'd4_w1' },
+          { worldX: 0.5, node: 'd4_w3' },
+        ],
+        nodes: {
+          d4_w1: { t: "The lamp post is empty. You feel its absence like a missing tooth.", nx: 'd4_w2' },
+          d4_w2: { t: "The dead crow is gone. Only a faint stain remains on the pavement, if you look.", resume: true },
+          d4_w3: { t: "You walk the rest of the street quickly. The wind is from the east, sharp, carrying nothing.", nx: 'd4_w4' },
+          d4_w4: { t: "Home. Door shut. The heating ticks. Night comes early and arrives all at once.",
+            end: true, el: "day four  ·  evening", toNight: true },
+        }
+      },
+      // Night scene — crow speaks
+      {
+        type: 'night',
+        startNode: 'd4_n1',
+        reqRoute: ['crow', 'secret', 'bitter-late-crow'],
+        nodes: {
+          d4_n1: { sp: '', t: "You can't sleep. The window is a pale rectangle in the dark room.", nx: 'd4_n2' },
+          d4_n2: { t: "A sound on the sill. Not a tap. A weight settling.", nx: 'd4_n3' },
+          d4_n3: { t: "You open the window. The cold hits your face. The crow is there, close enough to touch.", nx: 'd4_n4' },
+          d4_n4: { sp: 'the crow', t: "You fed us.", nx: 'd4_n5' },
+          d4_n5: { sp: 'the crow', t: "We remember everyone who feeds us. And everyone who doesn't.", nx: 'd4_n6' },
+          d4_n6: { sp: 'the crow', t: "The one on the pavement. She was ours. Young. Careless with the dark hours.", ch: [
+            { l: "[ what happened to her ]", nx: 'd4_ask', route: { crow: 1, engage: 1 } },
+            { l: "[ who are you ]", nx: 'd4_who', route: { aware: 1 } },
+            { l: "[ say nothing ]", nx: 'd4_quiet', route: { engage: -1 } },
+          ]},
+          d4_ask: { sp: 'the crow', t: "What always happens. The owl. Silent wings. The dark hours belong to them and we forget, every generation, we forget.", nx: 'd4_cont' },
+          d4_who: { sp: 'the crow', t: "We are the flock. We are what remembers. One voice, many dead.", nx: 'd4_cont' },
+          d4_quiet: { sp: 'the crow', t: "Good. Listening is rarer than speaking. We have been speaking for a long time and the words have worn smooth.", nx: 'd4_cont' },
+          d4_cont: { sp: 'the crow', t: "It wasn't always war. That's what they don't tell you. There was a time before.", nx: 'd4_c2' },
+          d4_c2: { sp: 'the crow', t: "We'll tell you. If you keep the window open.",
+            end: true, el: "day four  ·  the first voice", rt: "crow  ·  the window is open" },
+        }
+      },
+      // Night scene — owl speaks (owl route)
+      {
+        type: 'night',
+        startNode: 'd4_owl1',
+        reqRoute: ['owl', 'bitter-late-owl'],
+        nodes: {
+          d4_owl1: { t: "The window. Open a crack for air. The room is too warm.", nx: 'd4_owl2' },
+          d4_owl2: { t: "A pale shape on the sill. You didn't hear it arrive. That is the point of owls.", nx: 'd4_owl3' },
+          d4_owl3: { sp: 'the owl', t: "You left food. A gesture. Small but noted.", nx: 'd4_owl4' },
+          d4_owl4: { sp: 'the owl', t: "The crow that died was careless. They are all careless. It is what they are.", ch: [
+            { l: "[ did you kill it ]", nx: 'd4_owlask', route: { owl: 1, engage: 1 } },
+            { l: "[ what do you want ]", nx: 'd4_owlwant', route: { aware: 1 } },
+            { l: "[ say nothing ]", nx: 'd4_owlsilent' },
+          ]},
+          d4_owlask: { sp: 'the owl', t: "That is not the right question. The question is what happens to a territory when no one enforces its boundaries.", nx: 'd4_owlcont' },
+          d4_owlwant: { sp: 'the owl', t: "A witness. The crows have their stories. We have the facts.", nx: 'd4_owlcont' },
+          d4_owlsilent: { sp: 'the owl', t: "Silence. Good. You understand more than the crows give you credit for.", nx: 'd4_owlcont' },
+          d4_owlcont: { sp: 'the owl', t: "There is an order to the night. There always has been. What they call war, we call correction.", nx: 'd4_owlc2' },
+          d4_owlc2: { sp: 'the owl', t: "I will explain. Not because you asked. Because it is time someone heard it properly.",
+            end: true, el: "day four  ·  the owl speaks", rt: "owl  ·  cold witness" },
+        }
+      },
+      // Night scene — silent route
+      {
+        type: 'night',
+        startNode: 'd4_s1',
+        reqRoute: ['silent'],
+        nodes: {
+          d4_s1: { t: "Night. The window dark. You slept badly.", nx: 'd4_s2' },
+          d4_s2: { t: "In the morning, on the outside sill: a single feather. Black. Perfectly placed.", nx: 'd4_s3' },
+          d4_s3: { t: "You don't know what it means. You put it in a drawer and close it.",
+            end: true, el: "day four  ·  the feather", rt: "silent  ·  left for you" },
+        }
+      },
+      // Night scene — secret route
+      {
+        type: 'night',
+        startNode: 'd4_sec1',
+        reqRoute: ['secret-early'],
+        nodes: {
+          d4_sec1: { t: "The window. Something outside. You look.", nx: 'd4_sec2' },
+          d4_sec2: { t: "Nothing on the sill. But from the street below, a sound — not a crow, not an owl. Something between.", nx: 'd4_sec3' },
+          d4_sec3: { sp: '???', t: "It wasn't always like this.", nx: 'd4_sec4' },
+          d4_sec4: { t: "Silence. The voice is gone before you can locate it. But the words stay.",
+            end: true, el: "day four  ·  a third voice", rt: "secret  ·  before the division" },
+        }
+      },
+    ]
+  },
+
+  // ── DAY 5: The First History ──
+  5: {
+    seed: 7165,
+    weather: 'medium-snow',
+    snowCount: 85,
+    subtitle: 'the war began',
+    worldWidth: 1.8,
+    scenes: [
+      // Short walk
+      {
+        type: 'walk',
+        startNode: 'd5_w1',
+        pois: [
+          { worldX: 0.12, node: 'd5_w1' },
+          { worldX: 0.45, node: 'd5_w3' },
+        ],
+        nodes: {
+          d5_w1: { t: "Colder. The street feels narrower today, the houses pressing in.", nx: 'd5_w2' },
+          d5_w2: { t: "Two crows on a roofline across the street. A third on the lamp post. They track you.", resume: true },
+          d5_w3: { t: "At the oak, nothing. The owl roosts elsewhere in daylight. But the lower branches are scored with claw marks.", nx: 'd5_w4' },
+          d5_w4: { t: "You walk faster. You want to be home before dark.",
+            end: true, el: "day five  ·  dusk", toNight: true },
+        }
+      },
+      // Night — crow's history
+      {
+        type: 'night',
+        startNode: 'd5_cn1',
+        reqRoute: ['crow', 'bitter-late-crow'],
+        nodes: {
+          d5_cn1: { sp: 'the crow', t: "The high trees. Before the roads, before the houses. We had the high trees and they had the hollows.", nx: 'd5_cn2' },
+          d5_cn2: { sp: 'the crow', t: "Enough for both. That was the old arrangement. Territory drawn by what each species needed, not what each species wanted.", nx: 'd5_cn3' },
+          d5_cn3: { sp: 'the crow', t: "Then the hollows started emptying. Prey gone, trees cut, the world shrinking around both of us.", nx: 'd5_cn4' },
+          d5_cn4: { sp: 'the crow', t: "The first losses were ours. Three fledglings in one night. Silent wings in the dark.", ch: [
+            { l: "[ tell me about the dead ]", nx: 'd5_dead', route: { register: 'grief' } },
+            { l: "[ tell me about the fight ]", nx: 'd5_fight', route: { register: 'anger' } },
+            { l: "[ tell me what survived ]", nx: 'd5_survive', route: { register: 'survival' } },
+            { l: "[ say nothing ]", nx: 'd5_nothing', route: { register: 'unresolved' } },
+          ]},
+          d5_dead: { sp: 'the crow', t: "Names. We keep names. The owls don't understand this. To them, a dead crow is a correction. To us, a dead crow is a silence where a voice was.", nx: 'd5_end' },
+          d5_fight: { sp: 'the crow', t: "We learned to mob. Twenty against one. Noise as a weapon. If we couldn't match their silence, we'd drown it.", nx: 'd5_end' },
+          d5_survive: { sp: 'the crow', t: "We learned. Every death taught the flock something the dead bird knew. We carry them forward. That is what survival means.", nx: 'd5_end' },
+          d5_nothing: { sp: 'the crow', t: "Yes. Some things are better without commentary. The dead don't need our descriptions.", nx: 'd5_end' },
+          d5_end: { sp: 'the crow', t: "Tomorrow, we'll tell you the rest. The worst of it. You should know what you chose to listen to.",
+            end: true, el: "day five  ·  the beginning of the war", rt: "crow  ·  the old territory" },
+        }
+      },
+      // Night — owl's history
+      {
+        type: 'night',
+        startNode: 'd5_on1',
+        reqRoute: ['owl', 'bitter-late-owl'],
+        nodes: {
+          d5_on1: { sp: 'the owl', t: "The territory was never shared. That is crow revisionism. The territory was allocated.", nx: 'd5_on2' },
+          d5_on2: { sp: 'the owl', t: "The canopy for them. The dark hours for us. A clean division. Efficient.", nx: 'd5_on3' },
+          d5_on3: { sp: 'the owl', t: "They began encroaching at dusk. Claiming the grey hours. Noise where silence was required.", ch: [
+            { l: "[ why silence ]", nx: 'd5_owhy', route: { register: 'judgment' } },
+            { l: "[ what happened next ]", nx: 'd5_onext', route: { register: 'purification' } },
+            { l: "[ was it worth it ]", nx: 'd5_oworth', route: { register: 'grief' } },
+            { l: "[ say nothing ]", nx: 'd5_onothing', route: { register: 'cold-ruin' } },
+          ]},
+          d5_owhy: { sp: 'the owl', t: "Because silence is how the world thinks. Noise is how it forgets. The crows are a species of forgetting disguised as memory.", nx: 'd5_oend' },
+          d5_onext: { sp: 'the owl', t: "Correction. What was out of place was returned to place. This is not cruelty. This is structure.", nx: 'd5_oend' },
+          d5_oworth: { sp: 'the owl', t: "Worth. A crow word. We do not weigh outcomes against desire. We act according to necessity.", nx: 'd5_oend' },
+          d5_onothing: { sp: 'the owl', t: "You learn. The crows never do.", nx: 'd5_oend' },
+          d5_oend: { sp: 'the owl', t: "There is more. The crows will call it massacre. I will call it what it was.",
+            end: true, el: "day five  ·  the order of things", rt: "owl  ·  the first correction" },
+        }
+      },
+      // Night — silent
+      {
+        type: 'night',
+        startNode: 'd5_s1',
+        reqRoute: ['silent'],
+        nodes: {
+          d5_s1: { t: "Night again. The window stays shut. Outside, the wind carries sounds that might be wings.", nx: 'd5_s2' },
+          d5_s2: { t: "In the morning, three feathers on the sill. Arranged. Black, grey, black.",
+            end: true, el: "day five  ·  the arrangement", rt: "silent  ·  someone is trying" },
+        }
+      },
+      // Night — secret
+      {
+        type: 'night',
+        startNode: 'd5_sec1',
+        reqRoute: ['secret-early'],
+        nodes: {
+          d5_sec1: { sp: '???', t: "Before the war there was the wood. One wood. No borders.", nx: 'd5_sec2' },
+          d5_sec2: { sp: '???', t: "The crow and the owl roosted in the same tree once. Not as friends. As neighbours.", nx: 'd5_sec3' },
+          d5_sec3: { sp: '???', t: "The tree is gone now. Cut down or fallen. Neither side remembers which.", nx: 'd5_sec4' },
+          d5_sec4: { t: "The voice fades. You're not sure it was outside the window or inside your head.",
+            end: true, el: "day five  ·  the tree", rt: "secret  ·  before the border" },
+        }
+      },
+    ]
+  },
+
+  // ── DAY 6: Hardening ──
+  6: {
+    seed: 7206,
+    weather: 'heavy-snow',
+    snowCount: 120,
+    subtitle: 'the massacre',
+    worldWidth: 2.0,
+    scenes: [
+      {
+        type: 'walk',
+        startNode: 'd6_w1',
+        pois: [
+          { worldX: 0.1, node: 'd6_w1' },
+          { worldX: 0.35, node: 'd6_w3' },
+          { worldX: 0.6, node: 'd6_w5' },
+        ],
+        nodes: {
+          d6_w1: { t: "The street is wrong. You feel it in your teeth.", nx: 'd6_w2' },
+          d6_w2: { t: "Empty perches everywhere. The lamp, the gutters, the aerials. Not one bird.", resume: true },
+          d6_w3: { t: "Three feathers arranged in a line on the pavement. Like a marker. Like a warning.", nx: 'd6_w4' },
+          d6_w4: { t: "The silence is not absence. It is the silence after something.", resume: true },
+          d6_w5: { t: "You walk the last of the street in a quiet that feels wrong. Too still. The wrong kind of cold.",
+            end: true, el: "day six  ·  the empty street", toNight: true },
+        }
+      },
+      // Night — crow: the massacre
+      {
+        type: 'night',
+        startNode: 'd6_cn1',
+        reqRoute: ['crow', 'bitter-late-crow'],
+        nodes: {
+          d6_cn1: { sp: 'the crow', t: "Seventeen. In one night.", nx: 'd6_cn2' },
+          d6_cn2: { sp: 'the crow', t: "The roost in the old elms behind the school. We'd used it for six generations. They knew.", nx: 'd6_cn3' },
+          d6_cn3: { sp: 'the crow', t: "Silent wings. All of them. Three owls working in formation. The fledglings first. Then the elders too slow to wake.", nx: 'd6_cn4' },
+          d6_cn4: { sp: 'the crow', t: "The silence of it. That's what stays. Seventeen deaths and not one sound.", ch: [
+            { l: "[ what did you do ]", nx: 'd6_cret', route: { register2: 'vengeance' } },
+            { l: "[ how do you carry this ]", nx: 'd6_cgrief', route: { register2: 'mourning' } },
+            { l: "[ did it change you ]", nx: 'd6_cchange', route: { register2: 'survival' } },
+            { l: "[ I don't know what to say ]", nx: 'd6_cdont', route: { register2: 'unresolved' } },
+          ]},
+          d6_cret: { sp: 'the crow', t: "We mobbed them at dawn. Every crow in the territory. Drove them from the oak, from every roost for a mile. They came back. They always come back.", nx: 'd6_cend' },
+          d6_cgrief: { sp: 'the crow', t: "We don't carry it. We are it. Every loss is woven into the flock. We fly heavier each generation.", nx: 'd6_cend' },
+          d6_cchange: { sp: 'the crow', t: "Changed us. Yes. We became what they feared. Loud, many, relentless. We became the mob because the alternative was silence.", nx: 'd6_cend' },
+          d6_cdont: { sp: 'the crow', t: "No. You don't. That's honest. Most of your kind would have pretended.", nx: 'd6_cend' },
+          d6_cend: { sp: 'the crow', t: "Tomorrow is the last day. The lamp will be empty. We will be where we need to be.",
+            end: true, el: "day six  ·  seventeen", rt: "crow  ·  the weight of it" },
+        }
+      },
+      // Night — owl: the correction
+      {
+        type: 'night',
+        startNode: 'd6_on1',
+        reqRoute: ['owl', 'bitter-late-owl'],
+        nodes: {
+          d6_on1: { sp: 'the owl', t: "The crows will say seventeen. The number is correct. The framing is not.", nx: 'd6_on2' },
+          d6_on2: { sp: 'the owl', t: "A roost that close to our nesting territory. Seventy crows. The noise alone was an act of territorial aggression.", nx: 'd6_on3' },
+          d6_on3: { sp: 'the owl', t: "What followed was proportional. Seventeen from seventy. One quarter. Enough to communicate. Not enough to destroy.", ch: [
+            { l: "[ was it necessary ]", nx: 'd6_ojudge', route: { register2: 'judgment' } },
+            { l: "[ did you lose anyone ]", nx: 'd6_oloss', route: { register2: 'grief' } },
+            { l: "[ was it enough ]", nx: 'd6_oenough', route: { register2: 'purification' } },
+            { l: "[ say nothing ]", nx: 'd6_osilent', route: { register2: 'cold-ruin' } },
+          ]},
+          d6_ojudge: { sp: 'the owl', t: "Necessary is the only metric. Ask the crows if their noise was necessary. Ask their dead fledglings if the roost placement was wise.", nx: 'd6_oend' },
+          d6_oloss: { sp: 'the owl', t: "One. In the retaliation. They mobbed at dawn. Seventy voices for one owl. We do not forget either, though the crows think memory belongs only to them.", nx: 'd6_oend' },
+          d6_oenough: { sp: 'the owl', t: "It restored the boundary for one generation. Then they encroached again. They always do. The cycle continues because they cannot learn permanence.", nx: 'd6_oend' },
+          d6_osilent: { sp: 'the owl', t: "Noted.", nx: 'd6_oend' },
+          d6_oend: { sp: 'the owl', t: "Tomorrow the street will be empty. Do not mistake this for peace. It is the space between waves.",
+            end: true, el: "day six  ·  the correction", rt: "owl  ·  necessary mathematics" },
+        }
+      },
+      // Night — silent
+      {
+        type: 'night',
+        startNode: 'd6_s1',
+        reqRoute: ['silent'],
+        nodes: {
+          d6_s1: { t: "You dream of wings. You wake to nothing. The sill is bare.", nx: 'd6_s2' },
+          d6_s2: { t: "But in the garden below, in the snow: marks. Many small feet. One set of talons. And then nothing.",
+            end: true, el: "day six  ·  the marks", rt: "silent  ·  aftermath without witness" },
+        }
+      },
+      // Night — secret
+      {
+        type: 'night',
+        startNode: 'd6_sec1',
+        reqRoute: ['secret-early'],
+        nodes: {
+          d6_sec1: { sp: '???', t: "They both came to you because you didn't choose.", nx: 'd6_sec2' },
+          d6_sec2: { sp: '???', t: "The crow wants an ally. The owl wants a record. You are neither and both.", nx: 'd6_sec3' },
+          d6_sec3: { sp: '???', t: "The war is older than both their memories. It began before hatred. It began with a misunderstanding about territory that hardened into nature.", nx: 'd6_sec4' },
+          d6_sec4: { sp: '???', t: "There is no peace to make. Only this: the knowledge that it wasn't always like this. And the grief of knowing.",
+            end: true, el: "day six  ·  the oldest wound", rt: "secret  ·  grief of knowing" },
+        }
+      },
+    ]
+  },
+
+  // ── DAY 7: Closure ──
+  7: {
+    seed: 7247,
+    weather: 'light-snow',
+    snowCount: 40,
+    subtitle: 'the last walk',
+    worldWidth: 1.4,
+    scenes: [
+      // The last walk
+      {
+        type: 'walk',
+        startNode: 'd7_w1',
+        pois: [
+          { worldX: 0.1, node: 'd7_w1' },
+          { worldX: 0.4, node: 'd7_lamp' },
+          { worldX: 0.7, node: 'd7_wall' },
+        ],
+        nodes: {
+          d7_w1: { t: "The last walk. You know it before you step outside. Something in the quality of the light.", nx: 'd7_w2' },
+          d7_w2: { t: "Less snow. The air is still.", resume: true },
+          d7_lamp: { t: "The lamp post. Empty. The concrete below is clean. No feathers. No stain.", nx: 'd7_l2' },
+          d7_l2: { t: "You stop anyway. Force of habit. Force of something else.", resume: true },
+          d7_wall: { t: "Further down — on the garden wall. Lower than usual. A crow.", nx: 'd7_w3' },
+          d7_w3: { t: "It watches you walk the full length of the street. Patient. Still.", nx: 'd7_w4' },
+          d7_w4: { t: "At the end, it calls once. A single sharp note that carries in the cold air. Then it goes.", nx: 'd7_w5' },
+          d7_w5: { t: "Home. Night. The last night.",
+            end: true, el: "day seven  ·  the call", toNight: true },
+        }
+      },
+      // Morning coda — crow route
+      {
+        type: 'night',
+        startNode: 'd7_crow1',
+        reqRoute: ['crow'],
+        nodes: {
+          d7_crow1: { t: "Morning. On the window sill: a piece of foil, folded. A blue button. A fragment of glass, smoothed by time.", nx: 'd7_crow2' },
+          d7_crow2: { t: "Gifts. Crows leave gifts for people who feed them. Small, shiny, deliberate.", nx: 'd7_crow3' },
+          d7_crow3: { t: "You hold the button up to the light. Worthless. Invaluable.", nx: 'd7_coda' },
+          d7_coda: { t: "", ch: [
+            { l: "[ end ]", nx: 'd7_cfinal' },
+          ]},
+          d7_cfinal: { t: "",
+            end: true, el: "", coda: true, codaRoute: 'crow' },
+        }
+      },
+      // Morning coda — owl route
+      {
+        type: 'night',
+        startNode: 'd7_owl1',
+        reqRoute: ['owl'],
+        nodes: {
+          d7_owl1: { t: "Morning. The sill is bare. But at the base of the window, outside: a pellet.", nx: 'd7_owl2' },
+          d7_owl2: { t: "Compressed bone and fur. The owl's way of leaving something. Not a gift. A record.", nx: 'd7_owl3' },
+          d7_owl3: { t: "You leave it where it is. Evidence should not be moved.", nx: 'd7_ocoda' },
+          d7_ocoda: { t: "", ch: [
+            { l: "[ end ]", nx: 'd7_ofinal' },
+          ]},
+          d7_ofinal: { t: "",
+            end: true, el: "", coda: true, codaRoute: 'owl' },
+        }
+      },
+      // Morning — silent route
+      {
+        type: 'night',
+        startNode: 'd7_sil1',
+        reqRoute: ['silent'],
+        nodes: {
+          d7_sil1: { t: "Morning. The sill is clean. The street is ordinary. Nothing waits for you.", nx: 'd7_sil2' },
+          d7_sil2: { t: "In six months you will half-remember something about a crow, or was it an owl, or was it nothing.",
+            end: true, el: "crows and owls  ·  the silent route", rt: "you passed through without stopping",
+            finalEnd: true },
+        }
+      },
+      // Morning — secret route
+      {
+        type: 'night',
+        startNode: 'd7_sec1',
+        reqRoute: ['secret-early'],
+        nodes: {
+          d7_sec1: { t: "Morning. On the sill: two feathers. One black. One pale. Crossed.", nx: 'd7_sec2' },
+          d7_sec2: { t: "You pick them up. They weigh nothing. They weigh everything.", nx: 'd7_sec3' },
+          d7_sec3: { t: "The war goes on. It will always go on. But before the war, there was a world that did not require sides. You glimpsed it.", nx: 'd7_sec4' },
+          d7_sec4: { t: "That is the saddest knowledge: not that it ended, but that it was possible.",
+            end: true, el: "crows and owls  ·  the secret route", rt: "you saw the world before the border",
+            finalEnd: true },
+        }
+      },
+      // Morning — too-late route
+      {
+        type: 'night',
+        startNode: 'd7_late1',
+        reqRoute: ['too-late'],
+        nodes: {
+          d7_late1: { t: "You go to the window. You open it. The sill is empty.", nx: 'd7_late2' },
+          d7_late2: { t: "On the lamp post, a crow. Not the same one. You are sure of this immediately.", nx: 'd7_late3' },
+          d7_late3: { t: "It looks at you with no recognition at all. Just a human. Just a window.", nx: 'd7_late4' },
+          d7_late4: { t: "You waited too long. The story happened without you.",
+            end: true, el: "crows and owls  ·  too late", rt: "the story happened without you",
+            finalEnd: true },
+        }
+      },
+      // Bitter late crow
+      {
+        type: 'night',
+        startNode: 'd7_blc1',
+        reqRoute: ['bitter-late-crow'],
+        nodes: {
+          d7_blc1: { t: "Morning. A small piece of foil on the sill. Just one thing. Not the generous offering of a bond. A token.", nx: 'd7_blc2' },
+          d7_blc2: { sp: 'the crow', t: "You waited. We noticed that, too. We notice everything.", nx: 'd7_blc3' },
+          d7_blc3: { t: "The weight is different when you came late. The story is the same but the telling is damaged.",
+            end: true, el: "crows and owls  ·  the late crow", rt: "you came, but the weight is different",
+            finalEnd: true },
+        }
+      },
+      // Bitter late owl
+      {
+        type: 'night',
+        startNode: 'd7_blo1',
+        reqRoute: ['bitter-late-owl'],
+        nodes: {
+          d7_blo1: { t: "Morning. Nothing on the sill. But the window is open and the cold air carries something.", nx: 'd7_blo2' },
+          d7_blo2: { sp: 'the owl', t: "Late. But you came. That is data, not absolution.", nx: 'd7_blo3' },
+          d7_blo3: { t: "You close the window. The street continues without you. It always did.",
+            end: true, el: "crows and owls  ·  the late owl", rt: "late, but recorded",
+            finalEnd: true },
+        }
+      },
+    ]
+  },
+};
+
+// Coda lines based on Day 5 + Day 6 choices
+const CODAS = {
+  crow: {
+    'grief+mourning':    "We remember the dead by carrying them forward. Seventeen names in the voice of the flock. You heard them. That is enough.",
+    'grief+vengeance':   "We remember the dead by refusing to forget who killed them. The mourning and the anger are the same muscle.",
+    'grief+survival':    "We remember the dead by living. Loud, many, relentless. The dead survive in the noise of the living.",
+    'grief+unresolved':  "We remember the dead. The rest — what it means, what to do with it — we haven't decided. We may never decide.",
+    'anger+vengeance':   "They struck in silence. We answered in noise. The cycle is our inheritance and we will not lay it down.",
+    'anger+mourning':    "The anger is real. The grief is real. Between them is a space we live in, and it is very small.",
+    'anger+survival':    "We fight because the alternative is disappearing. The anger keeps us visible. The anger keeps us alive.",
+    'anger+unresolved':  "The anger has been here so long it has become architecture. We don't know what we'd be without it. We're not sure we want to find out.",
+    'survival+vengeance':"We survived by becoming what they feared. We are not proud of this. But we are alive.",
+    'survival+mourning': "Survival is a form of mourning. Every day we live with what was lost. We carry it in our wings.",
+    'survival+survival': "We adapt. We always adapt. The flock endures because the flock changes. That is not a victory. It is a fact.",
+    'survival+unresolved':"We're still here. That's the only certainty. The rest is weather.",
+    'unresolved+vengeance':"We told you the story and you gave us back silence and anger. That might be the most honest response we've heard.",
+    'unresolved+mourning':"The story doesn't end. It just stops being told. You heard it. What you do with it is yours.",
+    'unresolved+survival':"You listened. You didn't fix it. Nobody asked you to. The flock goes on.",
+    'unresolved+unresolved':"We told you everything and nothing is resolved. Welcome to being a crow.",
+  },
+  owl: {
+    'judgment+judgment':    "The pattern holds. Judgment was passed, judgment stands. The crows adapt or they do not. Either outcome is acceptable.",
+    'judgment+grief':       "Even we grieve. Not as the crows do — with noise and theatre — but in the silence between hunts. A necessary cost, precisely measured.",
+    'judgment+purification':"Order was restored. Order is always restored. The crows see tragedy where we see correction. That is the fundamental difference.",
+    'judgment+cold-ruin':   "The ruin is not ours. The ruin belongs to those who would not respect the boundary. We merely enforced what already existed.",
+    'purification+judgment':"What was impure was removed. What remains is clean. This is not cruelty. This is the world working as designed.",
+    'purification+grief':   "The cost of purity is grief. We accept the cost. The crows refuse to, and so the cycle continues.",
+    'purification+purification':"Clean. Ordered. Silent. The territory as it should be. The crows will return and we will correct again. This is permanence.",
+    'purification+cold-ruin':"We purified the territory. What grew back was damaged. Perhaps that was always going to happen. We do not regret necessity.",
+    'grief+judgment':       "We lost one. They lost seventeen. The mathematics do not balance in the way the crows believe. Both sides carry weight.",
+    'grief+grief':          "Two species mourning. Neither able to stop. The war is grief perpetuating grief. We see this clearly. Seeing clearly changes nothing.",
+    'grief+purification':   "Grief refined into purpose. We mourned, and then we ensured it would not happen again. For one generation, at least.",
+    'grief+cold-ruin':      "Cold. Yes. Ruin. Perhaps. But the alternative was chaos, and chaos is a louder form of ruin.",
+    'cold-ruin+judgment':   "The cold is not cruelty. The ruin is not ours. We judged what needed judging. The rest is weather.",
+    'cold-ruin+grief':      "Even ruins grieve. But quietly. As we do.",
+    'cold-ruin+purification':"What was broken was cleared. What grows in its place will be orderly. That is not hope. That is procedure.",
+    'cold-ruin+cold-ruin':  "The territory is silent. The territory is cold. This is how it was always going to end. We knew. We always know.",
+  },
+};
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 4: SAVE SYSTEM
+// ════════════════════════════════════════════════════════════════
+
+const SaveManager = {
+  save(data) {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(data)); }
+    catch (e) { /* silently fail if storage unavailable */ }
+  },
+  load() {
+    try {
+      const d = localStorage.getItem(SAVE_KEY);
+      return d ? JSON.parse(d) : null;
+    } catch (e) { return null; }
+  },
+  clear() {
+    try { localStorage.removeItem(SAVE_KEY); }
+    catch (e) { /* */ }
+  },
+  hasSave() { return this.load() !== null; },
+};
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 5: AUDIO MANAGER (Howler.js stub — loads if available)
+// ════════════════════════════════════════════════════════════════
+
+const AudioManager = {
+  _ctx: null,
+  _enabled: false,
+  _master: 0.5,
+  _active: [],
+
+  init() {
+    try {
+      this._ctx = new (window.AudioContext || window.webkitAudioContext)();
+      this._enabled = true;
+    } catch (e) { this._enabled = false; }
+  },
+
+  resume() {
+    if (this._ctx && this._ctx.state === 'suspended') this._ctx.resume();
+  },
+
+  // Procedural wind/ambient using oscillators + noise
+  playAmbient(type) {
+    if (!this._enabled) return;
+    this.stopAll();
+    // Simple procedural wind
+    const ctx = this._ctx;
+    const bufSize = ctx.sampleRate * 2;
+    const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * 0.015;
+    }
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.loop = true;
+    const gain = ctx.createGain();
+    gain.gain.value = type === 'night' ? 0.02 : 0.04;
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = type === 'night' ? 200 : 400;
+    src.connect(filter).connect(gain).connect(ctx.destination);
+    src.start();
+    this._active.push({ src, gain });
+  },
+
+  // Choice sound — a soft tone
+  playChoiceSound() {
+    if (!this._enabled) return;
+    const ctx = this._ctx;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 440;
+    gain.gain.setValueAtTime(0.06, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.5);
+  },
+
+  // Crow call — harsh, short
+  playCrowCall() {
+    if (!this._enabled) return;
+    const ctx = this._ctx;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(600, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(350, ctx.currentTime + 0.15);
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.25);
+  },
+
+  stopAll() {
+    this._active.forEach(a => { try { a.src.stop(); } catch (e) {} });
+    this._active = [];
+  },
+
+  fadeAll(dur) {
+    if (!this._enabled) return;
+    const t = this._ctx.currentTime;
+    this._active.forEach(a => {
+      a.gain.gain.linearRampToValueAtTime(0, t + dur);
+    });
+    setTimeout(() => this.stopAll(), dur * 1000 + 100);
+  },
+};
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 6: RENDERING SYSTEMS
+// ════════════════════════════════════════════════════════════════
+
+// ── DOM ELEMENTS ──
+const $game = document.getElementById('game');
+const $canvas = document.getElementById('canvas');
+const ctx = $canvas.getContext('2d');
+const $speaker = document.getElementById('speaker');
+const $text = document.getElementById('text');
+const $continue = document.getElementById('continue');
+const $choices = document.getElementById('ui-choices');
+const $routeTag = document.getElementById('route-tag');
+const $fade = document.getElementById('fade');
+const $titleScreen = document.getElementById('title-screen');
+const $titleBegin = document.getElementById('title-begin');
+const $titleContinue = document.getElementById('title-continue');
+const $dayOverlay = document.getElementById('day-overlay');
+const $dayLabel = document.getElementById('day-label');
+const $daySubtitle = document.getElementById('day-subtitle');
+const $endScreen = document.getElementById('end-screen');
+const $endLabel = document.getElementById('end-label');
+const $endRoute = document.getElementById('end-route');
+const $endAgain = document.getElementById('end-again');
+
+let W = 0, H = 0, groundY = 0;
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  W = $game.clientWidth;
+  H = $game.clientHeight;
+  $canvas.width = W * dpr;
+  $canvas.height = H * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  groundY = H * 0.64;
+}
+
+// ── PARALLAX LAYERS ──
+class ParallaxSystem {
+  constructor() {
+    this.cameraX = 0;
+    this.layers = [
+      { speed: 0.0 },   // sky — static
+      { speed: 0.12 },  // far buildings/rooflines
+      { speed: 0.30 },  // mid trees
+      { speed: 0.55 },  // near trees + props
+      { speed: 1.0 },   // ground
+    ];
+  }
+
+  update(charWorldX) {
+    this.cameraX = charWorldX;
+  }
+
+  getOffset(layerIndex) {
+    return this.cameraX * this.layers[layerIndex].speed;
+  }
+}
+
+// ── TREE RENDERER ──
+class TreeRenderer {
+  constructor() {
+    this.layerData = [];
+  }
+
+  generate(seed, dayNum) {
+    this.layerData = [
+      this._makeLayer(16, seed, 0.71, 0.06, 0.11, 0.4, 0.7, 'rgba(110,105,98,0.5)'),
+      this._makeLayer(12, seed + 1, 0.68, 0.10, 0.19, 0.55, 0.9, 'rgba(52,48,43,0.85)'),
+      this._makeLayer(7, seed + 2, 0.655, 0.18, 0.28, 0.75, 1.1, 'rgba(18,16,13,0.95)'),
+    ];
+  }
+
+  _makeLayer(n, seed, gFrac, mnH, mxH, mnS, mxS, col) {
+    const rng = new RNG(seed * 7001);
+    const arr = [];
+    for (let i = 0; i < n; i++) {
+      const t = i / n;
+      arr.push({
+        xFrac: t + rng.f() * 0.7 / n,
+        gFrac, mnH, mxH, col,
+        hFrac: mnH + rng.f() * (mxH - mnH),
+        sc: mnS + rng.f() * (mxS - mnS),
+        seed: seed * 31 + i,
+      });
+    }
+    return arr;
+  }
+
+  draw(cx, layerIndex, offset) {
+    const layer = this.layerData[layerIndex];
+    if (!layer) return;
+    layer.forEach(t => {
+      const x = t.xFrac * W * 2.5 - offset + W * 0.1;
+      // Only draw if on screen (with margin)
+      if (x < -100 || x > W + 100) return;
+      const gy = H * t.gFrac;
+      const h = H * t.hFrac;
+      this._drawTree(cx, x, gy, h, t.sc, t.seed, t.col);
+    });
+  }
+
+  _drawTree(cx, x, gy, h, sc, seed, col) {
+    const rng = new RNG(seed);
+    cx.strokeStyle = col;
+    cx.lineCap = 'round';
+    const th = h * 0.38;
+    const tw = Math.max(1, 3.2 * sc);
+    cx.lineWidth = tw;
+    cx.beginPath(); cx.moveTo(x, gy); cx.lineTo(x, gy - th); cx.stroke();
+    const dep = 5 + Math.round(rng.f() * 2);
+    this._branch(cx, rng, x, gy - th, -Math.PI / 2 - 0.13, h * 0.47, tw * 0.72, dep, col);
+    this._branch(cx, rng, x, gy - th, -Math.PI / 2 + 0.13, h * 0.47, tw * 0.72, dep, col);
+  }
+
+  _branch(cx, rng, bx, by, ang, len, w, d, col) {
+    if (d <= 0 || len < 1.4) return;
+    cx.strokeStyle = col;
+    cx.lineWidth = w;
+    cx.beginPath(); cx.moveTo(bx, by);
+    const ex = bx + Math.cos(ang) * len;
+    const ey = by + Math.sin(ang) * len;
+    cx.lineTo(ex, ey); cx.stroke();
+    const sp = 0.26 + rng.f() * 0.28;
+    const jt = (rng.f() - 0.5) * 0.22;
+    this._branch(cx, rng, ex, ey, ang - sp + jt, len * (0.55 + rng.f() * 0.15), w * 0.67, d - 1, col);
+    this._branch(cx, rng, ex, ey, ang + sp + jt, len * (0.55 + rng.f() * 0.15), w * 0.67, d - 1, col);
+    if (d > 3 && rng.f() > 0.52) {
+      this._branch(cx, rng, ex, ey, ang + (rng.f() - 0.5) * 0.1, len * 0.4, w * 0.5, d - 2, col);
+    }
+  }
+}
+
+// ── WEATHER SYSTEM ──
+class WeatherSystem {
+  constructor() {
+    this.particles = [];
+    this.bloodStains = [];
+  }
+
+  configure(type, count) {
+    this.particles = [];
+    const n = count || SNOW_COUNT;
+    for (let i = 0; i < n; i++) {
+      this.particles.push({
+        x: Math.random() * W * 1.5 - W * 0.25,
+        y: Math.random() * groundY,
+        r: 0.7 + Math.random() * 1.9,
+        speed: 15 + Math.random() * 28,
+        drift: (Math.random() - 0.5) * 9,
+        alpha: 0.3 + Math.random() * 0.5,
+      });
+    }
+  }
+
+  update(dt) {
+    for (const p of this.particles) {
+      p.y += p.speed * dt;
+      p.x += p.drift * dt;
+      if (p.y > groundY + 8) { p.y = -5; p.x = Math.random() * W * 1.5 - W * 0.25; }
+      if (p.x < -20) p.x = W + 10;
+      if (p.x > W + 20) p.x = -10;
+    }
+  }
+
+  draw(cx, snowOffset, groundOffset) {
+    // Snow
+    for (const p of this.particles) {
+      const sx = p.x - snowOffset * 0.05;
+      if (sx < -10 || sx > W + 10) continue;
+      if (p.y > groundY + 2) continue;
+      cx.fillStyle = `rgba(255,255,255,${p.alpha})`;
+      cx.beginPath();
+      cx.arc(sx, p.y, p.r, 0, Math.PI * 2);
+      cx.fill();
+    }
+    // Blood stains (Day 3) — anchored to ground layer
+    const bOff = groundOffset || 0;
+    for (const s of this.bloodStains) {
+      const bx = s.x - bOff;
+      if (bx < -20 || bx > W + 20) continue;
+      cx.fillStyle = `rgba(107,16,16,${s.alpha})`;
+      cx.beginPath();
+      cx.arc(bx, s.y, s.r, 0, Math.PI * 2);
+      cx.fill();
+    }
+  }
+
+  addBloodStains(deadCrowWorldX) {
+    // deadCrowWorldX is in the same coord system as the dead crow entity
+    // The dead crow is at: 0.42 * W * 2 + W * 0.1
+    const baseX = deadCrowWorldX;
+    const rng = new RNG(3333);
+    for (let i = 0; i < 12; i++) {
+      this.bloodStains.push({
+        x: baseX + rng.range(-18, 22),
+        y: groundY - rng.range(-1, 6),
+        r: rng.range(1.2, 4.5),
+        alpha: rng.range(0.35, 0.75),
+      });
+    }
+  }
+}
+
+// ── CHARACTER RENDERER ──
+class CharacterRenderer {
+  constructor() {
+    this.worldX = 0;
+    this.screenX = -70;
+    this.walkCycle = 0;
+    this.state = 'idle'; // idle, walking, stopped
+    this.targetScreenX = W * CHAR_STOP_X;
+  }
+
+  reset() {
+    this.worldX = 0;
+    this.screenX = -70;
+    this.walkCycle = 0;
+    this.state = 'walking';
+  }
+
+  update(dt, isHoldingRight, isReading) {
+    this.targetScreenX = W * CHAR_STOP_X;
+
+    if (this.state === 'entering') {
+      this.screenX += 120 * dt;
+      this.walkCycle += dt;
+      if (this.screenX >= this.targetScreenX) {
+        this.screenX = this.targetScreenX;
+        this.state = 'walking';
+      }
+      return;
+    }
+
+    if (isReading || this.state === 'stopped') {
+      // Gentle drift to a stop
+      return;
+    }
+
+    let speed = DRIFT_SPEED;
+    if (isHoldingRight) speed = WALK_SPEED;
+
+    this.worldX += speed * dt;
+    this.walkCycle += dt * (speed / WALK_SPEED);
+  }
+
+  draw(cx) {
+    if (this.screenX < -40) return;
+    const x = this.screenX;
+    const y = groundY;
+    const isWalking = this.state === 'walking' || this.state === 'entering';
+
+    // Shadow
+    cx.fillStyle = 'rgba(0,0,0,0.18)';
+    cx.beginPath(); cx.ellipse(x, y + 3, 11, 2.5, 0, 0, Math.PI * 2); cx.fill();
+
+    cx.fillStyle = '#1c1a16';
+
+    if (isWalking) {
+      this._drawSideProfile(cx, x, y);
+    } else {
+      this._drawFrontFacing(cx, x, y);
+    }
+  }
+
+  // Walking right — side profile silhouette
+  _drawSideProfile(cx, x, y) {
+    const bob = Math.sin(this.walkCycle * 6.5) * 2.0;
+    const lp = this.walkCycle * 6.5;
+
+    // Head
+    cx.beginPath(); cx.ellipse(x + 2, y - 54 + bob, 6.5, 7, 0, 0, Math.PI * 2); cx.fill();
+
+    // Neck
+    cx.fillRect(x, y - 47 + bob, 5, 5);
+
+    // Torso — slightly angled forward
+    cx.save();
+    cx.translate(x, y - 42 + bob);
+    cx.rotate(0.05);
+    cx.fillRect(-5, 0, 12, 22);
+    cx.restore();
+
+    // Front arm (swinging)
+    cx.save();
+    cx.translate(x + 3, y - 41 + bob);
+    cx.rotate(Math.sin(lp) * 0.35);
+    cx.fillRect(-2, 0, 4, 16);
+    cx.restore();
+
+    // Back arm (swinging opposite)
+    cx.save();
+    cx.translate(x - 1, y - 41 + bob);
+    cx.rotate(Math.sin(lp + Math.PI) * 0.35);
+    cx.fillRect(-2, 0, 4, 16);
+    cx.restore();
+
+    // Front leg
+    cx.save();
+    cx.translate(x + 3, y - 20 + bob);
+    cx.rotate(Math.sin(lp) * 0.3);
+    cx.fillRect(-2.5, 0, 5, 20);
+    cx.restore();
+
+    // Back leg
+    cx.save();
+    cx.translate(x - 1, y - 20 + bob);
+    cx.rotate(Math.sin(lp + Math.PI) * 0.3);
+    cx.fillRect(-2.5, 0, 5, 20);
+    cx.restore();
+  }
+
+  // Stopped — front-facing silhouette
+  _drawFrontFacing(cx, x, y) {
+    // Head
+    cx.beginPath(); cx.ellipse(x, y - 54, 7, 7.5, 0, 0, Math.PI * 2); cx.fill();
+
+    // Neck
+    cx.fillRect(x - 2.5, y - 47, 5, 4);
+
+    // Torso
+    cx.beginPath();
+    cx.moveTo(x - 8, y - 43);
+    cx.lineTo(x + 8, y - 43);
+    cx.lineTo(x + 6, y - 20);
+    cx.lineTo(x - 6, y - 20);
+    cx.closePath();
+    cx.fill();
+
+    // Left arm (down at side)
+    cx.save();
+    cx.translate(x - 9, y - 42);
+    cx.rotate(-0.08);
+    cx.fillRect(-2, 0, 4, 18);
+    cx.restore();
+
+    // Right arm (down at side)
+    cx.save();
+    cx.translate(x + 9, y - 42);
+    cx.rotate(0.08);
+    cx.fillRect(-2, 0, 4, 18);
+    cx.restore();
+
+    // Left leg
+    cx.fillRect(x - 5.5, y - 20, 5, 20);
+
+    // Right leg
+    cx.fillRect(x + 0.5, y - 20, 5, 20);
+  }
+}
+
+// ── ENTITY RENDERERS ──
+
+function drawLampPost(cx, worldX, offset) {
+  const sx = worldX * W * 2 - offset + W * 0.1;
+  if (sx < -50 || sx > W + 50) return sx;
+  const lTY = groundY - H * 0.29;
+  const armEndX = sx + W * 0.03;
+  const armEndY = lTY + H * 0.018;
+
+  cx.strokeStyle = '#1a1715';
+  cx.lineCap = 'round';
+  cx.lineWidth = 4.5;
+  cx.beginPath(); cx.moveTo(sx, groundY + 2); cx.lineTo(sx, lTY); cx.stroke();
+  cx.lineWidth = 2.5;
+  cx.beginPath(); cx.moveTo(sx, lTY);
+  cx.quadraticCurveTo(sx + (armEndX - sx) * 0.5, lTY - 5, armEndX, armEndY);
+  cx.stroke();
+
+  // Lamp glow
+  cx.fillStyle = 'rgba(245,235,215,0.1)';
+  cx.beginPath(); cx.arc(armEndX, armEndY + 8, 18, 0, Math.PI * 2); cx.fill();
+  cx.fillStyle = 'rgba(215,205,182,0.32)';
+  cx.beginPath(); cx.arc(armEndX, armEndY + 8, 7, 0, Math.PI * 2); cx.fill();
+
+  return sx; // return screen X for placing crow
+}
+
+function drawCrow(cx, x, y, anim, scale) {
+  scale = scale || 1;
+  const wb = Math.sin(anim) * 0.9;
+  cx.save();
+  cx.translate(x, y + wb);
+  cx.scale(scale, scale);
+  cx.fillStyle = '#1a1613';
+  // Body
+  cx.save(); cx.rotate(-0.18); cx.scale(1, 0.72);
+  cx.beginPath(); cx.ellipse(0, 0, 9, 7.5, 0, 0, Math.PI * 2); cx.fill();
+  cx.restore();
+  // Head
+  cx.beginPath(); cx.ellipse(8, -6, 5.5, 5.5, -0.25, 0, Math.PI * 2); cx.fill();
+  // Beak
+  cx.beginPath(); cx.moveTo(13, -6); cx.lineTo(20, -4.5); cx.lineTo(13, -3.5); cx.closePath(); cx.fill();
+  // Wing
+  cx.beginPath(); cx.moveTo(-4, 1); cx.lineTo(-14, 8); cx.lineTo(2, 5); cx.closePath(); cx.fill();
+  // Legs
+  cx.strokeStyle = '#1a1613'; cx.lineWidth = 1.3;
+  cx.beginPath();
+  cx.moveTo(2, 7); cx.lineTo(-2, 16);
+  cx.moveTo(2, 7); cx.lineTo(7, 16);
+  cx.stroke();
+  cx.restore();
+}
+
+function drawDeadCrow(cx, x, y) {
+  cx.save();
+  cx.translate(x, y);
+  cx.fillStyle = '#1a1613';
+  // Body on side
+  cx.save(); cx.rotate(0.3); cx.scale(1, 0.65);
+  cx.beginPath(); cx.ellipse(0, 0, 10, 8, 0, 0, Math.PI * 2); cx.fill();
+  cx.restore();
+  // Head
+  cx.beginPath(); cx.ellipse(10, 2, 5, 5, 0.1, 0, Math.PI * 2); cx.fill();
+  // Wing spread
+  cx.beginPath(); cx.moveTo(-5, -2); cx.lineTo(-18, -10); cx.lineTo(-8, 3); cx.closePath(); cx.fill();
+  cx.beginPath(); cx.moveTo(-3, 2); cx.lineTo(-15, 12); cx.lineTo(3, 5); cx.closePath(); cx.fill();
+  cx.restore();
+}
+
+function drawOwl(cx, x, y, alpha) {
+  cx.save();
+  cx.globalAlpha = alpha;
+  cx.fillStyle = '#7a7570';
+  const s = 5;
+  // Body
+  cx.beginPath(); cx.ellipse(x, y, s * 0.5, s * 0.7, 0, 0, Math.PI * 2); cx.fill();
+  // Head
+  cx.beginPath(); cx.ellipse(x, y - s * 0.9, s * 0.47, s * 0.47, 0, 0, Math.PI * 2); cx.fill();
+  // Ear tufts
+  cx.beginPath();
+  cx.moveTo(x - s * 0.18, y - s * 1.2); cx.lineTo(x - s * 0.38, y - s * 1.65); cx.lineTo(x - s * 0.04, y - s * 1.25);
+  cx.fill();
+  cx.beginPath();
+  cx.moveTo(x + s * 0.18, y - s * 1.2); cx.lineTo(x + s * 0.38, y - s * 1.65); cx.lineTo(x + s * 0.04, y - s * 1.25);
+  cx.fill();
+  cx.restore();
+}
+
+// ── BUILDING SILHOUETTES (parallax layer 1) ──
+function drawBuildingSilhouettes(cx, offset) {
+  const rng = new RNG(4444);
+  const baseY = groundY - H * 0.05;
+  for (let i = 0; i < 24; i++) {
+    const bx = i * W * 0.13 - offset + rng.range(-10, 30);
+    if (bx < -100 || bx > W + 100) continue;
+    const bw = rng.range(35, 60);
+    const bh = rng.range(35, 80);
+    const roofType = rng.f();
+
+    cx.fillStyle = `rgba(30, 28, 25, ${rng.range(0.45, 0.65)})`;
+
+    // House body
+    cx.fillRect(bx, baseY - bh, bw, bh);
+
+    // Peaked roof
+    if (roofType < 0.6) {
+      cx.beginPath();
+      cx.moveTo(bx - 3, baseY - bh);
+      cx.lineTo(bx + bw / 2, baseY - bh - rng.range(12, 25));
+      cx.lineTo(bx + bw + 3, baseY - bh);
+      cx.closePath();
+      cx.fill();
+    }
+
+    // Chimney
+    if (rng.f() > 0.4) {
+      const chW = rng.range(4, 8);
+      const chH = rng.range(10, 22);
+      const chX = bx + bw * rng.range(0.2, 0.7);
+      cx.fillRect(chX, baseY - bh - chH, chW, chH);
+    }
+
+    // Dark windows (small rectangles)
+    cx.fillStyle = 'rgba(15, 13, 11, 0.3)';
+    const rows = Math.floor(bh / 30);
+    for (let r = 0; r < rows; r++) {
+      const wy = baseY - bh + 15 + r * 28;
+      if (rng.f() > 0.3) cx.fillRect(bx + 6, wy, 8, 10);
+      if (rng.f() > 0.3 && bw > 40) cx.fillRect(bx + bw - 14, wy, 8, 10);
+    }
+  }
+}
+
+// ── NIGHT SCENE RENDERER ──
+function drawNightScene(cx, dayNum) {
+  // Dark sky
+  const sg = ctx.createLinearGradient(0, 0, 0, H);
+  sg.addColorStop(0, NIGHT_PALETTE.skyTop);
+  sg.addColorStop(0.5, NIGHT_PALETTE.skyMid);
+  sg.addColorStop(1, NIGHT_PALETTE.skyBottom);
+  cx.fillStyle = sg;
+  cx.fillRect(0, 0, W, H);
+
+  // Street silhouette at bottom
+  cx.fillStyle = '#050404';
+  cx.fillRect(0, H * 0.75, W, H * 0.25);
+
+  // Building outlines
+  const rng = new RNG(dayNum * 999);
+  cx.fillStyle = '#0d0c0b';
+  for (let i = 0; i < 8; i++) {
+    const bx = W * 0.05 + i * W * 0.12;
+    const bw = W * 0.09 + rng.f() * W * 0.03;
+    const bh = H * 0.25 + rng.f() * H * 0.2;
+    cx.fillRect(bx, H * 0.75 - bh, bw, bh);
+  }
+
+  // Window — warm glow
+  const winX = W * 0.42;
+  const winY = H * 0.32;
+  const winW = W * 0.16;
+  const winH = H * 0.22;
+
+  // Window opening — pale interior
+  cx.fillStyle = '#1a1816';
+  cx.fillRect(winX, winY, winW, winH);
+
+  // Warm light rectangle on sill
+  cx.fillStyle = 'rgba(200, 180, 140, 0.04)';
+  cx.fillRect(winX - 5, winY + winH, winW + 10, 15);
+  cx.fillStyle = 'rgba(200, 180, 140, 0.02)';
+  cx.fillRect(winX - 10, winY + winH + 15, winW + 20, 30);
+
+  // Window frame
+  cx.strokeStyle = '#252320';
+  cx.lineWidth = 2;
+  cx.strokeRect(winX, winY, winW, winH);
+  cx.beginPath();
+  cx.moveTo(winX + winW / 2, winY);
+  cx.lineTo(winX + winW / 2, winY + winH);
+  cx.stroke();
+
+  // Stars (sparse)
+  cx.fillStyle = 'rgba(180, 175, 168, 0.15)';
+  for (let i = 0; i < 15; i++) {
+    const sx = rng.f() * W;
+    const sy = rng.f() * H * 0.3;
+    const sr = 0.5 + rng.f() * 1;
+    cx.beginPath(); cx.arc(sx, sy, sr, 0, Math.PI * 2); cx.fill();
+  }
+
+  return { winX, winY, winW, winH };
+}
+
+// ── DEAD CROW CLOSE-UP PANEL ──
+// A looking-down composed frame: ground, snow, dead crow, blood
+function drawDeadCrowCloseup(cx, alpha) {
+  if (alpha <= 0) return;
+  cx.save();
+  cx.globalAlpha = alpha;
+
+  // Panel dimensions — centered, large
+  const px = W * 0.15;
+  const py = H * 0.05;
+  const pw = W * 0.7;
+  const ph = H * 0.55;
+
+  // Panel background — cold grey ground viewed from above
+  const groundGrad = cx.createRadialGradient(
+    px + pw / 2, py + ph / 2, pw * 0.1,
+    px + pw / 2, py + ph / 2, pw * 0.6
+  );
+  groundGrad.addColorStop(0, '#c8c4be');
+  groundGrad.addColorStop(0.6, '#b5b1ab');
+  groundGrad.addColorStop(1, '#9a968f');
+  cx.fillStyle = groundGrad;
+  cx.fillRect(px, py, pw, ph);
+
+  // Snow texture — scattered white dots on the ground
+  const rng = new RNG(7777);
+  cx.fillStyle = 'rgba(255,255,255,0.5)';
+  for (let i = 0; i < 60; i++) {
+    const sx = px + rng.f() * pw;
+    const sy = py + rng.f() * ph;
+    const sr = rng.range(0.8, 3);
+    cx.beginPath(); cx.arc(sx, sy, sr, 0, Math.PI * 2); cx.fill();
+  }
+
+  // Pavement cracks — thin dark lines
+  cx.strokeStyle = 'rgba(80, 75, 68, 0.25)';
+  cx.lineWidth = 0.8;
+  for (let i = 0; i < 5; i++) {
+    cx.beginPath();
+    const lx = px + rng.range(pw * 0.1, pw * 0.9);
+    const ly = py + rng.range(ph * 0.1, ph * 0.9);
+    cx.moveTo(lx, ly);
+    cx.lineTo(lx + rng.range(-40, 40), ly + rng.range(-30, 30));
+    cx.stroke();
+  }
+
+  // Dead crow body — centre of panel, viewed from above
+  const crowCX = px + pw * 0.5;
+  const crowCY = py + ph * 0.48;
+
+  // Body (oval from above)
+  cx.fillStyle = '#1a1613';
+  cx.beginPath();
+  cx.ellipse(crowCX, crowCY, 28, 18, 0.15, 0, Math.PI * 2);
+  cx.fill();
+
+  // Head
+  cx.beginPath();
+  cx.ellipse(crowCX + 22, crowCY - 8, 11, 10, -0.2, 0, Math.PI * 2);
+  cx.fill();
+
+  // Beak
+  cx.beginPath();
+  cx.moveTo(crowCX + 32, crowCY - 10);
+  cx.lineTo(crowCX + 44, crowCY - 8);
+  cx.lineTo(crowCX + 32, crowCY - 5);
+  cx.closePath();
+  cx.fill();
+
+  // Wings spread — the key detail, viewed from above
+  // Left wing
+  cx.beginPath();
+  cx.moveTo(crowCX - 8, crowCY - 5);
+  cx.quadraticCurveTo(crowCX - 45, crowCY - 35, crowCX - 55, crowCY - 15);
+  cx.quadraticCurveTo(crowCX - 48, crowCY + 5, crowCX - 10, crowCY + 8);
+  cx.closePath();
+  cx.fill();
+
+  // Right wing
+  cx.beginPath();
+  cx.moveTo(crowCX - 5, crowCY + 8);
+  cx.quadraticCurveTo(crowCX - 40, crowCY + 35, crowCX - 20, crowCY + 45);
+  cx.quadraticCurveTo(crowCX + 5, crowCY + 38, crowCX + 8, crowCY + 15);
+  cx.closePath();
+  cx.fill();
+
+  // Tail feathers
+  cx.beginPath();
+  cx.moveTo(crowCX - 18, crowCY + 2);
+  cx.lineTo(crowCX - 38, crowCY + 12);
+  cx.lineTo(crowCX - 32, crowCY - 5);
+  cx.closePath();
+  cx.fill();
+
+  // Wing feather detail — lighter strokes
+  cx.strokeStyle = 'rgba(50, 45, 38, 0.4)';
+  cx.lineWidth = 0.6;
+  for (let i = 0; i < 6; i++) {
+    const fa = -0.8 + i * 0.25;
+    cx.beginPath();
+    cx.moveTo(crowCX - 10, crowCY);
+    cx.lineTo(crowCX - 10 + Math.cos(fa) * 42, crowCY + Math.sin(fa) * 30);
+    cx.stroke();
+  }
+
+  // Eye — half-open, a glint
+  cx.fillStyle = '#2a2520';
+  cx.beginPath();
+  cx.ellipse(crowCX + 27, crowCY - 11, 3, 2.5, 0, 0, Math.PI * 2);
+  cx.fill();
+  cx.fillStyle = 'rgba(180, 175, 168, 0.3)';
+  cx.beginPath();
+  cx.arc(crowCX + 27.5, crowCY - 11.5, 1, 0, Math.PI * 2);
+  cx.fill();
+
+  // BLOOD — the only colour, dark red
+  // Pool under the body, spreading
+  cx.fillStyle = 'rgba(107, 16, 16, 0.6)';
+  cx.beginPath();
+  cx.ellipse(crowCX + 5, crowCY + 5, 22, 14, 0.3, 0, Math.PI * 2);
+  cx.fill();
+
+  // Darker centre
+  cx.fillStyle = 'rgba(85, 10, 10, 0.7)';
+  cx.beginPath();
+  cx.ellipse(crowCX + 3, crowCY + 3, 12, 8, 0.2, 0, Math.PI * 2);
+  cx.fill();
+
+  // Blood droplets / splatters
+  const bloodRng = new RNG(6666);
+  for (let i = 0; i < 15; i++) {
+    const bx = crowCX + bloodRng.range(-35, 40);
+    const by = crowCY + bloodRng.range(-20, 30);
+    const br = bloodRng.range(1, 4);
+    const ba = bloodRng.range(0.3, 0.65);
+    cx.fillStyle = `rgba(107, 16, 16, ${ba})`;
+    cx.beginPath();
+    cx.arc(bx, by, br, 0, Math.PI * 2);
+    cx.fill();
+  }
+
+  // Snow landing on the body — white flecks on black feathers
+  cx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+  for (let i = 0; i < 8; i++) {
+    const sx = crowCX + rng.range(-25, 25);
+    const sy = crowCY + rng.range(-15, 15);
+    cx.beginPath();
+    cx.arc(sx, sy, rng.range(0.5, 1.5), 0, Math.PI * 2);
+    cx.fill();
+  }
+
+  // Panel border — subtle dark frame
+  cx.strokeStyle = 'rgba(20, 18, 15, 0.5)';
+  cx.lineWidth = 1.5;
+  cx.strokeRect(px, py, pw, ph);
+
+  cx.restore();
+}
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 7: ROUTE TRACKER
+// ════════════════════════════════════════════════════════════════
+
+class RouteTracker {
+  constructor() {
+    this.scores = { crow: 0, owl: 0, silent: 0, aware: 0, engage: 0 };
+    this.flags = new Set();
+    this.registers = { register: null, register2: null };
+    this.choices = {};
+  }
+
+  recordChoice(day, nodeId, routeData) {
+    this.choices[day] = this.choices[day] || [];
+    this.choices[day].push(nodeId);
+    if (routeData) {
+      for (const [key, val] of Object.entries(routeData)) {
+        if (key === 'register' || key === 'register2') {
+          this.registers[key] = val;
+        } else if (typeof val === 'number') {
+          this.scores[key] = (this.scores[key] || 0) + val;
+        }
+      }
+    }
+  }
+
+  setFlag(flag) { if (flag) this.flags.add(flag); }
+  hasFlag(flag) { return this.flags.has(flag); }
+
+  getCurrentRoute() {
+    const s = this.scores;
+
+    // Secret route: saw both birds on Day 1 and observed both on Day 2
+    if (this.hasFlag('saw_both') && this.hasFlag('observed_both')) return 'secret-early';
+    if (this.hasFlag('saw_both') && s.aware >= 3) return 'secret-early';
+
+    // Silent route: consistently ignored
+    if (s.silent >= 4 && s.engage <= 0) return 'silent';
+    if (this.hasFlag('ignored') && s.silent >= 2) return 'silent';
+
+    // Crow route
+    if (s.crow >= 3 && s.crow > s.owl) return 'crow';
+    if (this.hasFlag('fed_crow')) return 'crow';
+
+    // Owl route
+    if (s.owl >= 3 && s.owl > s.crow) return 'owl';
+    if (this.hasFlag('fed_owl')) return 'owl';
+
+    // Bitter late routes — some engagement but late
+    if (s.crow > s.owl && s.engage >= 2) return 'bitter-late-crow';
+    if (s.owl > s.crow && s.engage >= 2) return 'bitter-late-owl';
+    if (s.crow > 0) return 'bitter-late-crow';
+    if (s.owl > 0) return 'bitter-late-owl';
+
+    // Too late
+    if (s.engage <= 1 && s.silent < 3) return 'too-late';
+
+    // Default fallback
+    return 'silent';
+  }
+
+  getCodaKey() {
+    const r1 = this.registers.register || 'unresolved';
+    const r2 = this.registers.register2 || 'unresolved';
+    return r1 + '+' + r2;
+  }
+
+  serialize() {
+    return {
+      scores: { ...this.scores },
+      flags: [...this.flags],
+      registers: { ...this.registers },
+      choices: { ...this.choices },
+    };
+  }
+
+  deserialize(data) {
+    if (!data) return;
+    this.scores = data.scores || this.scores;
+    this.flags = new Set(data.flags || []);
+    this.registers = data.registers || this.registers;
+    this.choices = data.choices || {};
+  }
+}
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 8: NARRATIVE CONTROLLER
+// ════════════════════════════════════════════════════════════════
+
+class NarrativeController {
+  constructor(bus) {
+    this.bus = bus;
+    this.nodes = {};
+    this.currentNodeId = null;
+    this.fullText = '';
+    this.shownText = '';
+    this.typing = false;
+    this.typeAcc = 0;
+    this.waiting = false; // waiting for click
+    this.waitingForChoice = false;
+    this.complete = false;
+    this.blocked = false;
+    this.endData = null;
+  }
+
+  load(nodes, startNode) {
+    this.nodes = nodes;
+    this.complete = false;
+    this.endData = null;
+    this.goNode(startNode);
+  }
+
+  goNode(id) {
+    this.currentNodeId = id;
+    const n = this.nodes[id];
+    if (!n) { this.complete = true; return; }
+
+    // Set flags
+    if (n.flag) this.bus.emit('flag', n.flag);
+
+    // End node
+    if (n.end) {
+      if (n.t && n.t.length > 0) {
+        // Show text first, then end
+        $speaker.textContent = n.sp || '';
+        this.fullText = n.t;
+        this.shownText = '';
+        $text.textContent = '';
+        $continue.classList.remove('on');
+        this.typing = true;
+        this.typeAcc = 0;
+        this.waiting = false;
+        this.waitingForChoice = false;
+        this.blocked = true;
+        setTimeout(() => { this.blocked = false; }, 350);
+        // Store end data for after text
+        this._pendingEnd = n;
+        return;
+      }
+      this.endData = n;
+      this.complete = true;
+      $speaker.textContent = '';
+      $text.textContent = '';
+      $continue.classList.remove('on');
+      this.bus.emit('scene:end', n);
+      return;
+    }
+
+    // Regular node
+    $speaker.textContent = n.sp || '';
+    this.fullText = n.t || '';
+    this.shownText = '';
+    $text.textContent = '';
+    $continue.classList.remove('on');
+    $choices.classList.remove('on');
+    $choices.innerHTML = '';
+    this.typing = true;
+    this.typeAcc = 0;
+    this.waiting = false;
+    this.waitingForChoice = false;
+    this.blocked = true;
+    setTimeout(() => { this.blocked = false; }, 350);
+
+    // Audio/FX triggers
+    if (n.fx === 'blood') this.bus.emit('fx:blood');
+    if (n.audio) this.bus.emit('audio:' + n.audio);
+  }
+
+  finishType() {
+    this.typing = false;
+    this.shownText = this.fullText;
+    $text.textContent = this.fullText;
+
+    const n = this.nodes[this.currentNodeId];
+    if (!n) return;
+
+    // Check if this was a pending end
+    if (this._pendingEnd) {
+      const endNode = this._pendingEnd;
+      this._pendingEnd = null;
+      if (endNode.ch) {
+        this._showChoices(endNode.ch);
+        return;
+      }
+      // Show continue prompt, then end on click
+      this.waiting = true;
+      this._isEndWait = true;
+      $continue.classList.add('on');
+      return;
+    }
+
+    if (n.ch) {
+      this._showChoices(n.ch);
+    } else if (n.resume) {
+      // Resume walking
+      this.complete = false;
+      this.waiting = false;
+      this.bus.emit('narrative:resume');
+    } else {
+      this.waiting = true;
+      $continue.classList.add('on');
+    }
+  }
+
+  _showChoices(choices) {
+    this.waitingForChoice = true;
+    $continue.classList.remove('on');
+    $choices.innerHTML = '';
+    choices.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = c.l;
+      btn.addEventListener('click', () => {
+        AudioManager.playChoiceSound();
+        this.bus.emit('choice', { nodeId: this.currentNodeId, choice: c });
+        $choices.innerHTML = '';
+        $choices.classList.remove('on');
+        this.waitingForChoice = false;
+        this.goNode(c.nx);
+      });
+      $choices.appendChild(btn);
+    });
+    setTimeout(() => $choices.classList.add('on'), 180);
+  }
+
+  advance() {
+    if (this.blocked) return;
+    if (this.complete) return;
+    if (this.waitingForChoice) return;
+
+    if (this.typing) {
+      this.finishType();
+      return;
+    }
+
+    if (this.waiting) {
+      this.waiting = false;
+      $continue.classList.remove('on');
+
+      if (this._isEndWait) {
+        this._isEndWait = false;
+        const endNode = this.endData || this.nodes[this.currentNodeId];
+        this.endData = endNode;
+        this.complete = true;
+        this.bus.emit('scene:end', endNode);
+        return;
+      }
+
+      const n = this.nodes[this.currentNodeId];
+      if (n && n.nx) {
+        this.goNode(n.nx);
+      }
+    }
+  }
+
+  update(dt) {
+    if (!this.typing) return;
+    this.typeAcc += dt;
+    const target = Math.floor(this.typeAcc / TYPE_SPEED);
+    if (target > this.shownText.length) {
+      this.shownText = this.fullText.slice(0, Math.min(target, this.fullText.length));
+      $text.textContent = this.shownText;
+      if (this.shownText.length >= this.fullText.length) {
+        this.finishType();
+      }
+    }
+  }
+
+  isActive() {
+    return this.typing || this.waiting || this.waitingForChoice;
+  }
+
+  clear() {
+    $speaker.textContent = '';
+    $text.textContent = '';
+    $continue.classList.remove('on');
+    $choices.innerHTML = '';
+    $choices.classList.remove('on');
+    this.typing = false;
+    this.waiting = false;
+    this.waitingForChoice = false;
+    this.complete = false;
+    this.endData = null;
+    this._pendingEnd = null;
+    this._isEndWait = false;
+  }
+}
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 9: SCENES
+// ════════════════════════════════════════════════════════════════
+
+class WalkScene {
+  constructor(bus) {
+    this.bus = bus;
+    this.parallax = new ParallaxSystem();
+    this.trees = new TreeRenderer();
+    this.weather = new WeatherSystem();
+    this.character = new CharacterRenderer();
+    this.narrative = new NarrativeController(bus);
+    this.pois = [];
+    this.triggeredPois = new Set();
+    this.dayConfig = null;
+    this.crowAnim = 0;
+    this.currentPoiIndex = -1;
+    this.active = false;
+    this.sceneData = null;
+    this.closeupAlpha = 0;
+    this.closeupTarget = 0;
+  }
+
+  enter(dayNum, sceneData) {
+    this.dayConfig = DAYS[dayNum];
+    this.sceneData = sceneData;
+
+    this.trees.generate(this.dayConfig.seed, dayNum);
+    this.weather.configure(this.dayConfig.weather, this.dayConfig.snowCount);
+    if (this.dayConfig.bloodOnSnow) {
+      // Blood stains anchored to dead crow's world position
+      this.weather.addBloodStains(0.42 * W * 2 + W * 0.1);
+    }
+
+    this.character.reset();
+    this.character.state = 'entering';
+    this.character.screenX = -70;
+
+    this.pois = sceneData.pois || [];
+    this.triggeredPois.clear();
+    this.currentPoiIndex = -1;
+    this.crowAnim = 0;
+    this.active = true;
+
+    this.narrative.load(sceneData.nodes, null); // Don't auto-start, wait for POI
+    this.narrative.complete = true; // Not reading yet
+
+    AudioManager.playAmbient('day');
+
+    // Start first POI when character arrives
+    this.bus.on('narrative:resume', this._onResume = () => {
+      this.character.state = 'walking';
+      this.narrative.complete = true;
+    });
+
+    // Dismiss close-up on choice
+    this.bus.on('choice', this._onChoice = () => {
+      this.closeupTarget = 0;
+    });
+  }
+
+  exit() {
+    this.active = false;
+    this.bus.off('narrative:resume', this._onResume);
+    if (this._onChoice) this.bus.off('choice', this._onChoice);
+    this.narrative.clear();
+  }
+
+  update(dt, input) {
+    if (!this.active) return;
+
+    this.crowAnim += dt * 0.38;
+
+    // Close-up panel animation
+    if (this.closeupTarget !== this.closeupAlpha) {
+      const speed = 1.2 * dt;
+      if (this.closeupTarget > this.closeupAlpha) {
+        this.closeupAlpha = Math.min(this.closeupTarget, this.closeupAlpha + speed);
+      } else {
+        this.closeupAlpha = Math.max(this.closeupTarget, this.closeupAlpha - speed * 2);
+      }
+    }
+
+    const isReading = this.narrative.isActive();
+    this.character.update(dt, input.right && !isReading, isReading);
+
+    // Check POIs
+    if (!isReading) {
+      const charWorldPos = this.character.worldX / (W * this.dayConfig.worldWidth);
+      for (let i = 0; i < this.pois.length; i++) {
+        const poi = this.pois[i];
+        if (!this.triggeredPois.has(i) && charWorldPos >= poi.worldX) {
+          this.triggeredPois.add(i);
+          this.character.state = 'stopped';
+          this.narrative.complete = false;
+          this.narrative.load(this.sceneData.nodes, poi.node);
+          break;
+        }
+      }
+    }
+
+    this.parallax.update(this.character.worldX);
+    this.weather.update(dt);
+    this.narrative.update(dt);
+  }
+
+  draw(cx) {
+    // Sky gradient
+    const sg = cx.createLinearGradient(0, 0, 0, groundY);
+    sg.addColorStop(0, PALETTE.skyTop);
+    sg.addColorStop(0.65, PALETTE.skyMid);
+    sg.addColorStop(1, PALETTE.skyBottom);
+    cx.fillStyle = sg;
+    cx.fillRect(0, 0, W, groundY + 2);
+
+    const offset = this.parallax.getOffset(4); // ground layer offset
+
+    // Layer 1: Far buildings
+    drawBuildingSilhouettes(cx, this.parallax.getOffset(1));
+
+    // Layer 2: Far trees
+    this.trees.draw(cx, 0, this.parallax.getOffset(2));
+
+    // Layer 3: Mid trees
+    this.trees.draw(cx, 1, this.parallax.getOffset(3));
+
+    // Garden walls (between buildings and ground, parallax layer 3)
+    const wallOffset = this.parallax.getOffset(3);
+    const wallRng = new RNG(5555);
+    cx.fillStyle = 'rgba(40, 37, 33, 0.7)';
+    for (let i = 0; i < 18; i++) {
+      const wx = i * W * 0.17 - wallOffset + wallRng.range(-5, 15);
+      if (wx < -60 || wx > W + 60) continue;
+      const ww = wallRng.range(30, 70);
+      const wh = wallRng.range(8, 18);
+      cx.fillRect(wx, groundY - wh, ww, wh);
+    }
+
+    // Ground line (pavement edge / curb)
+    cx.fillStyle = PALETTE.ground;
+    cx.fillRect(0, groundY - 2, W, 3);
+
+    // Pavement
+    const gg = cx.createLinearGradient(0, groundY, 0, groundY + 30);
+    gg.addColorStop(0, '#2a2723');
+    gg.addColorStop(1, PALETTE.dark);
+    cx.fillStyle = gg;
+    cx.fillRect(0, groundY, W, 30);
+
+    // Road / lower ground
+    const rg = cx.createLinearGradient(0, groundY + 30, 0, H);
+    rg.addColorStop(0, PALETTE.dark);
+    rg.addColorStop(1, PALETTE.darkest);
+    cx.fillStyle = rg;
+    cx.fillRect(0, groundY + 30, W, H - groundY - 30);
+
+    // Owl (faint, in background)
+    const owlX = W * 0.78 * 2 - this.parallax.getOffset(3);
+    if (owlX > -20 && owlX < W + 20) {
+      drawOwl(cx, owlX, H * 0.2, 0.14);
+    }
+
+    // Layer 4: Near trees + entities
+    this.trees.draw(cx, 2, this.parallax.getOffset(4));
+
+    // Lamp post
+    const lampScreenX = drawLampPost(cx, 0.28, offset);
+
+    // Crow on lamp (if applicable)
+    const dayNum = this.dayConfig ? Object.keys(DAYS).find(k => DAYS[k] === this.dayConfig) : '1';
+    if (parseInt(dayNum) <= 3 || parseInt(dayNum) === 7) {
+      const crowOnLamp = lampScreenX + W * 0.03 - 5;
+      const crowY = groundY - H * 0.29 + H * 0.018 - 17;
+      if (crowOnLamp > -30 && crowOnLamp < W + 30) {
+        if (parseInt(dayNum) === 7) {
+          // Crow on garden wall, further down
+          const wallX = W * 0.7 * 2 - offset;
+          if (wallX > -30 && wallX < W + 30) {
+            drawCrow(cx, wallX, groundY - 25, this.crowAnim);
+          }
+        } else {
+          drawCrow(cx, crowOnLamp, crowY, this.crowAnim);
+        }
+      }
+    }
+
+    // Dead crow (Day 3)
+    if (this.dayConfig.bloodOnSnow) {
+      const deadX = 0.42 * W * 2 - offset + W * 0.1;
+      if (deadX > -30 && deadX < W + 30) {
+        drawDeadCrow(cx, deadX, groundY - 3);
+      }
+    }
+
+    // Character
+    this.character.draw(cx);
+
+    // Snow
+    this.weather.draw(cx, this.parallax.getOffset(1) * 0.3, offset);
+
+    // Subtle fog overlay at bottom (below ground only)
+    const fg = cx.createLinearGradient(0, groundY + 20, 0, H);
+    fg.addColorStop(0, 'rgba(198,194,188,0)');
+    fg.addColorStop(0.6, 'rgba(198,194,188,0.25)');
+    fg.addColorStop(1, 'rgba(198,194,188,0.45)');
+    cx.fillStyle = fg;
+    cx.fillRect(0, groundY + 20, W, H - groundY - 20);
+
+    // Dead crow close-up panel (Day 3)
+    if (this.closeupAlpha > 0.01) {
+      drawDeadCrowCloseup(cx, this.closeupAlpha);
+    }
+  }
+
+  handleAdvance() {
+    this.narrative.advance();
+  }
+}
+
+class NightScene {
+  constructor(bus) {
+    this.bus = bus;
+    this.narrative = new NarrativeController(bus);
+    this.dayNum = 0;
+    this.active = false;
+    this.crowAnim = 0;
+    this.sceneData = null;
+    this.showCrow = false;
+    this.showOwl = false;
+  }
+
+  enter(dayNum, sceneData) {
+    this.dayNum = dayNum;
+    this.sceneData = sceneData;
+    this.active = true;
+    this.crowAnim = 0;
+
+    // Determine what to show
+    const route = sceneData.reqRoute || [];
+    this.showCrow = route.some(r => r.includes('crow') || r === 'secret-early');
+    this.showOwl = route.some(r => r.includes('owl'));
+
+    this.narrative.load(sceneData.nodes, sceneData.startNode);
+    AudioManager.playAmbient('night');
+  }
+
+  exit() {
+    this.active = false;
+    this.narrative.clear();
+  }
+
+  update(dt) {
+    if (!this.active) return;
+    this.crowAnim += dt * 0.3;
+    this.narrative.update(dt);
+  }
+
+  draw(cx) {
+    const win = drawNightScene(cx, this.dayNum);
+
+    // Crow on window sill
+    if (this.showCrow) {
+      drawCrow(cx, win.winX + win.winW * 0.75, win.winY + win.winH - 5, this.crowAnim, 0.9);
+    }
+
+    // Owl on window sill
+    if (this.showOwl) {
+      drawOwl(cx, win.winX + win.winW * 0.3, win.winY + win.winH - 8, 0.6);
+    }
+  }
+
+  handleAdvance() {
+    this.narrative.advance();
+  }
+}
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 10: INPUT CONTROLLER
+// ════════════════════════════════════════════════════════════════
+
+const Input = {
+  right: false,
+  _keys: new Set(),
+
+  init() {
+    window.addEventListener('keydown', e => {
+      this._keys.add(e.key);
+      if (e.key === 'ArrowRight') this.right = true;
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        Game.handleAdvance();
+      }
+    });
+    window.addEventListener('keyup', e => {
+      this._keys.delete(e.key);
+      if (e.key === 'ArrowRight') this.right = false;
+    });
+
+    // Click/tap to advance narrative
+    $game.addEventListener('click', e => {
+      if (e.target.closest('#ui-choices, #title-screen, #end-screen')) return;
+      Game.handleAdvance();
+    });
+
+    // Touch: hold right half to walk
+    $game.addEventListener('touchstart', e => {
+      const touch = e.touches[0];
+      if (touch.clientX > window.innerWidth * 0.5) this.right = true;
+    });
+    $game.addEventListener('touchend', () => { this.right = false; });
+  }
+};
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 11: GAME — TOP-LEVEL ORCHESTRATOR
+// ════════════════════════════════════════════════════════════════
+
+const Game = {
+  bus: new EventBus(),
+  routeTracker: new RouteTracker(),
+  currentDay: 1,
+  currentSceneIndex: 0,
+  scene: null,
+  state: 'title', // title, playing, day-transition, day-end, final-end
+  lastTime: 0,
+
+  init() {
+    resize();
+    Input.init();
+    AudioManager.init();
+
+    // Event listeners
+    this.bus.on('scene:end', data => this._onSceneEnd(data));
+    this.bus.on('choice', data => this._onChoice(data));
+    this.bus.on('flag', flag => this.routeTracker.setFlag(flag));
+    this.bus.on('fx:blood', () => {
+      if (this.scene && this.scene.closeupTarget !== undefined) {
+        this.scene.closeupTarget = 1;
+      }
+    });
+
+    // Title screen
+    $titleBegin.addEventListener('click', () => this._startGame());
+    $titleContinue.addEventListener('click', () => this._continueGame());
+    $endAgain.addEventListener('click', () => this._restart());
+
+    // Check for save
+    const save = SaveManager.load();
+    if (save && save.currentDay > 1) {
+      $titleContinue.style.display = 'block';
+      $titleContinue.textContent = `— continue from day ${save.currentDay} —`;
+    }
+
+    // Fallback for background tabs
+    this._startFallbackTimer();
+
+    // Render title screen
+    this._drawTitle();
+    window.addEventListener('resize', () => {
+      resize();
+      if (this.state === 'title') this._drawTitle();
+    });
+  },
+
+  _drawTitle() {
+    ctx.clearRect(0, 0, W, H);
+    // Dark background with faint snow
+    ctx.fillStyle = '#0a0908';
+    ctx.fillRect(0, 0, W, H);
+  },
+
+  _startGame() {
+    AudioManager.resume();
+    SaveManager.clear();
+    this.routeTracker = new RouteTracker();
+    this.currentDay = 1;
+    $titleScreen.classList.add('hidden');
+    $titleScreen.classList.remove('active');
+    setTimeout(() => this._startDay(1), 800);
+    this.state = 'day-transition';
+    requestAnimationFrame(t => { this.lastTime = t; this._loop(t); });
+  },
+
+  _continueGame() {
+    AudioManager.resume();
+    const save = SaveManager.load();
+    if (save) {
+      this.routeTracker.deserialize(save.routeTracker);
+      this.currentDay = save.currentDay;
+    }
+    $titleScreen.classList.add('hidden');
+    $titleScreen.classList.remove('active');
+    setTimeout(() => this._startDay(this.currentDay), 800);
+    this.state = 'day-transition';
+    requestAnimationFrame(t => { this.lastTime = t; this._loop(t); });
+  },
+
+  _restart() {
+    SaveManager.clear();
+    location.reload();
+  },
+
+  _startDay(dayNum) {
+    this.currentDay = dayNum;
+    this.currentSceneIndex = 0;
+    const day = DAYS[dayNum];
+    if (!day) { this._showFinalEnd(); return; }
+
+    // Show day transition
+    $dayLabel.textContent = `day ${this._dayWord(dayNum)}`;
+    $daySubtitle.textContent = day.subtitle;
+    $dayOverlay.classList.add('on');
+
+    setTimeout(() => {
+      $dayOverlay.classList.remove('on');
+      setTimeout(() => this._startScene(), 800);
+    }, 2500);
+  },
+
+  _dayWord(n) {
+    return ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven'][n] || n;
+  },
+
+  _startScene() {
+    const day = DAYS[this.currentDay];
+    if (!day) return;
+
+    // Find next valid scene
+    let sceneData = null;
+    while (this.currentSceneIndex < day.scenes.length) {
+      const s = day.scenes[this.currentSceneIndex];
+      if (s.reqRoute) {
+        const route = this.routeTracker.getCurrentRoute();
+        if (s.reqRoute.includes(route)) {
+          sceneData = s;
+          break;
+        } else {
+          this.currentSceneIndex++;
+          continue;
+        }
+      } else {
+        sceneData = s;
+        break;
+      }
+    }
+
+    if (!sceneData) {
+      // No valid scene found, try to end the day
+      this._endDay();
+      return;
+    }
+
+    if (sceneData.type === 'walk') {
+      this.scene = new WalkScene(this.bus);
+      this.scene.enter(this.currentDay, sceneData);
+    } else if (sceneData.type === 'night') {
+      this.scene = new NightScene(this.bus);
+      this.scene.enter(this.currentDay, sceneData);
+    }
+
+    this.state = 'playing';
+  },
+
+  _onSceneEnd(data) {
+    if (!data) return;
+
+    const endLabel = data.el || '';
+    const routeTag = data.rt || '';
+
+    // Show end label
+    if (endLabel) {
+      $routeTag.textContent = routeTag;
+      $routeTag.classList.add('on');
+    }
+
+    // Check for final end
+    if (data.finalEnd) {
+      setTimeout(() => this._showFinalEnd(data), 1500);
+      return;
+    }
+
+    // Check for coda
+    if (data.coda) {
+      setTimeout(() => this._showCoda(data), 1000);
+      return;
+    }
+
+    // Transition to next scene or day
+    setTimeout(() => {
+      $routeTag.textContent = '';
+      $routeTag.classList.remove('on');
+
+      if (this.scene) this.scene.exit();
+
+      if (data.toNight) {
+        this.currentSceneIndex++;
+        // Fade to night
+        $fade.classList.add('on');
+        setTimeout(() => {
+          this._startScene();
+          setTimeout(() => $fade.classList.remove('on'), 400);
+        }, 1300);
+      } else {
+        this._endDay();
+      }
+    }, 2500);
+  },
+
+  _onChoice(data) {
+    if (data.choice.route) {
+      this.routeTracker.recordChoice(this.currentDay, data.nodeId, data.choice.route);
+    }
+    if (data.choice.flag) {
+      this.routeTracker.setFlag(data.choice.flag);
+    }
+  },
+
+  _endDay() {
+    // Save progress
+    SaveManager.save({
+      version: 1,
+      currentDay: this.currentDay + 1,
+      routeTracker: this.routeTracker.serialize(),
+    });
+
+    // Fade and start next day
+    $fade.classList.add('on');
+    AudioManager.fadeAll(1.2);
+    setTimeout(() => {
+      if (this.scene) this.scene.exit();
+      this.scene = null;
+      $text.textContent = '';
+      $speaker.textContent = '';
+
+      if (this.currentDay >= 7) {
+        this._showFinalEnd();
+      } else {
+        this.currentDay++;
+        this.currentSceneIndex = 0;
+        this._startDay(this.currentDay);
+        setTimeout(() => $fade.classList.remove('on'), 400);
+      }
+    }, 1300);
+  },
+
+  _showCoda(data) {
+    const route = data.codaRoute;
+    const codaKey = this.routeTracker.getCodaKey();
+    const codas = CODAS[route];
+    let codaText = '';
+
+    if (codas) {
+      codaText = codas[codaKey] || codas[Object.keys(codas)[0]] || '';
+    }
+
+    // Show coda as final text
+    $speaker.textContent = route === 'crow' ? 'the crow' : 'the owl';
+    $text.textContent = '';
+
+    // Type out coda
+    let idx = 0;
+    const typeInterval = setInterval(() => {
+      idx++;
+      $text.textContent = codaText.slice(0, idx);
+      if (idx >= codaText.length) {
+        clearInterval(typeInterval);
+        setTimeout(() => {
+          const routeName = `crows and owls  ·  the ${route} route`;
+          const routeDesc = `${codaKey.replace('+', ' and ')}`;
+          this._showFinalEnd({ el: routeName, rt: routeDesc, finalEnd: true });
+        }, 3000);
+      }
+    }, TYPE_SPEED * 1000);
+  },
+
+  _showFinalEnd(data) {
+    this.state = 'final-end';
+    $fade.classList.add('on');
+
+    setTimeout(() => {
+      if (this.scene) { this.scene.exit(); this.scene = null; }
+      $text.textContent = '';
+      $speaker.textContent = '';
+      $continue.classList.remove('on');
+      $routeTag.textContent = '';
+      $routeTag.classList.remove('on');
+      $fade.classList.remove('on');
+
+      $endLabel.textContent = (data && data.el) || 'crows and owls';
+      $endRoute.textContent = (data && data.rt) || this.routeTracker.getCurrentRoute();
+      setTimeout(() => $endScreen.classList.add('on'), 200);
+    }, 1500);
+
+    SaveManager.clear();
+  },
+
+  handleAdvance() {
+    if (this.state !== 'playing' || !this.scene) return;
+    this.scene.handleAdvance();
+  },
+
+  _loop(t) {
+    const dt = Math.min((t - this.lastTime) / 1000, 0.05);
+    this.lastTime = t;
+
+    if (this.state === 'playing' && this.scene) {
+      ctx.clearRect(0, 0, W, H);
+      this.scene.update(dt, Input);
+      this.scene.draw(ctx);
+    }
+
+    requestAnimationFrame(t2 => this._loop(t2));
+  },
+
+  // Fallback timer for when rAF is throttled (background tabs)
+  _startFallbackTimer() {
+    setInterval(() => {
+      if (document.hidden && this.state === 'playing' && this.scene) {
+        const now = performance.now();
+        const dt = Math.min((now - this.lastTime) / 1000, 0.05);
+        this.lastTime = now;
+        this.scene.update(dt, Input);
+        this.scene.draw(ctx);
+      }
+    }, 33);
+  },
+};
+
+
+// ════════════════════════════════════════════════════════════════
+// SECTION 12: BOOTSTRAP
+// ════════════════════════════════════════════════════════════════
+
+Game.init();
+
+</script>
+</body>
+</html>

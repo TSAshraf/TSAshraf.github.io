@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="case-moody">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>The Layer Below — Case Study</title>
+    <meta name="description" content="Case study for The Layer Below — a monochrome browser-based narrative game about archaeology, observation, and what gets left behind.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../series/monochrome-narratives.html">Series</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☾</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Case Study Hero -->
+<header class="case-hero container">
+    <a href="../series/monochrome-narratives.html" class="case-back">← Back to Monochrome Narratives</a>
+    <h1 class="case-title">The Layer Below</h1>
+    <p class="case-summary">A rescue excavation. A monochrome narrative game about digging through layers of earth, uncovering fragments, and deciding what matters enough to preserve. Part of the Monochrome Narratives series.</p>
+
+    <div class="case-meta">
+        <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer, Developer & Writer</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Type</span>
+            <span class="case-meta-value">Narrative Game</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Stack</span>
+            <span class="case-meta-value">JavaScript, HTML5 Canvas, CSS</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Series</span>
+            <span class="case-meta-value"><a href="../series/monochrome-narratives.html" style="color: var(--accent);">Monochrome Narratives</a></span>
+        </div>
+    </div>
+
+    <div class="case-actions">
+        <a href="../Monochrome Narratives/The Layer Below/index.html" class="btn btn-primary">Play</a>
+        <a href="#" class="btn">View on GitHub</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Overview -->
+    <section class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-text">
+            <p>The Layer Below is a short narrative game played in the browser. You take on the role of someone conducting a rescue excavation — working through layers of earth across a series of days, uncovering objects and fragments, and making decisions about what to document, what to preserve, and what to leave behind.</p>
+            <p>The game uses a day-based structure. Each day presents a new layer with its own discoveries and pressures. The narrative unfolds through inspection — looking closely at what you've found — and through the choices you make about it. The site has its own story, and it surfaces differently depending on how you dig.</p>
+        </div>
+    </section>
+
+    <!-- Design Goal -->
+    <section class="case-section">
+        <h2 class="case-section-title">Why I Made This</h2>
+        <div class="case-section-text">
+            <p>Crows and Owls explored narrative through landscape and movement. I wanted The Layer Below to explore it through excavation — the act of revealing something that was already there, buried under what came after.</p>
+            <p>Archaeology felt like a natural subject for this series. The process of digging is inherently about attention and patience. You don't know what's in the next layer until you get there, and every decision to dig here rather than there is a small act of prioritisation. That maps cleanly onto narrative choice.</p>
+            <p>The rescue excavation framing adds urgency without adding a timer. You know the site won't last — development is coming, or the weather is turning — so every day feels finite even though there's no countdown on screen.</p>
+        </div>
+    </section>
+
+    <!-- Player Experience -->
+    <section class="case-section">
+        <h2 class="case-section-title">Player Experience</h2>
+        <div class="case-section-text">
+            <p>The game opens on Day 1. You see the site from above — a monochrome canvas showing the excavation grid. Narrative text introduces the context: where you are, why you're here, what's at stake.</p>
+            <p>Each day, you interact with the current layer. Objects and features appear as you work. You can inspect them — pressing space reveals details, descriptions, fragments of the story this ground is holding. Then you choose: document it formally, make a note, or move on.</p>
+            <p>As days progress, the layers deepen. Earlier choices affect what's accessible later. Some things you passed over become inaccessible. Some things you documented connect to later finds. The game builds a quiet archaeology of your own attention.</p>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="case-section">
+        <h2 class="case-section-title">Key Features</h2>
+        <div class="case-section-text">
+            <ul>
+                <li><strong>Day-based structure</strong> — the game progresses through a series of excavation days, each revealing a new layer with distinct discoveries and narrative beats.</li>
+                <li><strong>Inspection mechanic</strong> — objects and features can be examined closely. The inspect prompt reveals details that surface narrative context rather than gameplay stats.</li>
+                <li><strong>Choice through attention</strong> — what you choose to look at, document, or ignore shapes the story. There are no dialogue trees — decisions are embedded in how you interact with the site.</li>
+                <li><strong>Monochrome Canvas rendering</strong> — the excavation grid, objects, and layers are rendered procedurally on HTML5 Canvas. The palette is restricted to black, white, and greys.</li>
+                <li><strong>Modular scene system</strong> — each day is a scene with its own configuration, narrative data, and visual parameters, managed through a structured scene graph.</li>
+                <li><strong>Narrative text system</strong> — speaker-attributed text with click/space-to-advance pacing. The rhythm of reading is part of the experience.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="case-section">
+        <h2 class="case-section-title">Screenshots</h2>
+        <div class="case-gallery">
+            <figure class="case-gallery-item">
+                <img src="../assets/The Layer Below/01-title-screen.png" alt="The Layer Below — title screen">
+                <figcaption class="case-gallery-caption">Title screen — a rescue excavation</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/The Layer Below/02-day-transition.png" alt="The Layer Below — day transition">
+                <figcaption class="case-gallery-caption">Day transition — moving between excavation phases</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/The Layer Below/03-walk-narrative.png" alt="The Layer Below — walk narrative">
+                <figcaption class="case-gallery-caption">Walking the site — narrative text over the landscape</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/The Layer Below/04-trench-discovery.png" alt="The Layer Below — trench discovery">
+                <figcaption class="case-gallery-caption">Trench discovery — uncovering what the ground holds</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/The Layer Below/05-choice-point.png" alt="The Layer Below — choice point">
+                <figcaption class="case-gallery-caption">Choice point — document, note, or move on</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/The Layer Below/06-night-scene.png" alt="The Layer Below — night scene">
+                <figcaption class="case-gallery-caption">Night scene — the site after dark</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/The Layer Below/07-burial-voice.png" alt="The Layer Below — burial voice">
+                <figcaption class="case-gallery-caption">The burial voice — what the deepest layer holds</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section class="case-section">
+        <h2 class="case-section-title">Technical Architecture</h2>
+        <div class="case-section-text">
+            <p>The game is built as a modular vanilla JavaScript application with ES modules. No bundler, no framework — each concern is separated into its own file.</p>
+        </div>
+        <div class="case-architecture">The Layer Below
+├── js/
+│   ├── config.js      — Game constants, layer definitions, timing values
+│   ├── utils.js       — Shared utilities, math helpers, easing functions
+│   ├── renderer.js    — Canvas rendering pipeline, layer compositing
+│   ├── narrative.js   — Text display, speaker system, advance logic
+│   ├── data.js        — Narrative content, object descriptions, day scripts
+│   ├── scenes.js      — Scene graph, day transitions, state management
+│   └── game.js        — Main loop, input handling, game state coordinator
+├── css/
+│   └── style.css      — UI overlay styling, narrative box, title screen
+└── index.html         — Single entry point, canvas + UI overlay structure</div>
+        <div class="case-section-text" style="margin-top: 16px;">
+            <p>The architecture separates rendering from narrative from game logic. The renderer draws the current scene state to Canvas each frame. The narrative system manages text queues and player advancement independently. The scene system coordinates both, loading day configurations and managing transitions between excavation phases.</p>
+        </div>
+    </section>
+
+    <!-- Series Context -->
+    <section class="case-section">
+        <h2 class="case-section-title">Place in the Series</h2>
+        <div class="case-section-text">
+            <p>The Layer Below is the second game in the <a href="../series/monochrome-narratives.html" style="color: var(--accent);">Monochrome Narratives</a> series. Where Crows and Owls explored narrative through movement across a landscape, The Layer Below explores it through depth — going down rather than forward.</p>
+            <p>The shared constraints — monochrome palette, minimal interaction, no score or fail state — create continuity across the series. But the underlying mechanics are entirely different. Crows and Owls uses a tone-shifting choice system. The Layer Below uses spatial inspection and day-based progression. The series is unified by philosophy, not by engine.</p>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section class="case-section">
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="case-section-text">
+            <p>The day-based structure was the right call. It gives the experience natural pacing without artificial time pressure. Each day feels like a contained session, but the accumulation across days creates a longer arc that wouldn't work in a single sitting.</p>
+            <p>The inspection mechanic — pressing space to look closely — turned out to be the core of the game more than I expected. The decision of what to inspect is where the real narrative branching happens, even though it doesn't look like a traditional choice. You can't inspect everything in a day, so attention itself becomes the resource you're managing.</p>
+            <p>Building this as the second game in a series also clarified what the series is about. It's not a shared engine or a shared world — it's a shared approach to making interactive narrative work under tight constraints. That distinction matters for how I present the work and how I build the next ones.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

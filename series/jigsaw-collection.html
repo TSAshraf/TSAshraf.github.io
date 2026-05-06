@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Jigsaw Collection — Taashfeen</title>
+    <meta name="description" content="Interactive jigsaw puzzles — from a Java dissertation project for museums to a browser-based art reconstruction tool.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☾</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Series Hero -->
+<header class="series-hero container">
+    <a href="../index.html" class="case-back">← Back to home</a>
+    <p class="series-hero-label">Pedagogical Software</p>
+    <h1 class="series-hero-title">Jigsaw Collection</h1>
+    <p class="series-hero-desc">An evolving project in software for learning through attention. What began as a dissertation jigsaw for museums has grown into a broader exploration of how software can encourage looking closely — across artefacts, artwork, and the spaces that hold them.</p>
+    <p class="series-hero-desc" style="margin-top: 12px;">Presented as a series of case studies on the engineering and design decisions across four years of work — the alternatives considered, what didn't work, and what the project taught about building tools for learning.</p>
+    <p class="series-hero-meta" style="margin-top: 16px;">4 case studies · ongoing project</p>
+</header>
+
+<!-- Case Studies -->
+<section class="series-entries container">
+
+    <!-- Case Study 1 -->
+    <article class="series-entry">
+        <a href="../projects/fix-the-artefact.html" class="series-entry-thumb-link"><img class="series-entry-thumb" src="../assets/fix%20the%20artefact/Jigsaw%20Play%20area.png" alt="Fix the Artefact — jigsaw play area"></a>
+        <div class="series-entry-info">
+            <p class="series-entry-num">Case Study 01</p>
+            <h2 class="series-entry-title">From prototype to dissertation</h2>
+            <p class="series-entry-blurb">A year-2 prototype, the educational design questions it raised, and the evolution into a final-year dissertation project on usability and accessibility in museum contexts. What the project taught about pedagogical software design.</p>
+            <div class="series-entry-tags">
+                <span class="tag">Java</span>
+                <span class="tag">Swing</span>
+                <span class="tag">UX Research</span>
+                <span class="tag">Accessibility</span>
+            </div>
+            <p class="series-entry-meta">Dissertation project · ~2,500 words</p>
+            <div class="series-entry-actions">
+                <a href="../projects/fix-the-artefact.html" class="btn btn-primary">Read case study</a>
+                <a href="https://github.com/TSAshraf/Fix_The_Artefact/releases/latest/download/FixThePot-macOS.zip" download class="btn btn-platform" aria-label="Download for macOS">Download <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516.024.034 1.52.087 2.475-1.258.955-1.345.762-2.391.728-2.43Zm3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422.212-2.189 1.675-2.789 1.698-2.854.023-.065-.597-.79-1.254-1.157a3.692 3.692 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56.244.729.625 1.924 1.273 2.796.576.984 1.34 1.667 1.659 1.899.319.232 1.219.386 1.843.067.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758.347-.79.505-1.217.473-1.282Z"/></svg></a>
+                <a href="https://github.com/TSAshraf/Fix_The_Artefact/releases/latest/download/FixThePot-Windows.zip" download class="btn btn-platform" aria-label="Download for Windows">Download <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="7" height="7"/><rect x="8" y="0" width="7" height="7"/><rect x="0" y="8" width="7" height="7"/><rect x="8" y="8" width="7" height="7"/></svg></a>
+                <a href="https://github.com/TSAshraf/Fix_The_Artefact" target="_blank" rel="noopener" class="btn">GitHub</a>
+            </div>
+        </div>
+    </article>
+
+    <!-- Case Study 2 -->
+    <article class="series-entry">
+        <div class="series-entry-thumb series-entry-thumb-placeholder" aria-hidden="true"></div>
+        <div class="series-entry-info">
+            <p class="series-entry-num">Case Study 02</p>
+            <h2 class="series-entry-title">Modernisation</h2>
+            <p class="series-entry-blurb">Migration from Java/Swing to a modern web stack. Why the rewrite was warranted, what was kept, what was rebuilt — and what the porting process revealed about the original design.</p>
+            <div class="series-entry-tags">
+                <span class="tag">TypeScript</span>
+                <span class="tag">React</span>
+                <span class="tag">Tauri</span>
+                <span class="tag">Migration</span>
+            </div>
+            <p class="series-entry-meta">In progress</p>
+            <div class="series-entry-actions">
+                <span class="btn btn-disabled">Coming soon</span>
+            </div>
+        </div>
+    </article>
+
+    <!-- Case Study 3 -->
+    <article class="series-entry">
+        <div class="series-entry-thumb series-entry-thumb-placeholder" aria-hidden="true"></div>
+        <div class="series-entry-info">
+            <p class="series-entry-num">Case Study 03</p>
+            <h2 class="series-entry-title">Spatial artefacts</h2>
+            <p class="series-entry-blurb">Integrating 3D museum scans into the puzzle. Engagement design — rotating an artefact to inform solving its puzzle — and the engineering details: loading, performance, accessibility.</p>
+            <div class="series-entry-tags">
+                <span class="tag">3D Models</span>
+                <span class="tag">model-viewer</span>
+                <span class="tag">Performance</span>
+                <span class="tag">Accessibility</span>
+            </div>
+            <p class="series-entry-meta">In progress</p>
+            <div class="series-entry-actions">
+                <span class="btn btn-disabled">Coming soon</span>
+            </div>
+        </div>
+    </article>
+
+    <!-- Case Study 4 -->
+    <article class="series-entry">
+        <div class="series-entry-thumb series-entry-thumb-placeholder" aria-hidden="true"></div>
+        <div class="series-entry-info">
+            <p class="series-entry-num">Case Study 04</p>
+            <h2 class="series-entry-title">From single-player to classroom</h2>
+            <p class="series-entry-blurb">An architectural shift to a teacher–student model. Receipt-based assignment exchange, local-first design, cryptographic identity, and the pedagogical reasoning behind a deliberate refusal of leaderboards.</p>
+            <div class="series-entry-tags">
+                <span class="tag">Local-First</span>
+                <span class="tag">SQLite</span>
+                <span class="tag">Ed25519</span>
+                <span class="tag">Pedagogy</span>
+            </div>
+            <p class="series-entry-meta">In progress</p>
+            <div class="series-entry-actions">
+                <span class="btn btn-disabled">Coming soon</span>
+            </div>
+        </div>
+    </article>
+
+</section>
+
+<!-- Through-Lines -->
+<section class="section section-tight">
+    <div class="container">
+        <p class="section-label">Through-lines</p>
+        <h2 class="section-title">What stays constant</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+            <div>
+                <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Pedagogy</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65;">A puzzle that encourages looking closely rather than solving quickly. Context revealed through progress, not delivered upfront. Accessibility treated as a primary requirement — not a bolt-on. A deliberate refusal of leaderboards and other competitive incentives that pull attention away from the artefact. The goal is time spent with an image, not time saved.</p>
+            </div>
+            <div>
+                <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Architecture</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65;">A content-agnostic puzzle engine — the same core mechanics generalise across artefacts, artwork, and architectural views. A local-first instinct, present in the dissertation and formalised in the classroom case study. Minimal UI that doesn't compete with the image. The platform changes — Java desktop, browser, native shell — but the underlying interaction model and design principles carry through.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Other Implementations -->
+<section class="section section-tight">
+    <div class="container">
+        <p class="section-label">Other implementations</p>
+        <h2 class="section-title">Variations on the engine</h2>
+        <p class="section-intro">The puzzle engine generalises beyond museum artefacts. These are lighter content variations that share the same core but apply it to different subjects.</p>
+        <p class="section-meta">2 implementations · in progress + planned</p>
+
+        <div class="series-grid">
+
+            <!-- Fix the Artwork -->
+            <article class="series-card">
+                <div class="series-card-images">
+                    <div class="series-card-image-placeholder" aria-hidden="true"></div>
+                    <div class="series-card-image-placeholder" aria-hidden="true"></div>
+                </div>
+                <div class="series-card-body">
+                    <div class="series-card-header">
+                        <p class="series-card-label">Variation</p>
+                        <span class="series-card-pill">In progress</span>
+                    </div>
+                    <h3 class="series-card-title">Fix the Artwork</h3>
+                    <p class="series-card-desc">The same engine applied to paintings, illustrations, and visual compositions that reward close looking.</p>
+                    <div class="series-card-actions">
+                        <span class="btn btn-disabled">Coming soon</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Fix the Architecture -->
+            <article class="series-card">
+                <div class="series-card-images">
+                    <div class="series-card-image-placeholder" aria-hidden="true"></div>
+                    <div class="series-card-image-placeholder" aria-hidden="true"></div>
+                </div>
+                <div class="series-card-body">
+                    <div class="series-card-header">
+                        <p class="series-card-label">Variation</p>
+                        <span class="series-card-pill">Planned</span>
+                    </div>
+                    <h3 class="series-card-title">Fix the Architecture</h3>
+                    <p class="series-card-desc">A planned variant that turns the puzzle outward — reassembling buildings, façades, and architectural views.</p>
+                    <div class="series-card-actions">
+                        <span class="btn btn-disabled">Coming soon</span>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Still Life</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+
+    <div id="title-screen">
+      <div class="title-content">
+        <h1>Still Life</h1>
+        <p class="title-subtitle">a memory in warm light</p>
+        <div class="title-actions">
+          <button id="btn-new-game">begin</button>
+          <button id="btn-continue" style="display:none">continue</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="chapter-overlay" class="hidden">
+      <div class="chapter-label"></div>
+      <div class="chapter-subtitle"></div>
+    </div>
+
+    <div id="choices-box" class="hidden"></div>
+  </div>
+
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>

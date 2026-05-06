@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminus</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+
+    <div id="title-screen">
+      <div class="title-content">
+        <h1>Terminus</h1>
+        <p class="title-subtitle">the next station is acheron</p>
+        <div class="title-actions">
+          <button id="btn-new-game">begin</button>
+          <button id="btn-continue" style="display:none">continue</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="loop-overlay" class="hidden">
+      <div class="loop-label"></div>
+    </div>
+
+    <div id="choices-box" class="hidden"></div>
+  </div>
+
+  <script type="module" src="js/game.js?v=5"></script>
+</body>
+</html>

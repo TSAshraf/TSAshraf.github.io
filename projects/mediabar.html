@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>MediaBar — Case Study</title>
+    <meta name="description" content="Case study for MediaBar — a native macOS application that turns the MacBook notch into an ambient media controller across Spotify, Apple Music, YouTube, Audible, and Podcasts.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="../index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="../index.html#work">Work</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">&#9790;</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Case Study Hero -->
+<header class="case-hero container">
+    <a href="../series/mac-tools.html" class="case-back">&larr; Back to Mac Tools</a>
+    <h1 class="case-title">MediaBar</h1>
+    <p class="case-summary">A native macOS application that turns the MacBook notch into an ambient media controller. Consolidates Spotify, Apple Music, YouTube, Audible, Podcasts, and any other "Now Playing" source into a single pill that surfaces track info, artwork, and controls without breaking focus. Part of the Mac Tools series.</p>
+
+    <div class="case-meta">
+        <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer &amp; Developer</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Type</span>
+            <span class="case-meta-value">macOS Utility</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Stack</span>
+            <span class="case-meta-value">Swift, SwiftUI, AppKit, Combine, AppleScript, MediaRemote, Accessibility APIs</span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Series</span>
+            <span class="case-meta-value"><a href="../series/mac-tools.html" style="color: var(--accent);">Mac Tools</a></span>
+        </div>
+        <div class="case-meta-item">
+            <span class="case-meta-label">Focus</span>
+            <span class="case-meta-value">Ambient Media Control &amp; System Integration</span>
+        </div>
+    </div>
+
+    <div class="case-actions">
+        <a href="https://github.com/TSAshraf/MediaBar/releases/latest/download/MediaBar.zip" download class="btn btn-primary">Download</a>
+        <a href="https://github.com/TSAshraf/MediaBar" target="_blank" rel="noopener" class="btn">View on GitHub</a>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Overview -->
+    <section class="case-section">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-text">
+            <p>MediaBar is a macOS application that turns the notch on modern MacBooks into a unified media surface. It detects whatever is currently playing &mdash; Spotify, Apple Music, YouTube in any browser, Audible, Podcasts, Apple TV &mdash; and exposes the track, artwork, and controls in a pill that sits flush with the hardware notch.</p>
+            <p>The notch is otherwise dead screen real estate. macOS's own "Now Playing" widget lives one click deep in Control Center, only handles a subset of apps cleanly, and disappears the moment you focus elsewhere. MediaBar makes the same information ambient &mdash; visible at a glance, expandable on hover, and capable of controlling any source from one place.</p>
+        </div>
+    </section>
+
+    <!-- Why I Made This -->
+    <section class="case-section">
+        <h2 class="case-section-title">Why I Made This</h2>
+        <div class="case-section-text">
+            <p>I move between Spotify, YouTube in Safari, Audible, and the occasional podcast throughout the day, and macOS treats each of those as a separate problem. The Now Playing widget covers some of them inconsistently, Audible can only really be paused from inside Audible, and a YouTube tab playing in the background is invisible unless you remember which window it's in.</p>
+            <p>I wanted one persistent surface that reflected whatever was actually playing, regardless of source, and let me pause, skip, or scrub without context-switching. The notch was the right home for it: it's already there, it's already a focal point, and it's visually distinct enough to not feel like another menu bar widget competing for attention.</p>
+        </div>
+    </section>
+
+    <!-- User Experience -->
+    <section class="case-section">
+        <h2 class="case-section-title">User Experience</h2>
+        <div class="case-section-text">
+            <p>The pill sits in the notch area as a thin black bar that blends with the hardware notch itself. In its collapsed state only two elements are visible &mdash; a small album thumbnail on the left and an animated equalizer on the right that pulses while audio is playing. The rest of the pill stays out of the way.</p>
+            <p>Hovering reveals the compact dropdown: track title, artist, artwork, and inline playback controls (previous, play/pause, next) with a scrubbable progress bar underneath. Double-clicking the artwork opens the expanded view, which fills out the full pill with the album cover, track info, &plusmn;30 second skip buttons (useful for Audible and podcasts), and timestamps.</p>
+            <p>Right-clicking anywhere on the pill brings up a context menu with display toggles (artwork, now-playing animation, song name, always-visible mode) and a source picker that lets the user manually pin the pill to Spotify, Apple Music, Audible, or Podcasts. The pin persists across launches; auto-switch otherwise follows whichever source most recently started playing and pauses the previous one.</p>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="case-section">
+        <h2 class="case-section-title">Key Features</h2>
+        <div class="case-section-text">
+            <ul>
+                <li><strong>Multi-source detection</strong> &mdash; Spotify, Apple Music, Audible, Podcasts, YouTube (via any major browser including Safari Web Apps), Apple TV, and any other system "Now Playing" source. Each source is routed through the appropriate control path: AppleScript for Spotify and Apple Music, the private MediaRemote framework for everything else, AppleScript JavaScript injection for live browser video position.</li>
+                <li><strong>Notch-aware three-state layout</strong> &mdash; an idle pill that sits flush with the notch, a compact dropdown for hovering, and a full expanded view with artwork and extended controls. All three states centre around the actual notch position rather than a fixed screen coordinate.</li>
+                <li><strong>Auto-source switching with manual override</strong> &mdash; when something starts playing in another app, the pill follows automatically and pauses the previous source so two streams never overlap. Users can pin to a specific source via the right-click menu or cycle by double-clicking the artwork, with the choice persisting in UserDefaults.</li>
+                <li><strong>Live YouTube position tracking</strong> &mdash; MediaSession's positionState only fires on play/pause/seek, so during steady-state playback the system's reported position goes stale. MediaBar reads the actual <code>&lt;video&gt;.currentTime</code> via AppleScript JavaScript injection on a 2.5-second background poll, scans for the playing video element to handle YouTube Shorts (where several <code>&lt;video&gt;</code> tags share the DOM), and re-anchors the displayed position whenever it drifts.</li>
+                <li><strong>Catalyst app fallback for Audible and Podcasts</strong> &mdash; these apps expose minimal AppleScript surfaces and ignore play commands when nothing's queued. MediaBar walks the accessibility tree looking for a play button, falls back to a calculated coordinate click on the first library tile, and finally to a Tab+Return keystroke &mdash; all gated behind a one-time accessibility-permission explainer.</li>
+                <li><strong>Per-source artwork pipeline</strong> &mdash; Apple Music artwork is pulled from the current track via AppleScript and cached as PNG; Spotify artwork comes through its scripting bridge; system Now Playing artwork is fetched from MediaRemote with retry-and-backoff for sources like YouTube where thumbnails aren't immediately available after a play event.</li>
+                <li><strong>Wall-clock position projection</strong> &mdash; the displayed playback position is computed as <code>(anchor + (now - anchorTime))</code> rather than incremented from a stored counter. Timer jitter never accumulates, and unrelated source updates can't drag the bar backwards.</li>
+                <li><strong>Cold-launch focus protection</strong> &mdash; when a source needs to be launched (switching to Spotify when it isn't running, for instance), the launch uses <code>activates = false, hides = true</code>, and the running app is hidden again at four staggered intervals so Electron apps that ignore the initial hide flag still stay out of the user's way.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="case-section">
+        <h2 class="case-section-title">Screenshots</h2>
+        <div class="case-gallery">
+            <figure class="case-gallery-item">
+                <img src="../assets/MediaBar/Screenshot%202026-05-06%20at%2016.41.55.png" alt="MediaBar — compact hover dropdown">
+                <figcaption class="case-gallery-caption">Compact dropdown &mdash; track info and inline controls on hover</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/MediaBar/Screenshot%202026-05-06%20at%2016.41.59.png" alt="MediaBar — expanded view with album art and skip controls">
+                <figcaption class="case-gallery-caption">Expanded view &mdash; full artwork, scrubbable progress, skip-back / skip-forward 30 seconds</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/MediaBar/Screenshot%202026-05-06%20at%2016.42.04.png" alt="MediaBar — idle pill flush with the notch">
+                <figcaption class="case-gallery-caption">Idle state &mdash; album thumbnail and animated equalizer, otherwise invisible</figcaption>
+            </figure>
+            <figure class="case-gallery-item">
+                <img src="../assets/MediaBar/Screenshot%202026-05-06%20at%2016.43.54.png" alt="MediaBar — right-click context menu with source picker">
+                <figcaption class="case-gallery-caption">Right-click menu &mdash; display toggles, source picker, and quick-launch shortcut</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Technical Architecture -->
+    <section class="case-section">
+        <h2 class="case-section-title">Technical Architecture</h2>
+        <div class="case-section-text">
+            <p>Built as an Xcode project targeting macOS 13+. SwiftUI handles all view content, AppKit handles the notch window and global event monitors, Combine drives state propagation, and a vendored Perl adapter bridges access to MediaRemote on macOS versions where direct framework access is gated.</p>
+        </div>
+        <div class="case-architecture">MediaBar
+&boxvr;&boxh;&boxh; App/
+&boxv;   &boxur;&boxh;&boxh; MediaBarApp.swift           &mdash; Entry point, NSApplication setup
+&boxvr;&boxh;&boxh; Models/
+&boxv;   &boxvr;&boxh;&boxh; MediaSource.swift           &mdash; Source enum, MediaSourceProtocol, position projection
+&boxv;   &boxvr;&boxh;&boxh; MediaItem.swift             &mdash; Track metadata (title, artist, artwork, position)
+&boxv;   &boxur;&boxh;&boxh; PlaybackState.swift         &mdash; ObservableObject for view bindings
+&boxvr;&boxh;&boxh; Services/
+&boxv;   &boxvr;&boxh;&boxh; MediaManager.swift          &mdash; Source coordination, auto-switching, anchor logic
+&boxv;   &boxvr;&boxh;&boxh; SpotifyService.swift        &mdash; AppleScript polling
+&boxv;   &boxvr;&boxh;&boxh; AppleMusicService.swift     &mdash; AppleScript polling, artwork extraction
+&boxv;   &boxvr;&boxh;&boxh; SystemMediaService.swift    &mdash; MediaRemote stream parsing, browser JS injection
+&boxv;   &boxur;&boxh;&boxh; ArtworkService.swift        &mdash; Async image loading and caching
+&boxvr;&boxh;&boxh; Notch/
+&boxv;   &boxvr;&boxh;&boxh; NotchWindowController.swift &mdash; NSWindow lifecycle, three-state transitions
+&boxv;   &boxur;&boxh;&boxh; NotchHoverDetector.swift    &mdash; Global event monitors (hover, right-click, double-click)
+&boxvr;&boxh;&boxh; Views/
+&boxv;   &boxvr;&boxh;&boxh; NotchIdleView.swift         &mdash; Collapsed pill with equalizer
+&boxv;   &boxvr;&boxh;&boxh; NotchDropdownView.swift     &mdash; Compact hover view
+&boxv;   &boxur;&boxh;&boxh; ExpandedMediaView.swift     &mdash; Full controls, scrubbable progress
+&boxur;&boxh;&boxh; Resources/
+    &boxur;&boxh;&boxh; MediaRemoteAdapter/
+        &boxvr;&boxh;&boxh; mediaremote-adapter.pl  &mdash; Vendored MediaRemote bridge (Perl subprocess)
+        &boxur;&boxh;&boxh; MediaRemoteAdapter.framework</div>
+        <div class="case-section-text" style="margin-top: 16px;">
+            <p>The MediaManager is the central coordinator: it owns the per-source services, observes their state via callbacks, and runs the active-source selection logic. Position is anchored as a wall-clock projection rather than a counter so timer jitter never accumulates and unrelated source polls can't pull the bar backwards. SystemMediaService spawns the vendored Perl adapter as a subprocess and parses its line-delimited JSON output, which lets MediaBar read MediaRemote on macOS 15.4+ where direct in-process access was gated by Apple. Artwork lives behind an async pipeline so cold thumbnails (typically YouTube videos that haven't published their cover yet) retry with backoff instead of failing hard.</p>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section class="case-section">
+        <h2 class="case-section-title">Reflections</h2>
+        <div class="case-section-text">
+            <p>This project pushed deeper into macOS's private APIs and inter-process scripting than I expected. MediaRemote is the only unified pipeline for "Now Playing" data across apps and browsers, but Apple closed direct access in macOS 15.4. The workaround was to vendor an existing Perl adapter that holds the right entitlements, run it as a subprocess, and parse its JSON output. That kind of IPC inside a native Mac app isn't a typical Cocoa pattern, but it ended up being one of the more interesting parts to build.</p>
+            <p>The harder problem was position accuracy for YouTube. Spotify and Apple Music both expose their player position cleanly through AppleScript, but a YouTube tab is hidden behind several layers: the browser owns the page, the page owns the MediaSession API, and MediaSession only updates its position on user actions. The fix was to read the live <code>&lt;video&gt;</code> element's <code>currentTime</code> directly via AppleScript JavaScript injection on a background poll, with extra logic to find the actually-playing video element on YouTube Shorts (which keeps several <code>&lt;video&gt;</code> tags alive simultaneously). It works in regular Safari and Chromium-family browsers, with graceful degradation in Safari Web Apps that sandbox JavaScript injection out entirely.</p>
+            <p>The notch itself was the design constraint that shaped everything else. It's already a focal point, but treated as visual debris by every other app. Making the pill sit flush with the notch's curvature, hide and reveal smoothly on hover, and stay out of the way at every other moment took a lot of restraint with motion and chrome. Like Battery Hub, MediaBar does one thing &mdash; but it does it everywhere the user might be listening.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="../scripts/main.js"></script>
+</body>
+</html>
