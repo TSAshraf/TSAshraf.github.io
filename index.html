@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Taashfeen — Software Engineer & Interactive Designer</title>
+    <meta name="description" content="Portfolio of Taashfeen — CS graduate building polished software, structured projects, and strong interactive design work.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" role="navigation">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-name">Taashfeen</a>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☾</button></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero container">
+    <p class="hero-label">CS Graduate · Software Engineer · Interactive Designer</p>
+    <h1 class="hero-title">I build software that works well and feels considered.</h1>
+    <p class="hero-subtitle">From atmospheric browser narratives to native macOS utilities — I care about usability, structure, and the details that make software hold together.</p>
+</header>
+
+<!-- Work — Series -->
+<section class="section section-glow" id="work">
+    <div class="container">
+        <p class="section-label">Work</p>
+        <h2 class="section-title">Project series</h2>
+
+        <div class="series-grid">
+
+            <!-- Jigsaw Collection -->
+            <article class="series-card">
+                <div class="series-card-images">
+                    <img src="assets/fix%20the%20artefact/Jigsaw%20Play%20area.png" alt="Fix the Artefact — jigsaw play area">
+                    <img src="assets/fix%20the%20artefact/Egypt%20Map.png" alt="Fix the Artefact — Egypt map">
+                </div>
+                <div class="series-card-body">
+                    <div class="series-card-header">
+                        <p class="series-card-label">Pedagogical Software</p>
+                        <span class="series-card-pill">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+                            Case studies
+                        </span>
+                    </div>
+                    <h3 class="series-card-title">Jigsaw Collection</h3>
+                    <p class="series-card-desc">An evolving project in pedagogical software — beginning as a dissertation jigsaw for museums and growing into a browser-based tool for looking closely. Presented as a series of case studies on the engineering and design decisions across four years of work.</p>
+                    <div class="series-card-actions">
+                        <a href="series/jigsaw-collection.html" class="btn btn-primary">View series</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Monochrome Narratives -->
+            <article class="series-card">
+                <div class="series-card-images mono">
+                    <img src="assets/Crows and Owls/03_opening_scene.png" alt="Crows and Owls screenshot">
+                    <img src="assets/The Layer Below/04-trench-discovery.png" alt="The Layer Below screenshot">
+                </div>
+                <div class="series-card-body">
+                    <div class="series-card-header">
+                        <p class="series-card-label">Narrative Series</p>
+                        <span class="series-card-pill">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/></svg>
+                            4 Games
+                        </span>
+                    </div>
+                    <h3 class="series-card-title">Monochrome Narratives</h3>
+                    <p class="series-card-desc">Atmospheric browser-based narrative games built with HTML5 Canvas. Monochrome visuals, cumulative choice, minimal interaction — each piece explores mood, pacing, and the weight of small decisions.</p>
+                    <div class="series-card-actions">
+                        <a href="series/monochrome-narratives.html" class="btn btn-primary">View series</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Mac Tools -->
+            <article class="series-card">
+                <div class="series-card-images">
+                    <img src="assets/MediaBar/Screenshot%202026-05-06%20at%2016.41.59.png" alt="MediaBar — expanded view with album art and skip controls">
+                    <img src="assets/BatteryHub/02-rings-settings.png" alt="Battery Hub — ring view with settings">
+                </div>
+                <div class="series-card-body">
+                    <div class="series-card-header">
+                        <p class="series-card-label">Utility Series</p>
+                        <span class="series-card-pill">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+                            4 Tools
+                        </span>
+                    </div>
+                    <h3 class="series-card-title">Mac Tools</h3>
+                    <p class="series-card-desc">Native macOS menu bar utilities built with Swift and SwiftUI. Each tool replaces or improves a scattered system control — consolidating related information into a single, focused interface.</p>
+                    <div class="series-card-actions">
+                        <a href="series/mac-tools.html" class="btn btn-primary">View series</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+    <div class="container">
+        <p class="section-label">About</p>
+        <h2 class="section-title">A bit about me</h2>
+
+        <div class="about-content">
+            <div class="about-text">
+                <p>I'm a Computer Science graduate with a focus on building well-structured software and thoughtful interactive experiences. My work spans software engineering, UX design, creative coding, and native macOS development.</p>
+                <p>I care about accessibility, clean architecture, and making things that feel considered. Whether it's a dissertation project with usability research behind it, a moody browser narrative built from scratch, or a native utility that improves a daily workflow &mdash; I approach each piece with the same attention to craft.</p>
+            </div>
+            <div class="about-links">
+                <a href="mailto:taashfeena@gmail.com" class="about-link-item">
+                    <span>Email</span>
+                    <span>→</span>
+                </a>
+                <a href="https://github.com/TSAshraf" target="_blank" rel="noopener" class="about-link-item">
+                    <span>GitHub</span>
+                    <span>→</span>
+                </a>
+                <a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener" class="about-link-item">
+                    <span>LinkedIn</span>
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <ul class="footer-links">
+            <li><a href="mailto:taashfeena@gmail.com">Contact</a></li>
+            <li><a href="https://github.com/TSAshraf" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/taashfeen-a-569a1a300" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+        <p class="footer-copy">&copy; 2026 Taashfeen.</p>
+    </div>
+</footer>
+
+<script src="scripts/main.js"></script>
+</body>
+</html>
