@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Layer Below</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+
+    <div id="title-screen">
+      <div class="title-content">
+        <h1>The Layer Below</h1>
+        <p class="title-subtitle">a rescue excavation</p>
+        <div class="title-actions">
+          <button id="btn-new-game">begin</button>
+          <button id="btn-continue" style="display:none">continue</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="day-overlay" class="hidden">
+      <div class="day-label"></div>
+      <div class="day-subtitle"></div>
+    </div>
+
+    <!-- Narrative text now rendered on Canvas via Pretext -->
+    <!-- Choices remain as DOM for accessibility (focus, keyboard, screen readers) -->
+    <div id="choices-box" class="hidden"></div>
+  </div>
+
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>
